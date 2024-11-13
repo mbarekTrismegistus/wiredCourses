@@ -1,0 +1,297 @@
+{
+  "version": "6.0",
+  "nxVersion": "20.0.3",
+  "pathMappings": {
+    "@spartan-ng/ui-avatar-helm": [
+      "./src/components/ui-avatar-helm/src/index.ts"
+    ],
+    "@spartan-ng/ui-card-helm": [
+      "./src/components/ui-card-helm/src/index.ts"
+    ],
+    "@spartan-ng/ui-button-helm": [
+      "./src/components/ui-button-helm/src/index.ts"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "ng-app": [
+        {
+          "file": ".editorconfig",
+          "hash": "4165385352547808172"
+        },
+        {
+          "file": ".env",
+          "hash": "5684443773230635044"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "18168400278403753650"
+        },
+        {
+          "file": "README.md",
+          "hash": "10847664902688879205"
+        },
+        {
+          "file": "angular.json",
+          "hash": "8309115653266191371"
+        },
+        {
+          "file": "drizzle.config.ts",
+          "hash": "16341023043182863546"
+        },
+        {
+          "file": "package-lock.json",
+          "hash": "8292623264115916823"
+        },
+        {
+          "file": "package.json",
+          "hash": "15646673130043249275",
+          "deps": [
+            "npm:@angular-devkit/build-angular",
+            "npm:@angular/cli",
+            "npm:@angular/compiler-cli",
+            "npm:@spartan-ng/cli",
+            "npm:@types/jasmine",
+            "npm:@types/pg",
+            "npm:autoprefixer",
+            "npm:drizzle-kit",
+            "npm:jasmine-core",
+            "npm:karma",
+            "npm:karma-chrome-launcher",
+            "npm:karma-coverage",
+            "npm:karma-jasmine",
+            "npm:karma-jasmine-html-reporter",
+            "npm:postcss",
+            "npm:tailwind-merge",
+            "npm:tailwindcss",
+            "npm:tailwindcss-animate",
+            "npm:tsx",
+            "npm:typescript",
+            "npm:@angular/animations",
+            "npm:@angular/cdk",
+            "npm:@angular/common",
+            "npm:@angular/compiler",
+            "npm:@angular/core",
+            "npm:@angular/forms",
+            "npm:@angular/platform-browser",
+            "npm:@angular/platform-browser-dynamic",
+            "npm:@angular/router",
+            "npm:@spartan-ng/ui-avatar-brain",
+            "npm:@spartan-ng/ui-core",
+            "npm:body-parser",
+            "npm:class-variance-authority",
+            "npm:clsx",
+            "npm:cors",
+            "npm:drizzle-orm",
+            "npm:express",
+            "npm:nx",
+            "npm:pg",
+            "npm:postgres",
+            "npm:primeng",
+            "npm:rxjs",
+            "npm:tslib",
+            "npm:zone.js"
+          ]
+        },
+        {
+          "file": "public/favicon.ico",
+          "hash": "3988961587069885523"
+        },
+        {
+          "file": "server/db/index.ts",
+          "hash": "5427876084330025481"
+        },
+        {
+          "file": "server/db/schema.ts",
+          "hash": "10493885544161068038"
+        },
+        {
+          "file": "server/endpoints/addStudent.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "server/endpoints/addTeacher.ts",
+          "hash": "15948383632992542872"
+        },
+        {
+          "file": "server/endpoints/getStudents.ts",
+          "hash": "17692029185659522979"
+        },
+        {
+          "file": "server/server.ts",
+          "hash": "16656817658100407502"
+        },
+        {
+          "file": "src/app/add-course/add-course.component.css",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/add-course/add-course.component.html",
+          "hash": "1970941831258786404"
+        },
+        {
+          "file": "src/app/add-course/add-course.component.spec.ts",
+          "hash": "16900683569076297749"
+        },
+        {
+          "file": "src/app/add-course/add-course.component.ts",
+          "hash": "7732107646589756143"
+        },
+        {
+          "file": "src/app/app.component.css",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/app.component.html",
+          "hash": "12725491488970101007"
+        },
+        {
+          "file": "src/app/app.component.spec.ts",
+          "hash": "15403845304003040941"
+        },
+        {
+          "file": "src/app/app.component.ts",
+          "hash": "17081544039765582632"
+        },
+        {
+          "file": "src/app/app.config.ts",
+          "hash": "354334696427656085"
+        },
+        {
+          "file": "src/app/app.routes.ts",
+          "hash": "11057919205443164651"
+        },
+        {
+          "file": "src/app/hello/hello.component.html",
+          "hash": "7624232363042880598"
+        },
+        {
+          "file": "src/app/hello/nigga.component.ts",
+          "hash": "6964531180114853141"
+        },
+        {
+          "file": "src/app/navbar/navbar.component.ts",
+          "hash": "13792250941709085255"
+        },
+        {
+          "file": "src/app/second/second.component.css",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/second/second.component.html",
+          "hash": "7543085528504828565"
+        },
+        {
+          "file": "src/app/second/second.component.spec.ts",
+          "hash": "10365324049786786777"
+        },
+        {
+          "file": "src/app/second/second.component.ts",
+          "hash": "7984902279107491823"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/index.ts",
+          "hash": "16111783170664857174"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/lib/fallback/hlm-avatar-fallback.directive.spec.ts",
+          "hash": "16411822097059945456"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/lib/fallback/hlm-avatar-fallback.directive.ts",
+          "hash": "8116593847183966831"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/lib/fallback/index.ts",
+          "hash": "4095308081400682735"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/lib/hlm-avatar.component.spec.ts",
+          "hash": "11129624504767341931"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/lib/hlm-avatar.component.ts",
+          "hash": "8249750516958162507"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/lib/image/hlm-avatar-image.directive.spec.ts",
+          "hash": "2715012666887791191"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/lib/image/hlm-avatar-image.directive.ts",
+          "hash": "5112553850094434073"
+        },
+        {
+          "file": "src/components/ui-avatar-helm/src/lib/image/index.ts",
+          "hash": "725402389627633520"
+        },
+        {
+          "file": "src/components/ui-button-helm/src/index.ts",
+          "hash": "8982221364966377158"
+        },
+        {
+          "file": "src/components/ui-button-helm/src/lib/hlm-button.directive.ts",
+          "hash": "6707392129396539941"
+        },
+        {
+          "file": "src/components/ui-card-helm/src/index.ts",
+          "hash": "16562238750490677596"
+        },
+        {
+          "file": "src/components/ui-card-helm/src/lib/hlm-card-content.directive.ts",
+          "hash": "3041435324140004025"
+        },
+        {
+          "file": "src/components/ui-card-helm/src/lib/hlm-card-description.directive.ts",
+          "hash": "12315658723134421129"
+        },
+        {
+          "file": "src/components/ui-card-helm/src/lib/hlm-card-footer.directive.ts",
+          "hash": "10972621399707141653"
+        },
+        {
+          "file": "src/components/ui-card-helm/src/lib/hlm-card-header.directive.ts",
+          "hash": "10914822965028795660"
+        },
+        {
+          "file": "src/components/ui-card-helm/src/lib/hlm-card-title.directive.ts",
+          "hash": "9057266089303559552"
+        },
+        {
+          "file": "src/components/ui-card-helm/src/lib/hlm-card.directive.ts",
+          "hash": "7761636437151111445"
+        },
+        {
+          "file": "src/index.html",
+          "hash": "11095891598644492045"
+        },
+        {
+          "file": "src/main.ts",
+          "hash": "4927504514031276065"
+        },
+        {
+          "file": "src/styles.css",
+          "hash": "11828145797895784642"
+        },
+        {
+          "file": "tailwind.config.js",
+          "hash": "7512625737549891736"
+        },
+        {
+          "file": "tsconfig.app.json",
+          "hash": "17212958746959192557"
+        },
+        {
+          "file": "tsconfig.json",
+          "hash": "5912268997307462769"
+        },
+        {
+          "file": "tsconfig.spec.json",
+          "hash": "8918301549046766373"
+        }
+      ]
+    },
+    "nonProjectFiles": []
+  }
+}

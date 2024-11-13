@@ -1,10 +1,54 @@
-<div>
-    <p class="text-5xl font-bold">Share Your Course</p>
-    <input type="email" class="w-80" hlmInput placeholder="Title" #title>
-    <textarea class="w-80 min-h-40"  name="" hlmInput id="" #description>Enter a description</textarea>
-    <input type="text" hlmInput placeholder="teacher id" #teacherId>
-    <input type="file" name="file" hlmInput id="" (change)="handleUpload($event)">
-    {{ progress }}
-    <button hlmBtn [disabled]="loading" (click)="addCourse(title.value, description.value, teacherId.value)">Submit</button>
-</div>
+@if(!session){
+    <p>Login</p>
+}
+@else{
+    <div class="p-5">
+        <p class="text-5xl font-bold py-5">Share Your Course</p>
+        <div class="p-5 bg-zinc-900 flex flex-wrap gap-5 border border-zinc-800">
+            <div class="w-80 mx-auto flex items-center justify-center">
+                @if (thumbnail) {
+                    <img src="{{ thumbnail }}" alt="">
+                }
+                @else {
+                    <div class="flex flex-col items-center gap-4">
+                        <label for="thumbnail" class="cursor-pointer bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4">
+                            @if(progress){
+                                <p class="text-violet-600">{{ progress }}</p>
+                            }
+                            @else{
+                                <p class="flex items-center"><hlm-icon color="#7c3aed" name="lucideImage"></hlm-icon></p>
+                            }
+                        </label>
+                        <p>Upload A Thumbnail</p>
+                    </div>
+                }
+            </div>
+            <div class="flex-1 gap-4 flex-col flex">
+                <input type="email" hlmInput placeholder="Title" #title>
+                <textarea class="min-h-40"  name="" hlmInput id="" #description>Enter a description</textarea>
+                <input type="file" class="hidden" name="thumbnail" hlmInput id="thumbnail" (change)="handleUpload($event)">
+                <div class="flex items-center gap-4">
+                    <label for="media" class="cursor-pointer bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4">
+                        @if(progress){
+                            <p class="text-violet-600">{{ progress }}</p>
+                        }
+                        @else{
+                            <p class="flex items-center"><hlm-icon color="#7c3aed" name="lucideVideo"></hlm-icon></p>
+                        }
+                    </label>
+                    <p>Upload Course Videos</p>
+                </div>
+                <div class="flex gap-4">
+                    @for (item of filesName; track $index) {
+                        <p>{{ item.substring(0, 15) + "... ." + item.split('.').pop() }}</p><brn-separator decorative hlmSeparator orientation="vertical" />
+                    }
+                </div>
+                <input type="file" name="media" class="hidden" hlmInput id="media" (change)="handleUpload($event)">
+                
+                <button hlmBtn [disabled]="loading" (click)="addCourse(title.value, description.value)">Submit</button>
+            </div>
+        </div>
+    </div>
+}
+
 <router-outlet/>

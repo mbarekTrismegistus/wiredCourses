@@ -7,12 +7,13 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { lucideLoader } from '@ng-icons/lucide';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { provideIcons } from '@ng-icons/core';
+import { lucidePlus } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-registre',
   standalone: true,
   imports: [ReactiveFormsModule, HlmInputDirective, RouterOutlet, HlmButtonDirective, HlmIconComponent],
-  providers: [provideIcons({lucideLoader})],
+  providers: [provideIcons({lucideLoader, lucidePlus})],
   templateUrl: './registre.component.html',
   styleUrl: './registre.component.css'
 })

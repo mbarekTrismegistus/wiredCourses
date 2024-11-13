@@ -5,11 +5,9 @@ import addCourse from "./endpoints/addCourse"
 import cors from "cors"
 import { createSession, decrypt, login } from "./endpoints/auth"
 import cookieParser from 'cookie-parser'
-import multer from "multer"
-const upload = multer({ dest: 'uploads/', limits: { fieldSize: 10 * 10 * 1024 * 1024 } })
-import {google} from "googleapis"
-import path from "path"
-import stream from 'stream'
+
+
+
 
 
 
@@ -48,16 +46,15 @@ app.post("/register/teacher", async (req, res) => {
     }
 })
 
-app.post("/addCourse", upload.single('video'), async (req, res) => {
-    console.log(req.file)
-    res.status(200).json(req.file)
-    // let data: any = await addCourse(req.body)
-    // if(data){
-    //     res.status(200).json(data)
-    // }
-    // else{
-    //     res.status(500)
-    // }
+app.post("/addCourse", async (req, res) => {
+    let data: any = await addCourse(req.body)
+    console.log(data)
+    if(data){
+        res.status(200).json(data)
+    }
+    else{
+        res.status(500)
+    }
 })
 
 app.post("/auth/registre", async (req, res) => {
@@ -72,17 +69,16 @@ app.post("/auth/registre", async (req, res) => {
     }
 })
 
-app.post("/auth/login", upload.single('file'), async (req, res) => {
-    console.log(req.body.file)
-    // let data: any = await login(req.body)
-    // if(data){
-    //     res.setHeader("Set-cookie", data)
-    //     res.status(200).json(data)
-    // }
-    // else{
-    //     // console.log(data
-    //     res.status(401).json({msg: "info false"})
-    // }
+app.post("/auth/login", async (req, res) => {
+
+    let data: any = await login(req.body)
+    if(data){
+        res.setHeader("Set-cookie", data)
+        res.status(200).json(data)
+    }
+    else{
+        res.status(401).json({msg: "info false"})
+    }
 })
 
 app.get("/auth/session", async (req, res) => {

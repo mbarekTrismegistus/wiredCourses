@@ -25,6 +25,8 @@
     "@spartan-ng/ui-core": "^0.0.1-alpha.356",
     "@spartan-ng/ui-formfield-brain": "0.0.1-alpha.356",
     "@spartan-ng/ui-forms-brain": "0.0.1-alpha.356",
+    "@spartan-ng/ui-label-brain": "0.0.1-alpha.356",
+    "@spartan-ng/ui-separator-brain": "0.0.1-alpha.356",
     "@supabase/supabase-js": "^2.46.1",
     "@types/cookie-parser": "^1.4.7",
     "@types/node": "^22.8.7",

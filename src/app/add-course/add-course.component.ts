@@ -6,14 +6,23 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { v4 as uuidv4 } from 'uuid';
 import * as tus from 'tus-js-client';
 import { environment } from '../../environments/environment';
+import { provideIcons } from '@ng-icons/core';
+import { lucideImage } from '@ng-icons/lucide';
+import { lucideVideo } from '@ng-icons/lucide';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
+import { HlmSeparatorDirective } from '@spartan-ng/ui-separator-helm';
+import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
+
 
 
 
 @Component({
   selector: 'app-add-course',
   standalone: true,
-  imports: [RouterOutlet, HlmInputDirective, HlmButtonDirective],
+  imports: [RouterOutlet, HlmInputDirective, HlmButtonDirective, HlmIconComponent, HlmLabelDirective, HlmSeparatorDirective, BrnSeparatorComponent],
   templateUrl: './add-course.component.html',
+  providers: [provideIcons({lucideVideo, lucideImage})],
   styleUrl: './add-course.component.css'
 })
 
@@ -22,11 +31,16 @@ export class AddCourseComponent {
 
   loading:boolean = false
   file: Array<String> = []
+  filesName: Array<String> = []
   progress: any
+  thumbnail: any
+  session: any
 
 
   constructor(private http: HttpClient){
-
+    this.http.get("http://localhost:1515/auth/session", { withCredentials: true }).subscribe(res => {
+      this.session = res
+  })
   }
 
   async handleUpload(event: any){
@@ -61,8 +75,16 @@ export class AddCourseComponent {
             var percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2)
             this.progress = percentage
           },
-          onSuccess: function () {
+          onSuccess: () => {
               console.log('Download %s from %s', upload.url)
+              if(event.target.name === "media"){
+                this.file.push(`https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`)
+                this.filesName.push(avatarFile.name)
+              }
+              else if(event.target.name === "thumbnail"){
+                this.thumbnail = `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
+              }
+              this.progress = null
               resolve()
           },
       })
@@ -84,9 +106,15 @@ export class AddCourseComponent {
 
   }
 
-  addCourse(title: string, des: string, tId: string){
+  addCourse(title: string, des: string){
     this.loading = true
-    this.http.post("http://localhost:1515/addCourse", {title: title, description: des, teacherId: Number(tId)}).subscribe(res => {
+    this.http.post("http://localhost:1515/addCourse", {
+      title: title,
+      description: des, 
+      userId: Number(this.session.id),
+      media: this.file,
+      thumbnail: this.thumbnail
+    }).subscribe(res => {
       if(res){
         this.loading = false
       }
