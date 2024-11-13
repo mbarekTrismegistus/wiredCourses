@@ -1,0 +1,10 @@
+<div>
+    <p class="text-5xl font-bold">Share Your Course</p>
+    <input type="email" class="w-80" hlmInput placeholder="Title" #title>
+    <textarea class="w-80 min-h-40"  name="" hlmInput id="" #description>Enter a description</textarea>
+    <input type="text" hlmInput placeholder="teacher id" #teacherId>
+    <input type="file" name="file" hlmInput id="" (change)="handleUpload($event)">
+    {{ progress }}
+    <button hlmBtn [disabled]="loading" (click)="addCourse(title.value, description.value, teacherId.value)">Submit</button>
+</div>
+<router-outlet/>

@@ -1,0 +1,14 @@
+<head><base href="/"></head>
+
+@if (cat$ | async; as cat) {
+    <p class="mt-[100px]">{{ cat.url }} works!</p>
+    <img src="{{ cat.url }}" alt="">
+}@else {
+    <p>Loading...</p>
+}
+<input type="text" name="name" #name>
+<p> </p>
+
+<button (click)="addUser(name)">Submit</button>
+
+<router-outlet />

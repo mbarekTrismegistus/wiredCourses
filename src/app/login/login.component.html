@@ -1,0 +1,10 @@
+<div>
+    <form method="POST" [formGroup]="userData" (ngSubmit)="login()">
+        <input type="text" hlmInput formControlName="email">
+        <input type="text" hlmInput formControlName="password">
+        <p>{{ error }}</p>
+        <button type="submit" hlmBtn>Login</button>
+    </form>
+</div>
+
+<router-outlet/>
