@@ -20,7 +20,7 @@ const app = e()
 
 app.use(e.json())
 app.use(e.urlencoded({ extended: false }))
-app.use(cors({credentials: true, origin: 'http://localhost:4200'}))
+app.use(cors({credentials: true, origin: 'https://wired-courses.vercel.app'}))
 app.use(cookieParser())
 
 app.listen(1515, () => {
