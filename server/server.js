@@ -20,7 +20,13 @@ const app = e()
 
 app.use(e.json())
 app.use(e.urlencoded({ extended: false }))
-app.use(cors({credentials: true, origin: 'https://wired-courses.vercel.app'}))
+app.use(cors({
+    credentials: true, 
+    origin: 'https://wired-courses.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allow these HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'] // Allow specific headers
+
+}))
 app.use(cookieParser())
 
 app.listen(1515, () => {
@@ -80,6 +86,14 @@ app.post("/auth/registre", async (req, res) => {
         res.status(500)
     }
 })
+
+app.options('/auth/login', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'https://wired-courses.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.sendStatus(200); // Respond with 200 to preflight requests
+});
 
 app.post("/auth/login", async (req, res) => {
     res.set('Cache-Control', 'no-store');
