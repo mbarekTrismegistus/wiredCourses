@@ -20,7 +20,7 @@ const app = e()
 
 app.use(e.json())
 app.use(e.urlencoded({ extended: false }))
-app.use(cors({credentials: true, origin: '*'}))
+app.use(cors({credentials: true, origin: 'https://wired-courses.vercel.app'}))
 app.use(cookieParser())
 
 app.listen(1515, () => {
@@ -86,7 +86,7 @@ app.post("/auth/login", async (req, res) => {
     let data = await login(req.body)
     if(data){
         console.log(data)
-        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, path: "/", sameSite: "None", domain: "https://wired-courses.vercel.app"})
+        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, path: "/", sameSite: "none", domain: "wired-courses.vercel.app"})
         res.status(200).json(data)
     }
     else{
