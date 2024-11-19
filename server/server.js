@@ -82,11 +82,11 @@ app.post("/auth/registre", async (req, res) => {
 })
 
 app.post("/auth/login", async (req, res) => {
-
+    res.set('Cache-Control', 'no-store');
     let data = await login(req.body)
     if(data){
         console.log(data)
-        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 60 * 1000, path: "/", sameSite: "none"})
+        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 1000, domain: 'wired-courses.vercel.app', sameSite: "none"})
         res.status(200).json(data)
     }
     else{
