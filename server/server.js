@@ -100,7 +100,7 @@ app.post("/auth/login", async (req, res) => {
     let data = await login(req.body)
     if(data){
         console.log(data)
-        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 1000, domain: 'wired-courses-m68i.vercel.app/',path: "/", partitioned: "true", sameSite: "None"})
+        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 1000, domain: '.vercel.app',path: "/", partitioned: "true", sameSite: "None"})
         res.status(200).json(data)
     }
     else{
