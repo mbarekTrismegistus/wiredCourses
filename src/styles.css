@@ -105,3 +105,36 @@ color-scheme: light;
 --ring: 240 4.9% 83.9%;
 color-scheme: dark;
 }
+
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+
+.shadowblob{
+    background-color: #6d28d9;
+}
+
+.wraper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.g_id_signin iframe{
+    width: 100% !important;
+}
+
+
+.hide-scrollbar::-webkit-scrollbar{
+    display: none;
+}

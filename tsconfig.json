@@ -48,6 +48,18 @@
       ],
       "@spartan-ng/ui-separator-helm": [
         "./src/components/ui-separator-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-menu-helm": [
+        "./src/components/ui-menu-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-carousel-helm": [
+        "./src/components/ui-carousel-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-skeleton-helm": [
+        "./src/components/ui-skeleton-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-scrollarea-helm": [
+        "./src/components/ui-scrollarea-helm/src/index.ts"
       ]
     }
   },

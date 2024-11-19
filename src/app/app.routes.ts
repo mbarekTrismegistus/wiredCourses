@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
-import { SecondComponent } from './second/second.component';
 import { Hello } from './hello/nigga.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { RegistreComponent } from './registre/registre.component';
 import { LoginComponent } from './login/login.component';
+import { DiscoverComponent } from './discover/discover.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CourseComponent } from './course/course.component';
 
 export const routes: Routes = [
     {
@@ -11,8 +13,8 @@ export const routes: Routes = [
         component: Hello
     },
     {
-        path: "second/:id",
-        component: SecondComponent
+        path: "courses/:id",
+        component: CourseComponent
     },
     {
         path: "addCourse",
@@ -25,5 +27,13 @@ export const routes: Routes = [
     {
         path: "login",
         component: LoginComponent
+    },
+    {
+        path: "discover",
+        component: DiscoverComponent
+    },
+    {
+        path: "profile",
+        component: ProfileComponent
     }
 ];

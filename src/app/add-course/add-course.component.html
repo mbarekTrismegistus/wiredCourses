@@ -4,7 +4,8 @@
 @else{
     <div class="p-5">
         <p class="text-5xl font-bold py-5">Share Your Course</p>
-        <div class="p-5 bg-zinc-900 flex flex-wrap gap-5 border border-zinc-800">
+        <div class="p-5 bg-background flex flex-wrap gap-5 border rounded-lg shadow-5 dark:border-zinc-800 relative">
+            <div class="w-[70%] h-[1px] bg-gradient-to-r from-zinc-950 via-zinc-600 to-zinc-950 absolute top-0 z-[99]"></div>
             <div class="w-80 mx-auto flex items-center justify-center">
                 @if (thumbnail) {
                     <img src="{{ thumbnail }}" alt="">
@@ -24,9 +25,9 @@
                 }
             </div>
             <div class="flex-1 gap-4 flex-col flex">
-                <input type="email" hlmInput placeholder="Title" #title>
+                <input hlmInput placeholder="Title" #title>
                 <textarea class="min-h-40"  name="" hlmInput id="" #description>Enter a description</textarea>
-                <input type="file" class="hidden" name="thumbnail" hlmInput id="thumbnail" (change)="handleUpload($event)">
+                <input type="file" class="hidden" name="thumbnail" accept="image/*" hlmInput id="thumbnail" (change)="handleUpload($event)">
                 <div class="flex items-center gap-4">
                     <label for="media" class="cursor-pointer bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4">
                         @if(progress){
@@ -43,7 +44,7 @@
                         <p>{{ item.substring(0, 15) + "... ." + item.split('.').pop() }}</p><brn-separator decorative hlmSeparator orientation="vertical" />
                     }
                 </div>
-                <input type="file" name="media" class="hidden" hlmInput id="media" (change)="handleUpload($event)">
+                <input type="file" name="media" class="hidden" hlmInput id="media"  accept="video/*" (change)="handleUpload($event)">
                 
                 <button hlmBtn [disabled]="loading" (click)="addCourse(title.value, description.value)">Submit</button>
             </div>

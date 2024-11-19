@@ -16,7 +16,6 @@ import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
 
 
 
-
 @Component({
   selector: 'app-add-course',
   standalone: true,
@@ -30,7 +29,7 @@ import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
 export class AddCourseComponent {
 
   loading:boolean = false
-  file: Array<String> = []
+  file: Array<Object> = []
   filesName: Array<String> = []
   progress: any
   thumbnail: any
@@ -49,6 +48,7 @@ export class AddCourseComponent {
     let fileuuid = uuidv4()
 
     const avatarFile = event.target.files[0]
+
 
     return new Promise<void>((resolve, reject) => {
       var upload = new tus.Upload(avatarFile, {
@@ -78,8 +78,22 @@ export class AddCourseComponent {
           onSuccess: () => {
               console.log('Download %s from %s', upload.url)
               if(event.target.name === "media"){
-                this.file.push(`https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`)
+                var video = document.createElement('video');
+                video.preload = 'metadata';
+            
+                video.onloadedmetadata = () => {
+                  window.URL.revokeObjectURL(video.src);
+                  var duration = video.duration;
+                  this.file.push({
+                    duration: duration * 1000,
+                    title: avatarFile.name.split('.')[0],
+                    size: avatarFile.size,
+                    url: `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
+                  })
+                }
+                video.src = URL.createObjectURL(avatarFile);
                 this.filesName.push(avatarFile.name)
+                console.log(this.file)
               }
               else if(event.target.name === "thumbnail"){
                 this.thumbnail = `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
@@ -109,11 +123,19 @@ export class AddCourseComponent {
   addCourse(title: string, des: string){
     this.loading = true
     this.http.post("http://localhost:1515/addCourse", {
-      title: title,
-      description: des, 
-      userId: Number(this.session.id),
-      media: this.file,
-      thumbnail: this.thumbnail
+      course:{
+        title: title,
+        description: des, 
+        userId: Number(this.session.id),
+        thumbnail: this.thumbnail,
+        duration: this.file.reduce((e: any,s: any) => {
+          console.log(s,e)
+          return e.duration + s.duration
+        })
+      },
+      videos: {
+        media: this.file
+      }
     }).subscribe(res => {
       if(res){
         this.loading = false

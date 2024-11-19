@@ -3,13 +3,14 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
-
+import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, HlmInputDirective, HlmButtonDirective, RouterOutlet],
+  imports: [HlmIconComponent, ReactiveFormsModule, HlmInputDirective, HlmButtonDirective, RouterOutlet, HlmLabelDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -26,6 +27,14 @@ export class LoginComponent {
     password: new FormControl(''),
 
   })
+  ngOnInit(): void {
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    
+  }
 
   login(){
     let data = this.userData.value
@@ -40,6 +49,10 @@ export class LoginComponent {
       }
       console.log(error)
     })
+  }
+
+  googleAuth(data: any){
+    console.log(data)
   }
 
 }

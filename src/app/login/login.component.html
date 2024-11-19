@@ -1,10 +1,62 @@
-<div>
-    <form method="POST" [formGroup]="userData" (ngSubmit)="login()">
-        <input type="text" hlmInput formControlName="email">
-        <input type="text" hlmInput formControlName="password">
-        <p>{{ error }}</p>
-        <button type="submit" hlmBtn>Login</button>
-    </form>
-</div>
 
+<div class="w-[50vw] mx-auto flex">
+    <div class="w-[50%] self-center bg-background/[0.2] rounded-l-lg p-5">
+        <h1 class="lg:text-6xl md:text-5xl font-extrabold p-5 text-3xl">Login</h1>
+        <form method="POST" class="flex flex-col gap-4 p-5" [formGroup]="userData" (ngSubmit)="login()">
+            <label for="" hlmLabel>Email
+                <input type="text" class="w-[100%] rounded-full" hlmInput formControlName="email">
+            </label>
+            <label for="" hlmLabel>Password
+                <input type="text" class="w-[100%] rounded-full" hlmInput formControlName="password">
+            </label>
+            <p>{{ error }}</p>
+            <button type="submit" class="rounded-full" hlmBtn>Login</button>
+            <p class="text-center">Or</p>
+            <div class="mx-auto relative w-[100%]">
+                <button hlmBtn variant="secondary" class="absolute w-[100%] rounded-full border border-blue-600">
+                    <div class="flex gap-3 items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                            <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
+                        </svg>
+                        <p class="hidden lg:inline">
+                            Continue with Google
+                        </p>
+                        <p class="hidden md:inline lg:hidden">Google</p>
+                    </div>
+                </button>
+                <div id="g_id_onload"
+                    
+                    data-client_id="812937698268-14md8miugbmnnc39phnutj3ibr4tk5r9.apps.googleusercontent.com"
+                    data-context="signin"
+                    data-ux_mode="popup"
+                    data-login_uri="http://localhost:1515/auth/google"
+                    >
+                </div>
+        
+                <div style="color-scheme: light;" class="g_id_signin w-[100%] opacity-[0.001]"
+                    data-type="standard"
+                    data-shape="pill"
+                    data-theme="filled_black"
+                    data-text="signin_with"
+                    data-size="large"
+                    data-logo_alignment="left"
+                    
+                    >
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="flex-1 rounded-r-lg bg-cover bg-no-repeat bg-[url('https://w.wallhaven.cc/full/o5/wallhaven-o5p1v9.jpg')] flex-1">
+        
+    </div>
+</div>
+<script src="https://accounts.google.com/gsi/client" defer async></script>
+<script>
+    window.addEventListener('load', function() {
+    const signinButton = document.querySelector('.g_id_signin iframe');
+    if (signinButton) {
+        signinButton.style.width = '100%';
+    }
+    });
+</script>
 <router-outlet/>

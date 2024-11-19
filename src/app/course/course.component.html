@@ -1,0 +1,64 @@
+
+@if (course) {
+    <div class="p-5">
+        
+        <div class="flex flex-col lg:flex-row h-[60vh] rounded-lg lg:gap-3">
+            <vg-player class="h-[60vh] basis-3/4 rounded-lg">
+                <vg-overlay-play></vg-overlay-play>
+                <vg-buffering></vg-buffering>
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                </vg-scrub-bar>
+                <vg-controls>
+                    <vg-play-pause></vg-play-pause>
+                    <vg-playback-button></vg-playback-button>
+                    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+                    <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+                    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+                    <vg-track-selector></vg-track-selector>
+                    <vg-mute></vg-mute>
+                    <vg-volume></vg-volume>
+                    <vg-fullscreen></vg-fullscreen>
+                </vg-controls>
+                <video #videoFileContainer [src]="course.videos[coursePlaylistindex].url" [vgMedia]="$any(media)" #media id="singleVideo" preload="auto">
+                </video>
+            </vg-player>
+            <hlm-scroll-area class="border dark:border-zinc-800 p-3 bg-background/[0.5] basis=1/4 grow rounded-lg">
+                <p class="text-xl font-bold">Playlist: {{ (coursePlaylistindex + 1) + " of " +  (course.videos.length)}}</p> 
+                <div class="flex flex-col p-3">
+                    @for (item of course.videos; track $index) {
+                        <div (click)="changeIndex($index)" class="cursor-pointer">
+                            <div class="hover:bg-zinc-800 w-full p-3 hover:rounded-lg border-b border-zinc-800 flex justify-between">
+                                <p>
+                                    {{ item.title}}
+                                </p>
+                                <p>{{ moment.utc(item.duration).format('HH:mm:ss') }}</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- <div>{{ course }}</div> -->
+            </hlm-scroll-area>
+        </div>
+        <div>
+            <div class="flex gap-4 py-7">
+                <hlm-avatar variant="large">
+                    <img src="{{ course.user.picture }}" alt="" hlmAvatarImage>
+                    <span hlmAvatarFallback>rg</span>
+                </hlm-avatar>
+                <div class="flex flex-col gap-2">
+                    <h1 class="text-2xl lg:text-5xl font-bold">{{ course.title }}</h1>
+                    <p>By: <span class="font-bold">{{ course.user.firstname + " " + course.user.lastname }}</span></p>
+                    <p class="pt-5">{{ course.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@else {
+    Loading...
+}
+<router-outlet></router-outlet>

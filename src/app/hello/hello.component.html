@@ -1,7 +1,21 @@
-<div class="flex flex-col items-center justify-center w-100 h-[80vh]">
-    <p class="text-5xl font-bold">Welcome to Wired Course</p>
-    <div class="flex gap-4 py-5">
-        <button hlmBtn>Sign in</button>
-        <button hlmBtn variant="outline">Discover</button>
+<div class="flex flex-col items-center justify-center">
+    <div class="h-[80vh] flex flex-col items-center justify-center">
+        <div class="flex flex-wrap w-[50vw] text-center items-center justify-center">
+            <h1 class="lg:text-7xl md:text-5xl text-3xl font-black bg-gradient-to-b dark:from-[#FFFFFF] dark:to-[#DCDCDC] from-zinc-900 to-zinc-800 text-transparent bg-clip-text">Welcome&nbsp;</h1>
+            <h1 class="lg:text-7xl md:text-5xl text-3xl font-black bg-gradient-to-b dark:from-[#FFFFFF] dark:to-[#DCDCDC] from-zinc-900 to-zinc-800 text-transparent bg-clip-text">to&nbsp;</h1>
+            <h1 class="lg:text-7xl md:text-5xl text-3xl font-black bg-gradient-to-b from-violet-500 to-violet-800 text-transparent bg-clip-text">Wired&nbsp;</h1>
+            <h1 class="lg:text-7xl md:text-5xl text-3xl font-black bg-gradient-to-b dark:from-[#FFFFFF] dark:to-[#DCDCDC] from-zinc-900 to-zinc-800 text-transparent bg-clip-text">Courses</h1>
+        </div>
+        <div class="w-[50vw] p-5">
+            <p class="dark:text-gray-300 text-forground text-lg text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae, rerum! Repellat unde dolore, similique perferendis nisi assumenda ea ab doloremque</p>
+        </div>
+        <div class="flex gap-4 py-5">
+            <a routerLink="/discover">
+                <button hlmBtn class="border-violet-600 bg-gradient-to-l from-violet-700 to-indigo-800 text-white">Discover</button>
+            </a>
+        </div>
     </div>
+
+    
 </div>
+<router-outlet></router-outlet>

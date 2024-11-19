@@ -3,6 +3,7 @@ import cookie from "cookie"
 import { db } from '../db'
 import { users } from '../db/schema'
 import { eq } from 'drizzle-orm'
+import registre from './registre'
 
 const key = new TextEncoder().encode(process.env['AUTH_SECRET'])
 
@@ -15,14 +16,9 @@ async function encrypt(payload: any){
 
 export async function createSession(payload:  any){
     let jwt = await encrypt(payload)
-    return cookie.serialize("session", jwt, {
-        maxAge: 60 * 60 * 24,
-        httpOnly: true,
-        secure: true,
-        domain: "localhost",
-        path: "/"
-    })
+    return jwt
 }
+
 
 export async function decrypt(session: any){
     const { payload } = await jwtVerify(session, key, {
@@ -44,4 +40,22 @@ export async function login(data: any){
         return false
     }
 
+}
+
+
+export async function googleAuth(payload: any){
+    let user = await db.select().from(users).where(eq(users.email, payload.email))
+    if(user[0]){
+        return await login(user[0])
+    }
+    else{
+        let user = await registre({
+            firstname: payload.given_name,
+            lastname: payload.family_name,
+            picture: payload.picture,
+            email: payload.email
+        })
+        let session = await createSession(user[0])
+        return session
+    }
 }
