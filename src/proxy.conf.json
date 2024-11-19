@@ -1,5 +1,5 @@
 {
-    "/api/**": {
+    "/api": {
       "target": "https://wired-courses-m68i.vercel.app",
       "secure": false,  
       "changeOrigin": true,  
