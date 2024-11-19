@@ -38,7 +38,7 @@ export class LoginComponent {
 
   login(){
     let data = this.userData.value
-    this.http.post('/api/auth/login', data, { withCredentials: true, observe: 'response' }).subscribe(res => {
+    this.http.post('api/auth/login', data, { withCredentials: true, observe: 'response' }).subscribe(res => {
       console.log(res)
       if(res.ok){
         console.log("logged in")
