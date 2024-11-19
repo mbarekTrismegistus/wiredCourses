@@ -38,7 +38,7 @@ export class LoginComponent {
 
   login(){
     let data = this.userData.value
-    this.http.post('http://localhost:1515/auth/login', data, { withCredentials: true, observe: 'response' }).subscribe(res => {
+    this.http.post('https://wired-courses-m68i.vercel.app/auth/login', data, { withCredentials: true, observe: 'response' }).subscribe(res => {
       if(res.ok){
         console.log("logged in")
         window.location.href = window.location.protocol + '//' + window.location.host;
