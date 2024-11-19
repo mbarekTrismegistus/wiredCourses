@@ -43,7 +43,7 @@ export class RegistreComponent {
       ...this.userData.value,
       age: Number(this.userData.value.age),
     }
-    this.http.post('http://localhost:1515/auth/registre', data, { withCredentials: true }).subscribe(res => {
+    this.http.post('/api/auth/registre', data, { withCredentials: true }).subscribe(res => {
       this.loading = false
       window.location.href = window.location.protocol + '//' + window.location.host;
       return res

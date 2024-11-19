@@ -39,7 +39,7 @@ export class DiscoverComponent {
   }
 
   ngOnInit(){
-    this.http.get("http://localhost:1515/courses").subscribe((res) => {
+    this.http.get("/api/courses").subscribe((res) => {
       console.log(res)
       this.courses = res
     })

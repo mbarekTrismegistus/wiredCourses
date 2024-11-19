@@ -34,7 +34,7 @@ export class CourseComponent {
 
   ngOnInit(): void {
     this.courseId = Number(this.route.snapshot.paramMap.get('id'));
-    this.http.get(`http://localhost:1515/courses/${this.courseId}`).subscribe((res) => {
+    this.http.get(`/api/courses/${this.courseId}`).subscribe((res) => {
       console.log(res)
       this.course = res
       

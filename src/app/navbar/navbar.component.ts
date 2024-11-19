@@ -101,13 +101,13 @@ export class NavBar{
     session: any;
 
     constructor(private http: HttpClient){ 
-        this.http.get("http://localhost:1515/auth/session", { withCredentials: true }).subscribe(res => {
+        this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
             this.session = res
         })
     }
 
     logout(){
-        this.http.post("http://localhost:1515/auth/logout", {}, { withCredentials: true }).subscribe(res => {
+        this.http.post("/api/auth/logout", {}, { withCredentials: true }).subscribe(res => {
             if(res){
                 window.location.href = window.location.protocol + '//' + window.location.host;
             }

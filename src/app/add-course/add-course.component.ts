@@ -37,7 +37,7 @@ export class AddCourseComponent {
 
 
   constructor(private http: HttpClient){
-    this.http.get("http://localhost:1515/auth/session", { withCredentials: true }).subscribe(res => {
+    this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
       this.session = res
   })
   }
@@ -122,7 +122,7 @@ export class AddCourseComponent {
 
   addCourse(title: string, des: string){
     this.loading = true
-    this.http.post("http://localhost:1515/addCourse", {
+    this.http.post("/api/addCourse", {
       course:{
         title: title,
         description: des, 
