@@ -87,13 +87,6 @@ app.post("/auth/registre", async (req, res) => {
     }
 })
 
-app.options('/auth/login', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://wired-courses.vercel.app');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.sendStatus(200); // Respond with 200 to preflight requests
-});
 
 app.post("/auth/login", async (req, res) => {
     res.set('Cache-Control', 'no-store');
