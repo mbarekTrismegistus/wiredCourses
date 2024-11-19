@@ -42,7 +42,7 @@ export class LoginComponent {
       console.log(res)
       if(res.ok){
         console.log("logged in")
-        window.location.href = window.location.protocol + '//' + window.location.host;
+        // window.location.href = window.location.protocol + '//' + window.location.host;
       }
     }, (error) => {
       if(!error.ok){
