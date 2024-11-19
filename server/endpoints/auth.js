@@ -1,26 +1,26 @@
 import { SignJWT, jwtVerify } from 'jose'
 import cookie from "cookie"
-import { db } from '../db'
-import { users } from '../db/schema'
+import { db } from '../db/index.js'
+import { users } from '../db/schema.js'
 import { eq } from 'drizzle-orm'
-import registre from './registre'
+import registre from './registre.js'
 
 const key = new TextEncoder().encode(process.env['AUTH_SECRET'])
 
 
-async function encrypt(payload: any){
+async function encrypt(payload){
     return new SignJWT(payload).setProtectedHeader({alg: "HS256"})
     .setIssuedAt().setExpirationTime("1day").sign(key)
 }
 
 
-export async function createSession(payload:  any){
+export async function createSession(payload){
     let jwt = await encrypt(payload)
     return jwt
 }
 
 
-export async function decrypt(session: any){
+export async function decrypt(session){
     const { payload } = await jwtVerify(session, key, {
         algorithms: ['HS256']
     })
@@ -28,7 +28,7 @@ export async function decrypt(session: any){
     return payload
 }
 
-export async function login(data: any){
+export async function login(data){
 
     let user = await db.select().from(users).where(eq(users.email, data.email))
 
@@ -43,7 +43,7 @@ export async function login(data: any){
 }
 
 
-export async function googleAuth(payload: any){
+export async function googleAuth(payload){
     let user = await db.select().from(users).where(eq(users.email, payload.email))
     if(user[0]){
         return await login(user[0])

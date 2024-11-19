@@ -1,12 +1,14 @@
-import { eq, sql } from "drizzle-orm";
-import * as schema from "../db/schema"
+import * as schema from "../db/schema.js"
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import { course } from "../db/schema";
+import { configDotenv } from 'dotenv';
+
+
+configDotenv()
 
 
 
-const client = postgres(process.env['DATABASE_URL']!, { prepare: false });
+const client = postgres(process.env.DATABASE_URL, { prepare: false });
 
 
 const db = drizzle({

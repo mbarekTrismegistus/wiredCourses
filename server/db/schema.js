@@ -46,13 +46,13 @@ export const comment = pgTable("comments", {
 
 
 
-export const usersRelations = relations(users, ({ many }): any => ({
+export const usersRelations = relations(users, ({ many }) => ({
     courses: many(course),
     comments: many(comment)
 }))
 
 
-export const courseRelations = relations(course, ({ many, one }): any => ({
+export const courseRelations = relations(course, ({ many, one }) => ({
     comments: many(comment),
     videos: many(video),
     user: one(users, {
@@ -63,7 +63,7 @@ export const courseRelations = relations(course, ({ many, one }): any => ({
 
 
 
-export const commentRelations = relations(comment, ({ one }): any => ({
+export const commentRelations = relations(comment, ({ one }) => ({
     user: one(users, {
         fields: [comment.userId],
         references: [users.id]
@@ -77,7 +77,7 @@ export const commentRelations = relations(comment, ({ one }): any => ({
 }))
 
 
-export const videoRelations = relations(video, ({ one }): any => ({
+export const videoRelations = relations(video, ({ one }) => ({
     course: one(course, {
         fields: [video.courseId],
         references: [course.id]

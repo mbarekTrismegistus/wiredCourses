@@ -1,14 +1,14 @@
 import e from "express"
-import getUsers from "./endpoints/getUsers"
-import addTeacher from "./endpoints/registre"
-import addCourse from "./endpoints/addCourse"
+import getUsers from "./endpoints/getUsers.js"
+import addTeacher from "./endpoints/registre.js"
+import addCourse from "./endpoints/addCourse.js"
 import cors from "cors"
-import { createSession, decrypt, googleAuth, login } from "./endpoints/auth"
+import { createSession, decrypt, googleAuth, login } from "./endpoints/auth.js"
 import cookieParser from 'cookie-parser'
 import { jwtDecode } from "jwt-decode";
-import getCourses from "./endpoints/getCourses"
-import getCourse from "./endpoints/getCourse"
-import addVideos from "./endpoints/addVideos"
+import getCourses from "./endpoints/getCourses.js"
+import getCourse from "./endpoints/getCourse.js"
+import addVideos from "./endpoints/addVideos.js"
 
 
 
@@ -27,7 +27,7 @@ app.listen(1515, () => {
     console.log("listening on 1515")
 })
 
-app.get('/hello', (req: any, res: any) => {
+app.get('/hello', (req, res) => {
     res.status(200).json({
         msg: "hello"
     })
@@ -41,7 +41,7 @@ app.get('/users', async (req, res) => {
 })
 
 app.post("/register/teacher", async (req, res) => {
-    let data: any = await addTeacher(req.body)
+    let data = await addTeacher(req.body)
     if(data){
         res.status(200).json(data)
     }
@@ -51,9 +51,9 @@ app.post("/register/teacher", async (req, res) => {
 })
 
 app.post("/addCourse", async (req, res) => {
-    let data: any = await addCourse(req.body.course)
+    let data = await addCourse(req.body.course)
     if(data){
-        let videos: any = await addVideos({
+        let videos = await addVideos({
             courseId: data[0].id,
             data: req.body.videos.media
         })
@@ -70,9 +70,9 @@ app.post("/addCourse", async (req, res) => {
 })
 
 app.post("/auth/registre", async (req, res) => {
-    let data: any = await addTeacher(req.body)
+    let data = await addTeacher(req.body)
     if(data){
-        let session: any = await createSession(data[0])
+        let session = await createSession(data[0])
         res.cookie('session', session, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, path: "/"})
         res.status(200).json(session)
     }
@@ -83,7 +83,7 @@ app.post("/auth/registre", async (req, res) => {
 
 app.post("/auth/login", async (req, res) => {
 
-    let data: any = await login(req.body)
+    let data = await login(req.body)
     if(data){
         console.log(data)
         res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, path: "/"})
@@ -111,7 +111,7 @@ app.post("/auth/logout", async (req, res) => {
 
 app.get("/auth/session", async (req, res) => {
     if(req.cookies.session){
-        let data: any = await decrypt(req.cookies.session)
+        let data = await decrypt(req.cookies.session)
         res.status(200).json(data)
 
     }

@@ -1,5 +1,5 @@
-import { db } from "../db";
-import { users } from "../db/schema";
+import { db } from "../db/index.js";
+import { users } from "../db/schema.js";
 
 export default async function getUsers(){
     let data = await db.select().from(users)

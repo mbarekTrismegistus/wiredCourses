@@ -1,10 +1,10 @@
-import { db } from "../db";
-import { video } from "../db/schema";
+import { db } from "../db/index.js";
+import { video } from "../db/schema.js";
 
 
 
-export default async function addVideos(req: any){
-    let data = req.data.map((e: any) => {
+export default async function addVideos(req){
+    let data = req.data.map((e) => {
         return {
             ...e,
             courseId: req.courseId
