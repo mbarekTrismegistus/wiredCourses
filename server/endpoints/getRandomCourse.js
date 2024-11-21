@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import * as schema from "../db/schema.js"
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
@@ -28,7 +28,8 @@ export default async function getRandomCourse(){
                 }
             },
 
-        }
+        },
+        orderBy: sql`RANDOM()`,
     })
     return data
 }

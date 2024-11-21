@@ -6,11 +6,12 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HlmIconComponent, ReactiveFormsModule, HlmInputDirective, HlmButtonDirective, RouterOutlet, HlmLabelDirective],
+  imports: [HlmSkeletonComponent, HlmIconComponent, ReactiveFormsModule, HlmInputDirective, HlmButtonDirective, RouterOutlet, HlmLabelDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

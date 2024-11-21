@@ -1,6 +1,25 @@
 
-<div class="w-[50vw] mx-auto flex">
-    <div class="w-[50%] self-center bg-background/[0.2] rounded-l-lg p-5">
+<div class="w-[50vw] mx-auto flex flex-col lg:flex-row border border-zinc-800 rounded-lg">
+    @if (courses) {
+        <div class="flex-1 relative rounded-l-lg bg-cover bg-no-repeat bg-[url('{{ courses.thumbnail }}')] min-h-[150px] lg:min-h-[500px]">
+            <div class="absolute min-h-[150px] lg:min-h-[500px] bg-zinc-950/[0.5] w-full top-0 left-0"></div>
+            <div class="absolute top-5 left-5">
+                <p class="text-2xl lg:text-5xl font-bold">Join Wired Courses</p>
+                <p class="hidden lg:block">Browse The newest Courses, and contribute by posting yours :) </p>
+            </div>
+            <div class="bottom-5 absolute left-5">
+                <p class="pt-5">{{ courses.title }}</p>
+                <p class="font-bold">By {{ courses.user.firstname + " " + courses.user.lastname}}</p>
+            </div>
+        </div>
+
+    }
+    @else {
+        <hlm-skeleton class="flex-1 relative rounded-l-lg rounded-r-none min-h-[150px] lg:min-h-[500px]">
+
+        </hlm-skeleton>
+    }
+    <div class="bg-background/[0.2] rounded-r-lg p-5 flex-1">
         <h1 class="lg:text-6xl md:text-5xl font-extrabold p-5 text-3xl">Login</h1>
         <form method="POST" class="flex flex-col gap-4 p-5" [formGroup]="userData" (ngSubmit)="login()">
             <label for="" hlmLabel>Email
@@ -46,17 +65,7 @@
             </div>
         </form>
     </div>
-    <div class="flex-1 rounded-r-lg bg-cover bg-no-repeat bg-[url('https://w.wallhaven.cc/full/o5/wallhaven-o5p1v9.jpg')] flex-1">
-        
-    </div>
+   
 </div>
 <script src="https://accounts.google.com/gsi/client" defer async></script>
-<script>
-    window.addEventListener('load', function() {
-    const signinButton = document.querySelector('.g_id_signin iframe');
-    if (signinButton) {
-        signinButton.style.width = '100%';
-    }
-    });
-</script>
 <router-outlet/>
