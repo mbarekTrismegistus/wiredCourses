@@ -1,7 +1,7 @@
 
 <div class="w-[50vw] mx-auto flex flex-col lg:flex-row border border-zinc-800 rounded-lg">
     @if (courses) {
-        <div class="flex-1 relative rounded-l-lg bg-cover bg-no-repeat bg-[url('{{ courses.thumbnail }}')] min-h-[150px] lg:min-h-[500px]">
+        <div class="flex-1 relative rounded-l-lg bg-cover bg-no-repeat min-h-[150px] lg:min-h-[500px]" style="background-image: url('{{ courses.thumbnail }}');">
             <div class="absolute min-h-[150px] lg:min-h-[500px] bg-zinc-950/[0.5] w-full top-0 left-0"></div>
             <div class="absolute top-5 left-5">
                 <p class="text-2xl lg:text-5xl font-bold">Join Wired Courses</p>
