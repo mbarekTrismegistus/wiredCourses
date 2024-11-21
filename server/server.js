@@ -9,6 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import getCourses from "./endpoints/getCourses.js"
 import getCourse from "./endpoints/getCourse.js"
 import addVideos from "./endpoints/addVideos.js"
+import getRandomCourse from "./endpoints/getRandomCourse.js"
 
 
 
@@ -137,6 +138,11 @@ app.get("/courses", async (req, res) => {
 app.get("/courses/:id", async (req, res) => {
     let { id } = req.params
     let data = await getCourse(Number(id))
+    res.status(200).json(data)
+})
+
+app.get("/randomCourse", async (req, res) => {
+    let data = await getRandomCourse()
     res.status(200).json(data)
 })
 

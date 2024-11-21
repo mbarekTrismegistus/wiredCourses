@@ -17,6 +17,7 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 export class LoginComponent {
 
   error: string = ""
+  courses: any
 
   constructor(private http: HttpClient, private router: Router){
 
@@ -33,6 +34,10 @@ export class LoginComponent {
     script.async = true;
     script.defer = true;
     document.body.appendChild(script);
+    this.http.get("/api/randomCourse").subscribe((res) => {
+      console.log(res)
+      this.courses = res
+    })
     
   }
 
