@@ -41,7 +41,8 @@ export const comment = pgTable("comments", {
     content: text("content").notNull(),
     dateCommented: timestamp("dateCommented").notNull().defaultNow(),
     userId: integer("userId").references(() => users.id),
-    courseId: integer("courseId").references(() => course.id)
+    courseId: integer("courseId").references(() => course.id),
+    parrentId: integer('parrentId').references(() => comment.id, {onDelete: 'cascade'})
 })
 
 
@@ -71,6 +72,14 @@ export const commentRelations = relations(comment, ({ one }) => ({
     course: one(course, {
         fields: [comment.courseId],
         references: [course.id]
+    }),
+    parrent: one(comment, {
+        fields: [comment.parrentId],
+        references: [comment.id],
+        relationName: "childrenComment"
+    }),
+    childrens: many(comment, {
+        relationName: "childrenComment"
     })
 
 

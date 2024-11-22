@@ -44,6 +44,8 @@ export class CourseComponent {
   comments: any
   queryClient = inject(QueryClient)
 
+  Commentgroup:any = {}
+
   constructor(private route: ActivatedRoute, private http: HttpClient){
     this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
       this.session = res
@@ -51,12 +53,22 @@ export class CourseComponent {
   }
 
   query = injectQuery(() => ({
-    queryKey: ['todos'],
-    queryFn: () => {
+    queryKey: ['course'],
+    queryFn: async() => {
       this.courseId = Number(this.route.snapshot.paramMap.get('id'));
-      return lastValueFrom(this.http.get<any>(`/api/courses/${this.courseId}`))
+      let data = await lastValueFrom(this.http.get<any>(`/api/courses/${this.courseId}`))
+      data.comments.forEach((c: any) => {
+        this.Commentgroup[c.parrentId] ||= []
+        this.Commentgroup[c.parrentId].push(c)
+      })
+      console.log(this.Commentgroup)
+      return data
+      
     }
   }))
+
+
+  
 
 
   changeIndex(index: number){
@@ -65,16 +77,14 @@ export class CourseComponent {
     this.videoFileContainer.nativeElement.play()
   }
 
-  comment(content: string, courseId: any){
-    let data = {
-      content: content,
-      userId: this.session.id,
-      courseId: courseId
-    }
-    this.http.post(`/api/comment`, data).subscribe((res) => {
-      console.log(res)
-      
-    })
+  mutation = injectMutation(() => ({
+    mutationFn: (data: any) => {
+      return lastValueFrom(this.http.post(`/api/comment`, data))
+    },
+    onSuccess: () => {
+      this.queryClient.invalidateQueries({ queryKey: ['course'] })
+    },
+  }))
 
-  }
+
 }

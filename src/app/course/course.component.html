@@ -103,7 +103,7 @@
             @if (session) {
                 <div class="flex gap-4">
                     <textarea class="rounded-full focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Enter A Comment"></textarea>
-                    <button hlmBtn class="rounded-full" (click)="comment(content.value, query.data().id)">Comment</button>
+                    <button hlmBtn class="rounded-full" (click)="mutation.mutate({content: content.value, courseId: query.data().id, userId: session.id})" [disabled]="mutation.isPending()">Comment</button>
                 </div>
             }
             @else {
@@ -111,6 +111,11 @@
                     <textarea disabled class="focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Log in first"></textarea>
                 </div>
             }
+            <div>
+                @for (item of query.data().comments; track $index) {
+                    <p>{{ item.content }}</p>
+                }
+            </div>
 
         </div>
     </div>
