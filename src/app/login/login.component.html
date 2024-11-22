@@ -1,15 +1,15 @@
 
-<div class="w-[50vw] mx-auto flex flex-col lg:flex-row border border-zinc-800 rounded-lg">
+<div class="w-[50vw] mx-auto flex flex-col lg:flex-row border border-zinc-800 rounded-lg mt-5">
     @if (courses) {
-        <div class="flex-1 relative rounded-l-lg bg-cover bg-no-repeat min-h-[150px] lg:min-h-[500px]" style="background-image: url('{{ courses.thumbnail }}');">
+        <div class="flex-1 text-white relative rounded-l-lg bg-cover bg-no-repeat min-h-[150px] lg:min-h-[500px]" style="background-image: url('{{ courses.thumbnail }}');">
             <div class="absolute min-h-[150px] lg:min-h-[500px] bg-zinc-950/[0.5] w-full top-0 left-0"></div>
             <div class="absolute top-5 left-5">
                 <p class="text-2xl lg:text-5xl font-bold">Join Wired Courses</p>
-                <p class="hidden lg:block">Browse The newest Courses, and contribute by posting yours :) </p>
+                <p class="hidden lg:block pt-4">Browse The newest Courses, and contribute by posting yours :) </p>
             </div>
             <div class="bottom-5 absolute left-5">
                 <p class="pt-5">{{ courses.title }}</p>
-                <p class="font-bold">By {{ courses.user.firstname + " " + courses.user.lastname}}</p>
+                <p class="font-bold"><span class="font-normal">By: </span>{{ courses.user.firstname + " " + courses.user.lastname}}</p>
             </div>
         </div>
 
@@ -23,16 +23,16 @@
         <h1 class="lg:text-6xl md:text-5xl font-extrabold p-5 text-3xl">Login</h1>
         <form method="POST" class="flex flex-col gap-4 p-5" [formGroup]="userData" (ngSubmit)="login()">
             <label for="" hlmLabel>Email
-                <input type="text" class="w-[100%] rounded-full" hlmInput formControlName="email">
+                <input type="text" [class]="error ? 'border-red-600/[0.7] w-[100%] rounded-full bg-red-600/[0.1]' : 'w-[100%] rounded-full'" hlmInput formControlName="email">
             </label>
             <label for="" hlmLabel>Password
-                <input type="text" class="w-[100%] rounded-full" hlmInput formControlName="password">
+                <input type="text" [class]="error ? 'border-red-600/[0.7] w-[100%] rounded-full bg-red-600/[0.1]' : 'w-[100%] rounded-full'" hlmInput formControlName="password">
             </label>
-            <p>{{ error }}</p>
+            <p class="text-red-600">{{ error }}</p>
             <button type="submit" [disabled]="laoding" class="rounded-full" hlmBtn>@if (laoding) {<hlm-icon name="lucideLoaderCircle" size="sm" class="mr-2 animate-spin" />} Login</button>
             <p class="text-center">Or</p>
             <div class="mx-auto relative w-[100%]">
-                <button hlmBtn variant="secondary" class="absolute w-[100%] rounded-full border border-blue-600">
+                <button hlmBtn variant="secondary" class="absolute w-[100%] rounded-full border border-violet-600">
                     <div class="flex gap-3 items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
                             <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>

@@ -10,6 +10,7 @@ import getCourses from "./endpoints/getCourses.js"
 import getCourse from "./endpoints/getCourse.js"
 import addVideos from "./endpoints/addVideos.js"
 import getRandomCourse from "./endpoints/getRandomCourse.js"
+import addComment from "./endpoints/addComment.js"
 
 
 
@@ -147,6 +148,15 @@ app.get("/randomCourse", async (req, res) => {
 })
 
 
+app.post("/comment", async (req, res) => {
+    let data = await addComment(req.body)
+    if(data){
+        res.status(200).json(data)
+    }
+    else{
+        res.status(500).json({msg: "error happened"})
+    }
+})
 
 
 

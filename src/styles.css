@@ -138,3 +138,7 @@ html,body
 .hide-scrollbar::-webkit-scrollbar{
     display: none;
 }
+
+.ng-scroll-content{
+    width: 100%!important;
+}

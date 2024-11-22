@@ -56,10 +56,13 @@ export class CourseComponent {
   comment(content: string, courseId: any){
     let data = {
       content: content,
-      userId: this.session,
+      userId: this.session.id,
       courseId: courseId
     }
-    console.log(data)
+    this.http.post(`/api/comment`, data).subscribe((res) => {
+      console.log(res)
+      
+    })
 
   }
 }

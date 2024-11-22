@@ -57,7 +57,7 @@ export class LoginComponent {
       }
     }, (error) => {
       if(!error.ok){
-        this.error = "error"
+        this.error = "False Info"
         this.laoding = false
       }
       console.log(error)
