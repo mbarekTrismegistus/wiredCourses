@@ -112,9 +112,9 @@
                 </div>
             }
             <div>
-                @for (item of query.data().comments; track $index) {
-                    <p>{{ item.content }}</p>
-                }
+                <app-comments-list [comments]="Commentgroup['null']" [allComments]="Commentgroup">
+                </app-comments-list>
+                
             </div>
 
         </div>

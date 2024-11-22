@@ -20,6 +20,7 @@ import {
 } from '@tanstack/angular-query-experimental'
 import { JsonPipe } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
+import { CommentsListComponent } from '../comments-list/comments-list.component';
 
 interface Todo {
   id: string
@@ -29,7 +30,7 @@ interface Todo {
 @Component({
   selector: 'app-course',
   standalone: true,
-  imports: [JsonPipe, HlmSkeletonComponent, HlmInputDirective, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective, HlmSeparatorDirective, HlmButtonDirective, BrnSeparatorComponent, HlmScrollAreaComponent, RouterOutlet, VgBufferingModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule],
+  imports: [CommentsListComponent, HlmSkeletonComponent, HlmInputDirective, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective, HlmSeparatorDirective, HlmButtonDirective, BrnSeparatorComponent, HlmScrollAreaComponent, RouterOutlet, VgBufferingModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule],
   templateUrl: './course.component.html',
   styleUrl: './course.component.css'
 })

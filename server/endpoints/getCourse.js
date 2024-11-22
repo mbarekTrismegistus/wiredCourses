@@ -29,7 +29,11 @@ export default async function getCourse(id){
             },
             comments: {
                 with: {
-                    user: true
+                    user: {
+                        columns: {
+                            password: false
+                        }
+                    }
                 }
             },
             videos: true

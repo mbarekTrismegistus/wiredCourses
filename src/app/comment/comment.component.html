@@ -1,0 +1,9 @@
+<div class="p-5 border-zinc-800 border-l">
+    {{ comment().content }}
+    {{ comment().id }}
+    <div class="ms-5">
+        @if (allComments()[comment().id]) {
+            <app-comments-list [comments]="allComments()[comment().id]" [allComments]="allComments()"></app-comments-list>
+        }
+    </div>
+</div>
