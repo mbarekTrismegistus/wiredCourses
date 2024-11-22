@@ -64,7 +64,7 @@ export const courseRelations = relations(course, ({ many, one }) => ({
 
 
 
-export const commentRelations = relations(comment, ({ one }) => ({
+export const commentRelations = relations(comment, ({ one, many }) => ({
     user: one(users, {
         fields: [comment.userId],
         references: [users.id]
