@@ -1,9 +1,39 @@
-<div class="p-5 border-zinc-800 border-l">
-    {{ comment().content }}
-    {{ comment().id }}
+<div class="dark:bg-zinc-900 border dark:border-zinc-800 bg-white w-full border-zinc-200 p-5 rounded-lg my-4">
+    <div class="w-full flex gap-4">
+        <hlm-avatar>
+            <img src='{{ comment().user.picture }}' hlmAvatarImage />
+            <span class='text-white bg-zinc-500' hlmAvatarFallback>RG</span>
+        </hlm-avatar>
+        <div class="flex-1">
+            <p class="font-bold">
+                {{ comment().user.firstname + " " + comment().user.lastname }}
+            </p>
+            <p>
+                {{ comment().content }}
+            </p>
+            <div class="pt-4">
+                <div class="flex text-sm text-zinc-400 gap-2">
+                    <p class="" (click)="toggleReplies()">
+                        show Replies {{ allComments()[comment().id] ? "(" + allComments()[comment().id].length + ")" : "(0)" }}
+                    </p>
+                    <p (click)="toggleInput()">
+                        Reply
+                    </p>
+                </div>
+            </div>
+            @if(!inputHidden){
+                <div class="flex gap-4">
+                    <textarea class="rounded-full focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Enter A Comment"></textarea>
+                    <button hlmBtn class="rounded-full" (click)="mutation.mutate({content: content.value, courseId: comment().courseId, userId: session.id, parrentId: comment().id})" [disabled]="mutation.isPending()">Comment</button>
+                </div>
+            }
+        </div>
+    </div>
+
+
     <div class="ms-5">
         @if (allComments()[comment().id]) {
-            <app-comments-list [comments]="allComments()[comment().id]" [allComments]="allComments()"></app-comments-list>
+            <app-comments-list [comments]="allComments()[comment().id]" [allComments]="allComments()" [classList]="hidden ? 'hidden': 'block'"></app-comments-list>
         }
     </div>
 </div>

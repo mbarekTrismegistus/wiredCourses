@@ -58,6 +58,7 @@ export class CourseComponent {
     queryFn: async() => {
       this.courseId = Number(this.route.snapshot.paramMap.get('id'));
       let data = await lastValueFrom(this.http.get<any>(`/api/courses/${this.courseId}`))
+      this.Commentgroup = {}
       data.comments.forEach((c: any) => {
         this.Commentgroup[c.parrentId] ||= []
         this.Commentgroup[c.parrentId].push(c)
