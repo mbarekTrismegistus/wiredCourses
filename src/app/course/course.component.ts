@@ -9,6 +9,8 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { HlmScrollAreaComponent } from '@spartan-ng/ui-scrollarea-helm';
 import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
 import { HlmSeparatorDirective } from '@spartan-ng/ui-separator-helm';
+import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 import { HlmAvatarImageDirective, HlmAvatarComponent, HlmAvatarFallbackDirective } from '@spartan-ng/ui-avatar-helm';
 import moment from 'moment';
 
@@ -16,7 +18,7 @@ import moment from 'moment';
 @Component({
   selector: 'app-course',
   standalone: true,
-  imports: [HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective, HlmSeparatorDirective, HlmButtonDirective, BrnSeparatorComponent, HlmScrollAreaComponent, RouterOutlet, VgBufferingModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule],
+  imports: [HlmSkeletonComponent, HlmInputDirective, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective, HlmSeparatorDirective, HlmButtonDirective, BrnSeparatorComponent, HlmScrollAreaComponent, RouterOutlet, VgBufferingModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule],
   templateUrl: './course.component.html',
   styleUrl: './course.component.css'
 })
@@ -27,9 +29,12 @@ export class CourseComponent {
   coursePlaylistindex: number = 0
   videoFileContainer: any;
   moment: any = moment
+  session: any
 
   constructor(private route: ActivatedRoute, private http: HttpClient){
-    
+    this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
+      this.session = res
+    })
   }
 
   ngOnInit(): void {
@@ -46,5 +51,15 @@ export class CourseComponent {
     this.coursePlaylistindex = index
     this.videoFileContainer.nativeElement.load();
     this.videoFileContainer.nativeElement.play()
+  }
+
+  comment(content: string, courseId: any){
+    let data = {
+      content: content,
+      userId: this.session,
+      courseId: courseId
+    }
+    console.log(data)
+
   }
 }

@@ -18,7 +18,9 @@
                                         <img src="{{ item.thumbnail }}" class="rounded-lg h-[200px] object-cover" alt="">
                                         <div class="absolute top-[180px] right-[30px] bg-zinc-950/[0.7] py-1 px-2 rounded-full">
                                             @if(item.duration){
-                                                {{ moment.utc(item.duration).format('HH:mm:ss') }}
+                                                <p class="text-white">
+                                                    {{ moment.utc(item.duration).format('HH:mm:ss') }}
+                                                </p>
                                             }
                                         </div>
                                       <div class="flex items-center gap-3 py-3">

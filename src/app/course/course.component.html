@@ -1,9 +1,8 @@
-
 @if (course) {
     <div class="p-5">
         
         <div class="flex flex-col lg:flex-row h-[60vh] rounded-lg lg:gap-3">
-            <vg-player class="h-[60vh] basis-3/4 rounded-lg">
+            <vg-player class="h-[60vh] basis-3/4 flex-1 rounded-lg">
                 <vg-overlay-play></vg-overlay-play>
                 <vg-buffering></vg-buffering>
                 <vg-scrub-bar>
@@ -25,13 +24,13 @@
                 <video #videoFileContainer [src]="course.videos[coursePlaylistindex].url" [vgMedia]="$any(media)" #media id="singleVideo" preload="auto">
                 </video>
             </vg-player>
-            <hlm-scroll-area class="border dark:border-zinc-800 p-3 bg-background/[0.5] basis=1/4 grow rounded-lg">
+            <hlm-scroll-area class="basis-1/4 border dark:border-zinc-800 p-3 bg-background/[0.5] rounded-lg min-h-[200px]">
                 <p class="text-xl font-bold">Playlist: {{ (coursePlaylistindex + 1) + " of " +  (course.videos.length)}}</p> 
-                <div class="flex flex-col p-3">
+                <div class="w-72 p-3">
                     @for (item of course.videos; track $index) {
                         <div (click)="changeIndex($index)" class="cursor-pointer">
                             <div class="hover:bg-zinc-800 w-full p-3 hover:rounded-lg border-b border-zinc-800 flex justify-between">
-                                <p>
+                                <p class="text-ellipsis overflow-hidden">
                                     {{ item.title}}
                                 </p>
                                 <p>{{ moment.utc(item.duration).format('HH:mm:ss') }}</p>
@@ -39,10 +38,9 @@
                         </div>
                     }
                 </div>
-                <!-- <div>{{ course }}</div> -->
             </hlm-scroll-area>
         </div>
-        <div>
+        <div class="w-full">
             <div class="flex gap-4 py-7">
                 <hlm-avatar variant="large">
                     <img src="{{ course.user.picture }}" alt="" hlmAvatarImage>
@@ -51,14 +49,69 @@
                 <div class="flex flex-col gap-2">
                     <h1 class="text-2xl lg:text-5xl font-bold">{{ course.title }}</h1>
                     <p>By: <span class="font-bold">{{ course.user.firstname + " " + course.user.lastname }}</span></p>
-                    <p class="pt-5">{{ course.description }}</p>
+                    <p class="pt-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos dicta animi ratione deserunt? Repudiandae sint aspernatur autem fugit, vel incidunt accusantium similique odit, optio asperiores sit animi, aut placeat veniam.</p>
                 </div>
             </div>
+        </div>
+        <div class="py-5">
+            <p class="lg:text-xl font-bold py-5">Comments</p>
+            @if (session) {
+                <div class="flex gap-4">
+                    <textarea class="rounded-full focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Enter A Comment"></textarea>
+                    <button hlmBtn class="rounded-full" (click)="comment(content.value, course.id)">Comment</button>
+                </div>
+            }
+            @else {
+                <div class="flex">
+                    <textarea class="focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Log in first"></textarea>
+                </div>
+            }
+
         </div>
     </div>
 
 }
 @else {
-    Loading...
+    <div class="p-5">
+        <div class="flex flex-col lg:flex-row h-[60vh] rounded-lg lg:gap-3">
+            <hlm-skeleton class="h-[60vh] basis-3/4 rounded-lg">
+            
+            </hlm-skeleton>
+            <hlm-scroll-area class="border dark:border-zinc-800 p-3 bg-background/[0.5] basis=1/4 grow rounded-lg min-h-[200px]">
+                <p class="text-xl font-bold">Playlist: </p> 
+                <div class="flex flex-col p-3">
+                    @for (item of [1,2,3,4,5]; track $index) {
+                        <div class="cursor-pointer">
+                            <div class="hover:bg-zinc-800 w-full p-3 hover:rounded-lg border-b border-zinc-800 flex justify-between">
+                                <hlm-skeleton class="w-40 h-5"></hlm-skeleton>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- <div>{{ course }}</div> -->
+            </hlm-scroll-area>
+        </div>
+        <div class="w-full">
+            <div class="flex w-full gap-4 py-7">
+                <hlm-skeleton class="w-12 h-12 rounded-full">
+
+                </hlm-skeleton>
+                <div class="flex flex-col gap-2">
+                    <hlm-skeleton class="w-40 h-5"></hlm-skeleton>
+                    <hlm-skeleton class="w-20 h-3"></hlm-skeleton>
+                    <hlm-skeleton class="py-5 w-[40rem] h-5">
+                    </hlm-skeleton>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="py-5">
+            <p class="lg:text-xl font-bold py-5">Comments</p>
+                <hlm-skeleton class="w-full h-10">
+                </hlm-skeleton>
+
+        </div>
+    </div>
 }
 <router-outlet></router-outlet>

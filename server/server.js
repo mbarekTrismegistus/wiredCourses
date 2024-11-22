@@ -80,7 +80,7 @@ app.post("/auth/registre", async (req, res) => {
     let data = await addTeacher(req.body)
     if(data){
         let session = await createSession(data[0])
-        res.cookie('session', session, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, path: "/", domain: "wired-courses.vercel.app"})
+        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, sameSite: "None"})
         res.status(200).json(session)
     }
     else{
@@ -94,7 +94,7 @@ app.post("/auth/login", async (req, res) => {
     let data = await login(req.body)
     if(data){
         console.log(data)
-        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 1000, sameSite: "None"})
+        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, sameSite: "None"})
         res.status(200).json(data)
     }
     else{
