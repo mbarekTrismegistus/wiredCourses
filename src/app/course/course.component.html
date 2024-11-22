@@ -1,78 +1,6 @@
-@if (course) {
+@if(query.isLoading()) {
     <div class="p-5">
-        
-        <div class="flex flex-col lg:flex-row h-[60vh] rounded-lg lg:gap-3">
-            <vg-player class="h-[60vh] basis-3/4 flex-1 rounded-lg">
-                <vg-overlay-play></vg-overlay-play>
-                <vg-buffering></vg-buffering>
-                <vg-scrub-bar>
-                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-                </vg-scrub-bar>
-                <vg-controls>
-                    <vg-play-pause></vg-play-pause>
-                    <vg-playback-button></vg-playback-button>
-                    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
-                    <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-                    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
-                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
-                    <vg-track-selector></vg-track-selector>
-                    <vg-mute></vg-mute>
-                    <vg-volume></vg-volume>
-                    <vg-fullscreen></vg-fullscreen>
-                </vg-controls>
-                <video #videoFileContainer [src]="course.videos[coursePlaylistindex].url" [vgMedia]="$any(media)" #media id="singleVideo" preload="auto">
-                </video>
-            </vg-player>
-            <hlm-scroll-area class="basis-1/4 border dark:border-zinc-800 p-3 bg-background/[0.5] rounded-lg min-h-[200px]">
-                <p class="text-xl font-bold">Playlist: {{ (coursePlaylistindex + 1) + " of " +  (course.videos.length)}}</p> 
-                <div class="p-3">
-                    @for (item of course.videos; track $index) {
-                        <div (click)="changeIndex($index)" class="cursor-pointer ">
-                            <div class="w-[50%] hover:bg-zinc-800 w-full gap-4 p-3 hover:rounded-lg border-b border-zinc-800 flex justify-between">
-                                <p class="text-ellipsis overflow-hidden">
-                                    {{ item.title}}
-                                </p>
-                                <p>{{ moment.utc(item.duration).format('HH:mm:ss') }}</p>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </hlm-scroll-area>
-        </div>
-        <div class="w-full">
-            <div class="flex gap-4 py-7">
-                <hlm-avatar variant="large">
-                    <img src="{{ course.user.picture }}" alt="" hlmAvatarImage>
-                    <span hlmAvatarFallback>rg</span>
-                </hlm-avatar>
-                <div class="flex flex-col gap-2">
-                    <h1 class="text-2xl lg:text-5xl font-bold">{{ course.title }}</h1>
-                    <p>By: <span class="font-bold">{{ course.user.firstname + " " + course.user.lastname }}</span></p>
-                    <p class="pt-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos dicta animi ratione deserunt? Repudiandae sint aspernatur autem fugit, vel incidunt accusantium similique odit, optio asperiores sit animi, aut placeat veniam.</p>
-                </div>
-            </div>
-        </div>
-        <div class="py-5">
-            <p class="lg:text-xl font-bold py-5">Comments</p>
-            @if (session) {
-                <div class="flex gap-4">
-                    <textarea class="rounded-full focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Enter A Comment"></textarea>
-                    <button hlmBtn class="rounded-full" (click)="comment(content.value, course.id)">Comment</button>
-                </div>
-            }
-            @else {
-                <div class="flex">
-                    <textarea disabled class="focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Log in first"></textarea>
-                </div>
-            }
-
-        </div>
-    </div>
-
-}
-@else {
-    <div class="p-5">
+       
         <div class="flex flex-col lg:flex-row h-[60vh] rounded-lg lg:gap-3">
             <hlm-skeleton class="h-[60vh] basis-3/4 rounded-lg">
             
@@ -113,4 +41,80 @@
         </div>
     </div>
 }
+@else if (query.isError()) {
+    error
+}
+@else if(query.data()) {
+    <div class="p-5">
+        <div class="flex flex-col lg:flex-row h-[60vh] rounded-lg lg:gap-3">
+            <vg-player class="h-[60vh] basis-3/4 flex-1 rounded-lg">
+                <vg-overlay-play></vg-overlay-play>
+                <vg-buffering></vg-buffering>
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                </vg-scrub-bar>
+                <vg-controls>
+                    <vg-play-pause></vg-play-pause>
+                    <vg-playback-button></vg-playback-button>
+                    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+                    <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+                    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+                    <vg-track-selector></vg-track-selector>
+                    <vg-mute></vg-mute>
+                    <vg-volume></vg-volume>
+                    <vg-fullscreen></vg-fullscreen>
+                </vg-controls>
+                <video #videoFileContainer [src]="query.data().videos[coursePlaylistindex].url" [vgMedia]="$any(media)" #media id="singleVideo" preload="auto">
+                </video>
+            </vg-player>
+            <hlm-scroll-area class="basis-1/4 border dark:border-zinc-800 p-3 bg-background/[0.5] rounded-lg min-h-[200px]">
+                <p class="text-xl font-bold">Playlist: {{ (coursePlaylistindex + 1) + " of " +  (query.data().videos.length)}}</p> 
+                <div class="p-3">
+                    @for (item of query.data().videos; track $index) {
+                        <div (click)="changeIndex($index)" class="cursor-pointer ">
+                            <div class="w-[50%] hover:bg-zinc-800 w-full gap-4 p-3 hover:rounded-lg border-b border-zinc-800 flex justify-between">
+                                <p class="text-ellipsis overflow-hidden">
+                                    {{ item.title}}
+                                </p>
+                                <p>{{ moment.utc(item.duration).format('HH:mm:ss') }}</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </hlm-scroll-area>
+        </div>
+        <div class="w-full">
+            <div class="flex gap-4 py-7">
+                <hlm-avatar variant="large">
+                    <img src="{{ query.data().user.picture }}" alt="" hlmAvatarImage>
+                    <span hlmAvatarFallback>rg</span>
+                </hlm-avatar>
+                <div class="flex flex-col gap-2">
+                    <h1 class="text-2xl lg:text-5xl font-bold">{{ query.data().title }}</h1>
+                    <p>By: <span class="font-bold">{{ query.data().user.firstname + " " + query.data().user.lastname }}</span></p>
+                    <p class="pt-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos dicta animi ratione deserunt? Repudiandae sint aspernatur autem fugit, vel incidunt accusantium similique odit, optio asperiores sit animi, aut placeat veniam.</p>
+                </div>
+            </div>
+        </div>
+        <div class="py-5">
+            <p class="lg:text-xl font-bold py-5">Comments</p>
+            @if (session) {
+                <div class="flex gap-4">
+                    <textarea class="rounded-full focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Enter A Comment"></textarea>
+                    <button hlmBtn class="rounded-full" (click)="comment(content.value, query.data().id)">Comment</button>
+                </div>
+            }
+            @else {
+                <div class="flex">
+                    <textarea disabled class="focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Log in first"></textarea>
+                </div>
+            }
+
+        </div>
+    </div>
+ }
+
+
 <router-outlet></router-outlet>

@@ -29,6 +29,7 @@
     "@spartan-ng/ui-menu-brain": "0.0.1-alpha.356",
     "@spartan-ng/ui-separator-brain": "0.0.1-alpha.356",
     "@supabase/supabase-js": "^2.46.1",
+    "@tanstack/angular-query-experimental": "^5.61.1",
     "@types/cookie-parser": "^1.4.7",
     "@types/node": "^22.8.7",
     "@videogular/ngx-videogular": "^10.0.1",
