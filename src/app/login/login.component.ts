@@ -7,11 +7,14 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
+import { provideIcons } from '@ng-icons/core';
+import { lucideLoaderCircle } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [HlmSkeletonComponent, HlmIconComponent, ReactiveFormsModule, HlmInputDirective, HlmButtonDirective, RouterOutlet, HlmLabelDirective],
+  providers: [provideIcons({ lucideLoaderCircle })],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,6 +22,7 @@ export class LoginComponent {
 
   error: string = ""
   courses: any
+  laoding: boolean = false
 
   constructor(private http: HttpClient, private router: Router){
 
@@ -43,16 +47,18 @@ export class LoginComponent {
   }
 
   login(){
+    this.laoding = true
     let data = this.userData.value
     this.http.post('/api/auth/login', data, { withCredentials: true, observe: 'response' }).subscribe(res => {
       console.log(res)
       if(res.ok){
         console.log("logged in")
-        // window.location.href = window.location.protocol + '//' + window.location.host;
+        window.location.href = window.location.protocol + '//' + window.location.host;
       }
     }, (error) => {
       if(!error.ok){
         this.error = "error"
+        this.laoding = false
       }
       console.log(error)
     })

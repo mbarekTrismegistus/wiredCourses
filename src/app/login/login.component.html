@@ -29,7 +29,7 @@
                 <input type="text" class="w-[100%] rounded-full" hlmInput formControlName="password">
             </label>
             <p>{{ error }}</p>
-            <button type="submit" class="rounded-full" hlmBtn>Login</button>
+            <button type="submit" [disabled]="laoding" class="rounded-full" hlmBtn>@if (laoding) {<hlm-icon name="lucideLoaderCircle" size="sm" class="mr-2 animate-spin" />} Login</button>
             <p class="text-center">Or</p>
             <div class="mx-auto relative w-[100%]">
                 <button hlmBtn variant="secondary" class="absolute w-[100%] rounded-full border border-blue-600">

@@ -32,13 +32,19 @@ export async function login(data){
 
     let user = await db.select().from(users).where(eq(users.email, data.email))
 
-    if(user[0].password === data.password){
-        let session = await createSession(user[0])
-        return session
+    if(user){
+        if(user[0].password === data.password){
+            let session = await createSession(user[0])
+            return session
+        }
+        else{
+            return false
+        }
     }
     else{
         return false
     }
+
 
 }
 
