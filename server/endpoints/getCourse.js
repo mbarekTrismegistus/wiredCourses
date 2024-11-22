@@ -27,7 +27,11 @@ export default async function getCourse(id){
                     password: false
                 }
             },
-            comments: true,
+            comments: {
+                with: {
+                    user: true
+                }
+            },
             videos: true
         }
     })
