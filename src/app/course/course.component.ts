@@ -63,7 +63,6 @@ export class CourseComponent {
         this.Commentgroup[c.parrentId] ||= []
         this.Commentgroup[c.parrentId].push(c)
       })
-      console.log(this.Commentgroup)
       return data
       
     }

@@ -38,7 +38,6 @@ export class RegistreComponent {
 
   registre(){
     this.loading = true
-    console.log(this.loading)
     let data = {
       ...this.userData.value,
       age: Number(this.userData.value.age),

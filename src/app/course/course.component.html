@@ -99,7 +99,7 @@
             </div>
         </div>
         <div class="py-5">
-            <p class="lg:text-xl font-bold py-5">Comments</p>
+            <p class="lg:text-xl font-bold py-5">Comments {{ query.data().comments?.length }}</p>
             @if (session) {
                 <div class="flex gap-4">
                     <textarea class="rounded-full focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full bg-background rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Enter A Comment"></textarea>
@@ -112,8 +112,16 @@
                 </div>
             }
             <div class="py-5">
-                <app-comments-list [comments]="Commentgroup['null']" [allComments]="Commentgroup">
-                </app-comments-list>
+                @if (Commentgroup['null']?.length > 0) {
+                    <app-comments-list [comments]="Commentgroup['null']" [allComments]="Commentgroup">
+                    </app-comments-list>
+
+                }
+                @else {
+                    <p class="text-center">
+                        No Comments
+                    </p>
+                }
                 
             </div>
 

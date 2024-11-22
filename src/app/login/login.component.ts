@@ -40,7 +40,6 @@ export class LoginComponent {
     script.defer = true;
     document.body.appendChild(script);
     this.http.get("/api/randomCourse").subscribe((res) => {
-      console.log(res)
       this.courses = res
     })
     
@@ -50,7 +49,6 @@ export class LoginComponent {
     this.laoding = true
     let data = this.userData.value
     this.http.post('/api/auth/login', data, { withCredentials: true, observe: 'response' }).subscribe(res => {
-      console.log(res)
       if(res.ok){
         console.log("logged in")
         window.location.href = window.location.protocol + '//' + window.location.host;
@@ -64,8 +62,5 @@ export class LoginComponent {
     })
   }
 
-  googleAuth(data: any){
-    console.log(data)
-  }
 
 }

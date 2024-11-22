@@ -34,7 +34,15 @@ export async function login(data){
 
     if(user[0]){
         if(user[0].password === data.password){
-            let session = await createSession(user[0])
+            let session = await createSession(
+                {
+                    id: user[0].id,
+                    email: user[0].email,
+                    picture: user[0].picture,
+                    firstname: user[0].firstname,
+                    lastname: user[0].lastname
+                }
+            )
             return session
         }
         else{

@@ -80,7 +80,13 @@ app.post("/addCourse", async (req, res) => {
 app.post("/auth/registre", async (req, res) => {
     let data = await addTeacher(req.body)
     if(data){
-        let session = await createSession(data[0])
+        let session = await createSession({
+            id: data[0].id,
+            email: data[0].email,
+            picture: data[0].picture,
+            firstname: data[0].firstname,
+            lastname: data[0].lastname
+        })
         res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, sameSite: "None"})
         res.status(200).json(session)
     }

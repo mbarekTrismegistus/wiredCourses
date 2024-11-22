@@ -40,7 +40,6 @@ export class DiscoverComponent {
 
   ngOnInit(){
     this.http.get("/api/courses").subscribe((res) => {
-      console.log(res)
       this.courses = res
     })
   }

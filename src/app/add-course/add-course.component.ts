@@ -93,7 +93,6 @@ export class AddCourseComponent {
                 }
                 video.src = URL.createObjectURL(avatarFile);
                 this.filesName.push(avatarFile.name)
-                console.log(this.file)
               }
               else if(event.target.name === "thumbnail"){
                 this.thumbnail = `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
@@ -129,7 +128,6 @@ export class AddCourseComponent {
         userId: Number(this.session.id),
         thumbnail: this.thumbnail,
         duration: this.file.reduce((e: any,s: any) => {
-          console.log(s,e)
           return e.duration + s.duration
         })
       },
