@@ -11,6 +11,7 @@ import getCourse from "./endpoints/getCourse.js"
 import addVideos from "./endpoints/addVideos.js"
 import getRandomCourse from "./endpoints/getRandomCourse.js"
 import addComment from "./endpoints/addComment.js"
+import getUser from "./endpoints/getUser.js"
 
 
 
@@ -164,6 +165,17 @@ app.post("/comment", async (req, res) => {
     }
 })
 
+
+app.get("/users/:id", (req, res) => {
+    let {id} = req.params
+    let data = getUser(id)
+    if(data){
+        res.status(200).json(data)
+    }
+    else{
+        res.status(400).json({msg: "user not found"})
+    }
+})
 
 
 

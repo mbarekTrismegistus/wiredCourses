@@ -1,1 +1,9 @@
-<p>profile works!</p>
+@if(query.isLoading()){
+    loading ...
+}
+@else if (query.isError()) {
+    error
+}
+@else if (query.data()) {
+    <p>{{ query.data().firstname }}</p>
+}

@@ -1,7 +1,7 @@
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
@@ -18,7 +18,6 @@ import {
   injectQuery,
   QueryClient
 } from '@tanstack/angular-query-experimental'
-import { JsonPipe } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
 import { CommentsListComponent } from '../comments-list/comments-list.component';
 
@@ -30,7 +29,7 @@ interface Todo {
 @Component({
   selector: 'app-course',
   standalone: true,
-  imports: [CommentsListComponent, HlmSkeletonComponent, HlmInputDirective, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective, HlmSeparatorDirective, HlmButtonDirective, BrnSeparatorComponent, HlmScrollAreaComponent, RouterOutlet, VgBufferingModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule],
+  imports: [RouterLink, CommentsListComponent, HlmSkeletonComponent, HlmInputDirective, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective, HlmSeparatorDirective, HlmButtonDirective, BrnSeparatorComponent, HlmScrollAreaComponent, RouterOutlet, VgBufferingModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule],
   templateUrl: './course.component.html',
   styleUrl: './course.component.css'
 })
