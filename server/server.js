@@ -167,7 +167,12 @@ app.get("/randomCourse", async (req, res) => {
 
 
 app.post("/comment", async (req, res) => {
-    let data = await addComment(req.body)
+    let session = await decrypt(req.cookies.session)
+    let body = {
+        ...req.body,
+        userId: session.id
+    }
+    let data = await addComment(body)
     if(data){
         res.status(200).json(data)
     }
