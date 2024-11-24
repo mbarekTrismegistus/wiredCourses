@@ -125,7 +125,6 @@ export class AddCourseComponent {
       course:{
         title: title,
         description: des, 
-        userId: Number(this.session.id),
         thumbnail: this.thumbnail,
         duration: this.file.reduce((e: any,s: any) => {
           return e.duration + s.duration
@@ -134,7 +133,7 @@ export class AddCourseComponent {
       videos: {
         media: this.file
       }
-    }).subscribe(res => {
+    }, {withCredentials: true}).subscribe(res => {
       if(res){
         this.loading = false
       }
