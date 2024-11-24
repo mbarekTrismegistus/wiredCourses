@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "http://localhost:1515",
+      "target": "https://wired-courses-m68i.vercel.app",
       "secure": false,  
       "changeOrigin": true,  
       "logLevel": "debug",

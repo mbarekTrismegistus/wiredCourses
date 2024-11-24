@@ -60,7 +60,7 @@ app.post("/register/teacher", async (req, res) => {
 })
 
 app.post("/addCourse", async (req, res) => {
-    let session = req.cookies
+    let session = req.cookies.session
     console.log(session)
     // let data = await addCourse(req.body.course)
     // if(data){

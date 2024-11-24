@@ -126,9 +126,9 @@ export class AddCourseComponent {
         title: title,
         description: des, 
         thumbnail: this.thumbnail,
-        duration: this.file.reduce((e: any,s: any) => {
+        duration: this.file.length > 0 ? this.file.reduce((e: any,s: any) => {
           return e.duration + s.duration
-        })
+        }) : 0
       },
       videos: {
         media: this.file
