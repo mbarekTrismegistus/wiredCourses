@@ -29,9 +29,11 @@ export class ProfileComponent {
 
   query = injectQuery(() => ({
     queryKey: ['user'],
-    queryFn: () => {
+    queryFn: async () => {
       this.userId = Number(this.route.snapshot.paramMap.get('id'));
-      return lastValueFrom(this.http.get<any>(`api/users/${this.userId}`))
+      let data = await lastValueFrom(this.http.get<any>(`api/users/${this.userId}`))
+      console.log(data)
+      return data
     }
   }))
 

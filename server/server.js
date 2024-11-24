@@ -166,9 +166,9 @@ app.post("/comment", async (req, res) => {
 })
 
 
-app.get("/users/:id", (req, res) => {
+app.get("/users/:id", async (req, res) => {
     let {id} = req.params
-    let data = getUser(id)
+    let data = await getUser(id)
     if(data){
         res.status(200).json(data)
     }
