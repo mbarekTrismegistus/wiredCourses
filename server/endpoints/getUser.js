@@ -3,6 +3,7 @@ import * as schema from "../db/schema.js"
 import postgres from "postgres";
 import { configDotenv } from 'dotenv';
 import { users } from "../db/schema.js";
+import { eq } from "drizzle-orm";
 
 
 configDotenv()
