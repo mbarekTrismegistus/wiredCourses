@@ -1,40 +1,48 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, input, numberAttribute } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective } from '@spartan-ng/ui-avatar-helm';
 import {
   injectMutation,
   injectQuery,
   QueryClient
 } from '@tanstack/angular-query-experimental'
 import { lastValueFrom } from 'rxjs';
+import moment from 'moment';
+import { HlmCardContentDirective, HlmCardDirective, HlmCardFooterDirective, HlmCardHeaderDirective } from '@spartan-ng/ui-card-helm';
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [],
+  imports: [HlmButtonDirective, HlmCardDirective,HlmCardHeaderDirective,HlmCardContentDirective, HlmCardFooterDirective, RouterLink, HlmAvatarComponent, HlmAvatarImageDirective, HlmAvatarFallbackDirective],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
 
-  userId:any
+  id = input.required({
+    transform: numberAttribute,
+  })
   queryClient = inject(QueryClient)
+  moment:any = moment
+
 
 
 
   constructor(private route: ActivatedRoute, private http: HttpClient){
-
   }
 
 
+
   query = injectQuery(() => ({
-    queryKey: ['user'],
-    queryFn: async () => {
-      this.userId = Number(this.route.snapshot.paramMap.get('id'));
-      let data = await lastValueFrom(this.http.get<any>(`api/users/${this.userId}`))
-      console.log(data)
-      return data
-    }
+    queryKey: ['user', this.id()],
+    queryFn: () => {
+      console.log("fetching")
+      return lastValueFrom(this.http.get<any>(`api/users/${this.id()}`))
+
+    },
+    staleTime: 0
   }))
 
 

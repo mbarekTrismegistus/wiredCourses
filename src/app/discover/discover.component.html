@@ -12,9 +12,9 @@
                         @for (item of courses; track $index) {
                             <hlm-carousel-item class="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                               <section class="max-w-[18rem] relative" hlmCard>
-                                                          <div class="w-[70%] h-[1px] bg-gradient-to-r dark:block hidden from-zinc-950 via-zinc-600 to-zinc-950 absolute top-0 z-[99]"></div>
+                                <div class="w-[70%] h-[1px] bg-gradient-to-r dark:block hidden from-zinc-950 via-zinc-600 to-zinc-950 absolute top-0 z-[99]"></div>
           
-                                  <div hlmCardHeader class="relative">
+                                    <div hlmCardHeader class="relative">
                                         <img src="{{ item.thumbnail }}" class="rounded-lg h-[200px] object-cover" alt="">
                                         <div class="absolute top-[180px] right-[30px] bg-zinc-950/[0.7] py-1 px-2 rounded-full">
                                             @if(item.duration){
@@ -34,18 +34,18 @@
                                               <p class="font-bold"><span class="font-light">by </span> {{ item.user.firstname }} {{ item.user.lastname }}</p>
                                           </div>
                                       </div>
-                                  </div>
-                                  <div hlmCardContent class="h-[2lh] mb-3">
-                                    <p class="line-clamp-2 pb-3">{{ item.description }}</p>
-                                    
-                                  </div>
+                                    </div>
+                                    <div hlmCardContent class="h-[2lh] mb-3">
+                                        <p class="line-clamp-2 pb-3">{{ item.description }}</p>
+                                        
+                                    </div>
 
-                                  <div hlmCardFooter class="flex flex-col gap-3">
-                                    <a class="w-full" routerLink="/courses/{{ item.id }}">
-                                        <button hlmBtn class="w-full mt-3">Watch</button>
-                                    </a>
-                                    <p class="text-sm self-start">Posted {{ moment(item.datePosted).fromNow() }}</p>
-                                  </div>
+                                    <div hlmCardFooter class="flex flex-col gap-3">
+                                        <a class="w-full" routerLink="/courses/{{ item.id }}">
+                                            <button hlmBtn class="w-full mt-3">Watch</button>
+                                        </a>
+                                        <p class="text-sm self-start">Posted {{ moment(item.datePosted).fromNow() }}</p>
+                                    </div>
                       
                               </section>
                             </hlm-carousel-item>

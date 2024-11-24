@@ -11,6 +11,7 @@ export const users = pgTable("users", {
     picture: text("picture"),
     email: varchar({ length: 255 }).notNull().unique(),
     password: varchar({ length: 255 }),
+    dateJoined: timestamp("dateJoined").notNull().defaultNow()
 });
 
 

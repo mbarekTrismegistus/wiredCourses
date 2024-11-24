@@ -54,7 +54,7 @@ import { lucideSearch } from '@ng-icons/lucide';
                                 <hlm-menu-group>
                                     <button hlmMenuItem>
                                         <hlm-icon name="lucideUser" hlmMenuIcon />
-                                        <a routerLink="/profile">Profile</a>
+                                        <a routerLink="/profile/{{ session.id }}">Profile</a>
                                     </button>
                                     <button hlmMenuItem>
                                         <hlm-icon name="lucideHouse" hlmMenuIcon />
