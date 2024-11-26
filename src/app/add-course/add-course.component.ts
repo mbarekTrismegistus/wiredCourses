@@ -90,6 +90,7 @@ export class AddCourseComponent {
                     size: avatarFile.size,
                     url: `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
                   })
+                  console.log(this.file)
                 }
                 video.src = URL.createObjectURL(avatarFile);
                 this.filesName.push(avatarFile.name)
@@ -121,14 +122,17 @@ export class AddCourseComponent {
 
   addCourse(title: string, des: string){
     this.loading = true
+    let duration = 0
+    this.file.forEach((e:any) => {
+      duration += e.duration
+    })
+
     this.http.post("/api/addCourse", {
       course:{
         title: title,
         description: des, 
         thumbnail: this.thumbnail,
-        duration: this.file.length > 0 ? this.file.reduce((e: any,s: any) => {
-          return e.duration + s.duration
-        }) : 0
+        duration: duration
       },
       videos: {
         media: this.file

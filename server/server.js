@@ -62,30 +62,27 @@ app.post("/register/teacher", async (req, res) => {
 
 app.post("/addCourse", async (req, res) => {
     let session = await decrypt(req.cookies.session)
-    console.log(req.body)
     if(session){
-        // let body = {
-        //     ...req.body.course,
-        //     userId: session.id
-        // }
-        // // console.log(body)
-        // let data = await addCourse(body)
-        // console.log(req.body.videos.media)
-        // if(data){
-        //     let videos = await addVideos({
-        //         courseId: data[0].id,
-        //         data: req.body.videos.media
-        //     })
-        //     if(videos){
-        //         res.status(200).json(videos)
-        //     }
-        //     else{
-        //         res.status(500)
-        //     }
-        // }
-        // else{
-        //     res.status(500)
-        // }
+        let body = {
+            ...req.body.course,
+            userId: session.id
+        }
+        let data = await addCourse(body)
+        if(data){
+            let videos = await addVideos({
+                courseId: data[0].id,
+                data: req.body.videos.media
+            })
+            if(videos){
+                res.status(200).json(videos)
+            }
+            else{
+                res.status(500)
+            }
+        }
+        else{
+            res.status(500)
+        }
     }
     else{
         res.status(401)
