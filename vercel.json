@@ -6,7 +6,7 @@
       },
       {
         "source": "/ws/:path*", 
-        "destination": "https://wired-courses-3vl7.vercel.app/:path*" 
+        "destination": "https://wiredcourses-2.onrender.com/:path*" 
       }
 
     ]
