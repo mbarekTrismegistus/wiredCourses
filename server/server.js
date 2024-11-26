@@ -16,9 +16,6 @@ import io from "socket.io-client"
 
 
 
-export const fetchCache = 'force-no-store';
-
-
 
 const app = e()
 let wsclient =  io.connect("https://wired-courses-3vl7.vercel.app/")
