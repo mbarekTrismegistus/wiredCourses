@@ -22,7 +22,7 @@ const db = drizzle({
 
 export default async function getNotifications(params) {
     let data = await db.query.notifications.findMany({
-        where: eq(notifications, params),
+        where: eq(notifications.userId, params),
         with: {
             user: {
                 columns: {
@@ -31,4 +31,5 @@ export default async function getNotifications(params) {
             }
         }
     })
+    return data
 }

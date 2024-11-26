@@ -207,7 +207,7 @@ app.get("/users/:id", async (req, res) => {
 app.get("/notifications", async (req, res) => {
 
     let session = await decrypt(req.cookies.session)
-    let data = await getNotifications(session.id)
+    let data = await getNotifications(Number(session.id))
     if(data){
         res.status(200).json(data)
     }

@@ -79,6 +79,14 @@ import { lucideSearch } from '@ng-icons/lucide';
                                         <a routerLink="/">Log Out</a>
                                     </button>
                                 </hlm-menu-group>
+                                <hlm-menu-group>
+                                    @if(query.isLoading()){
+                                        loading...
+                                    }
+                                    @for (item of query.data(); track $index) {
+                                        {{ item.content }}
+                                    }
+                                </hlm-menu-group>
                             </hlm-menu>
                         </ng-template>
                     </hlm-avatar>
