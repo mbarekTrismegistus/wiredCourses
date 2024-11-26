@@ -6,7 +6,7 @@ export class SocketService {
     socket:any;
     constructor() {   }
     setupSocketConnection(id:any) {
-      this.socket = io('http://localhost:1516');
+      this.socket = io('https://wired-courses-3vl7.vercel.app');
       this.socket.emit('join', {id: id()})
 
       this.socket.on('sendbacknotif', (msg:any) => {

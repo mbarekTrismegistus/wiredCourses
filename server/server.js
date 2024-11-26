@@ -21,7 +21,7 @@ import io from "socket.io-client"
 
 
 const app = e()
-let wsclient =  io.connect("http://localhost:1516")
+let wsclient =  io.connect("https://wired-courses-3vl7.vercel.app/")
 
 
 
