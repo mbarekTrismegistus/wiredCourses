@@ -6,7 +6,7 @@ export class SocketService {
     socket:any;
     constructor() {   }
     setupSocketConnection(id:any) {
-      this.socket = io('/ws', {transports: ['websocket']});
+      this.socket = io('http://localhost:1516');
       this.socket.emit('join', {id: id()})
 
       this.socket.on('sendbacknotif', (msg:any) => {

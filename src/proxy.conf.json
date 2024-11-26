@@ -9,8 +9,9 @@
       }
     },
     "/ws": {
-      "target": "https://wiredcourses-2.onrender.com/",
+      "target": "http://localhost:1516/socket.io/",
       "secure": false,  
+      "ws": true,
       "changeOrigin": true,  
       "logLevel": "debug",
       "pathRewrite": {
