@@ -17,11 +17,6 @@ import io from "socket.io-client"
 
 
 const app = e()
-let wsclient =  io.connect("https://wiredcourses-2.onrender.com")
-
-wsclient.on('msg', () => {
-    console.log("connected from server")
-})
 
 
 
@@ -199,6 +194,7 @@ app.get("/users/:id", async (req, res) => {
 
 
 app.post('/test/:id', (req, res) => {
+    let wsclient = io.connect("https://wiredcourses-2.onrender.com")
     wsclient.emit('join', {id: Number(req.params.id)})
     wsclient.emit('addnotif', {id: Number(req.params.id)})
     res.status(200).json("hello")
