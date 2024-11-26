@@ -203,7 +203,7 @@ app.get("/users/:id", async (req, res) => {
 app.get('/test/:id', (req, res) => {
     wsclient.emit('join', {id: Number(req.params.id)})
     wsclient.emit('addnotif', {id: Number(req.params.id)})
-    res.status(200).json({ws: wsclient})
+    res.status(200).json({ws: toString(wsclient)})
 })
  
 
