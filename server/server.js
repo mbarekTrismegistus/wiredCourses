@@ -170,12 +170,12 @@ app.get("/randomCourse", async (req, res) => {
 app.post("/comment", async (req, res) => {
     let session = await decrypt(req.cookies.session)
     let body = {
-        ...req.body,
+        ...req.body.comment,
         userId: session.id
     }
     let data = await addComment(body)
     if(data){
-        res.status(200).json(data)
+        res.status(200).json({comment: data, course: body.course})
     }
     else{
         res.status(500).json({msg: "error happened"})

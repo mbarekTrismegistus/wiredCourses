@@ -84,7 +84,8 @@ export class CourseComponent {
     onSuccess: (data: any) => {
       console.log(data)
       // this.http.post(`/api/addNotification`, {
-      //   userId: 
+      //   senderId: data.userId,
+      //   content: `` 
       // }, {withCredentials: true})
       this.queryClient.invalidateQueries({ queryKey: ['course'] })
     },
