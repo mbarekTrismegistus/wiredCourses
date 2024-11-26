@@ -1,6 +1,12 @@
 import e from "express"
 import { createServer } from 'http';
 import { Server } from 'socket.io'; 
+import { configDotenv } from 'dotenv';
+
+
+configDotenv()
+
+const port = process.env.PORT || 4000;
 
 const app = e()
 
@@ -31,6 +37,6 @@ io.on('connection', (socket) => {
 
 
 
-httpServer.listen(1516, () => {
+httpServer.listen(port, () => {
     console.log('listening on *:1516');
 });
