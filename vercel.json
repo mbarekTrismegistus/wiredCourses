@@ -5,8 +5,8 @@
         "destination": "https://wired-courses-m68i.vercel.app/:path*" 
       },
       {
-        "source": "/ws/:path*", 
-        "destination": "https://wiredcourses-2.onrender.com/:path*" 
+        "source": "/ws", 
+        "destination": "https://wiredcourses-2.onrender.com/socket.io" 
       }
 
     ]
