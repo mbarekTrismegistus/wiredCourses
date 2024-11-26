@@ -17,6 +17,7 @@ const io = new Server(httpServer, { cors: {
 
 io.on('connection', (socket) => {
     console.log("connected")
+    socket.emit("msg", "hello ")
     socket.on('disconnect', () => {
         console.log('disconnected')
     })
