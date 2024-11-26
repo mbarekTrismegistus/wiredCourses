@@ -17,7 +17,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { 
     origin: ['https://wired-courses.vercel.app', 'https://wired-courses-m68i.vercel.app'],
     methods: ["GET", "POST"],
-    credentials: true
+    credentials: true,
  } });
 
 io.on('connection', (socket) => {

@@ -21,7 +21,7 @@ import io from "socket.io-client"
 
 
 const app = e()
-let wsclient =  io.connect("https://wiredcourses-2.onrender.com/")
+let wsclient =  io.connect("https://wiredcourses-2.onrender.com/", {transports: ['websocket'], timeout: 500000})
 
 
 
