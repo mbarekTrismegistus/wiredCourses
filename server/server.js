@@ -169,7 +169,7 @@ app.get("/randomCourse", async (req, res) => {
 
 app.post("/comment", async (req, res) => {
     let session = await decrypt(req.cookies.session)
-    console.log(req.body.comment)
+    console.log(req.body)
     let body = {
         ...req.body.comment,
         userId: session.id

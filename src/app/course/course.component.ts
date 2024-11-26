@@ -79,6 +79,7 @@ export class CourseComponent {
 
   mutation = injectMutation(() => ({
     mutationFn: (data: any) => {
+      console.log(data.comment)
       return lastValueFrom(this.http.post(`/api/comment`, data, {withCredentials: true}))
     },
     onSuccess: (data: any) => {
