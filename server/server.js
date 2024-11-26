@@ -14,6 +14,7 @@ import addComment from "./endpoints/addComment.js"
 import getUser from "./endpoints/getUser.js"
 import io from "socket.io-client"
 import getNotifications from "./endpoints/getNotification.js"
+import addNotification from "./endpoints/addNotification.js"
 
 
 
@@ -66,7 +67,9 @@ app.post("/addCourse", async (req, res) => {
             ...req.body.course,
             userId: session.id
         }
+        console.log(body)
         let data = await addCourse(body)
+        console.log(data)
         if(data){
             let videos = await addVideos({
                 courseId: data[0].id,
@@ -216,6 +219,22 @@ app.get("/notifications", async (req, res) => {
     }
 
 
+})
+
+
+app.post('/addNotification', async(req, res) => {
+    let session = await decrypt(req.cookies.session)
+    let body = {
+        ...req.body,
+        senderId: session.id
+    }
+    let resp = await addNotification(body)
+    if(resp){
+        res.status(200).json(resp)
+    }
+    else{
+        res.status(500).json("error")
+    }
 })
 
 

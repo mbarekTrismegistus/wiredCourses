@@ -81,7 +81,11 @@ export class CourseComponent {
     mutationFn: (data: any) => {
       return lastValueFrom(this.http.post(`/api/comment`, data, {withCredentials: true}))
     },
-    onSuccess: () => {
+    onSuccess: (data: any) => {
+      console.log(data)
+      // this.http.post(`/api/addNotification`, {
+      //   userId: 
+      // }, {withCredentials: true})
       this.queryClient.invalidateQueries({ queryKey: ['course'] })
     },
   }))

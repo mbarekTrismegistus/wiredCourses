@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, real, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, real, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 
 
@@ -51,7 +51,9 @@ export const notifications = pgTable("notifications", {
     notificationDate: timestamp("notificationDate").notNull().defaultNow(),
     content: text().notNull(),
     userId: integer("userId").references(() => users.id),
-    notifyLink: text()
+    senderId: integer("senderId").references(() => users.id),
+    notifyLink: text(),
+    isRead: boolean().default(false)
 
 })
 
@@ -108,6 +110,10 @@ export const videoRelations = relations(video, ({ one }) => ({
 export const notificationsRelations = relations(notifications, ({ one }) => ({
     user: one(users, {
         fields: [notifications.userId],
+        references: [users.id]
+    }),
+    sender: one(users, {
+        fields: [notifications.senderId],
         references: [users.id]
     })
 }))

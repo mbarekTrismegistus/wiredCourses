@@ -9,6 +9,7 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { lucideHouse } from '@ng-icons/lucide';
 import { lucideBookPlus } from '@ng-icons/lucide';
 import { lucideLogOut } from '@ng-icons/lucide';
+import { createClient } from '@supabase/supabase-js';
 import {
     injectMutation,
     injectQuery,
@@ -115,11 +116,34 @@ export class NavBar{
     session: any;
     queryClient = inject(QueryClient)
 
+    supabase: any
+    channel:any
+
+
+
+
     constructor(private http: HttpClient){ 
+        
         this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
             this.session = res
         })
-    }
+        this.supabase = createClient("https://ruwfyzzkwvwtombvswpa.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1d2Z5enprd3Z3dG9tYnZzd3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE1OTM3NTEsImV4cCI6MjA0NzE2OTc1MX0.LS_PWRczbZdHtBDzHF5HqpzZspxHMS_-AUnv_e1l8IM")
+        this.supabase
+        .channel('schema-db-changes')
+        .on(
+            'postgres_changes',
+            {
+            event: 'INSERT',
+            schema: 'public',
+            },
+            (payload: any) => {
+                this.queryClient.invalidateQueries({queryKey: ['notifications']})
+            }
+            )
+            .subscribe()
+        }
+
+
 
     logout(){
         this.http.post("/api/auth/logout", {}, { withCredentials: true }).subscribe(res => {

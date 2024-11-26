@@ -26,8 +26,8 @@ export class ProfileComponent {
     transform: numberAttribute,
   })
   
-  // queryClient = inject(QueryClient)
-  // moment:any = moment
+  queryClient = inject(QueryClient)
+  moment:any = moment
 
 
 
@@ -36,30 +36,30 @@ export class ProfileComponent {
 
   }
 
-  ngOnInit() {
-    this.socketService.setupSocketConnection(this.id);
-  }
+  // ngOnInit() {
+  //   this.socketService.setupSocketConnection(this.id);
+  // }
 
 
-  ngOnDestroy() {
-    this.socketService.disconnect();
-  }
-
-
-
+  // ngOnDestroy() {
+  //   this.socketService.disconnect();
+  // }
 
 
 
 
-  // query = injectQuery(() => ({
-  //   queryKey: ['user', this.id()],
-  //   queryFn: () => {
-  //     console.log("fetching")
-  //     return lastValueFrom(this.http.get<any>(`api/users/${this.id()}`))
 
-  //   },
-  //   staleTime: 0
-  // }))
+
+
+  query = injectQuery(() => ({
+    queryKey: ['user', this.id()],
+    queryFn: () => {
+      console.log("fetching")
+      return lastValueFrom(this.http.get<any>(`api/users/${this.id()}`))
+
+    },
+    staleTime: 0
+  }))
 
 
 }
