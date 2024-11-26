@@ -8,7 +8,12 @@ const app = e()
 
 
 const httpServer = createServer(app);
-const io = new Server(httpServer, { cors: { origin: '*' } });
+const io = new Server(httpServer, { cors: { 
+    origin: ['https://wired-courses.vercel.app', 'https://wired-courses-m68i.vercel.app'],
+    methods: ["GET", "POST"],
+    transports: ['websocket', 'polling'],
+    credentials: true
+ } });
 
 io.on('connection', (socket) => {
     console.log("connected")
