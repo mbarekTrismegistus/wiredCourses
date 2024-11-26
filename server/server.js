@@ -67,9 +67,9 @@ app.post("/addCourse", async (req, res) => {
             ...req.body.course,
             userId: session.id
         }
-        console.log(body)
+        // console.log(body)
         let data = await addCourse(body)
-        console.log(data)
+        console.log(req.body.videos.media)
         if(data){
             let videos = await addVideos({
                 courseId: data[0].id,
