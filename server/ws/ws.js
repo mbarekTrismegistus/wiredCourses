@@ -8,7 +8,7 @@ const app = e()
 
 
 const httpServer = createServer(app);
-const io = new Server(httpServer, { cors: { origin: ['*'] } });
+const io = new Server(httpServer, { cors: { origin: '*' } });
 
 io.on('connection', (socket) => {
     console.log("connected")
