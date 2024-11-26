@@ -21,9 +21,11 @@ import io from "socket.io-client"
 
 
 const app = e()
-let wsclient =  io.connect("https://wiredcourses-2.onrender.com/", {transports: ['websocket'], timeout: 500000})
+let wsclient =  io.connect("wss://wiredcourses-2.onrender.com/", {transports: ['websocket']})
 
-
+wsclient.on('msg', () => {
+    console.log("connected from server")
+})
 
 
 
