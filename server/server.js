@@ -12,6 +12,8 @@ import addVideos from "./endpoints/addVideos.js"
 import getRandomCourse from "./endpoints/getRandomCourse.js"
 import addComment from "./endpoints/addComment.js"
 import getUser from "./endpoints/getUser.js"
+import io from "socket.io-client"
+
 
 
 
@@ -19,6 +21,10 @@ import getUser from "./endpoints/getUser.js"
 
 
 const app = e()
+let wsclient =  io.connect("http://localhost:1516")
+
+
+
 
 
 app.use(e.json())
@@ -192,6 +198,18 @@ app.get("/users/:id", async (req, res) => {
         res.status(400).json({msg: "user not found"})
     }
 })
+
+
+app.get('/test/:id', (req, res) => {
+    wsclient.emit('join', {id: Number(req.params.id)})
+    wsclient.emit('addnotif', {id: Number(req.params.id)})
+    res.status(200).json("hello")
+})
+ 
+
+
+
+
 
 
 

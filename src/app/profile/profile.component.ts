@@ -7,10 +7,11 @@ import {
   injectQuery,
   QueryClient
 } from '@tanstack/angular-query-experimental'
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import moment from 'moment';
 import { HlmCardContentDirective, HlmCardDirective, HlmCardFooterDirective, HlmCardHeaderDirective } from '@spartan-ng/ui-card-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,26 +25,41 @@ export class ProfileComponent {
   id = input.required({
     transform: numberAttribute,
   })
-  queryClient = inject(QueryClient)
-  moment:any = moment
+  
+  // queryClient = inject(QueryClient)
+  // moment:any = moment
 
 
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient){
+  constructor(private route: ActivatedRoute, private http: HttpClient, private socketService: SocketService){
+
+  }
+
+  ngOnInit() {
+    this.socketService.setupSocketConnection(this.id);
+  }
+
+
+  ngOnDestroy() {
+    this.socketService.disconnect();
   }
 
 
 
-  query = injectQuery(() => ({
-    queryKey: ['user', this.id()],
-    queryFn: () => {
-      console.log("fetching")
-      return lastValueFrom(this.http.get<any>(`api/users/${this.id()}`))
 
-    },
-    staleTime: 0
-  }))
+
+
+
+  // query = injectQuery(() => ({
+  //   queryKey: ['user', this.id()],
+  //   queryFn: () => {
+  //     console.log("fetching")
+  //     return lastValueFrom(this.http.get<any>(`api/users/${this.id()}`))
+
+  //   },
+  //   staleTime: 0
+  // }))
 
 
 }

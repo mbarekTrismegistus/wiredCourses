@@ -8,6 +8,7 @@ import {
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SocketService } from '../services/socket.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withFetch()),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SocketService
   ]
 };

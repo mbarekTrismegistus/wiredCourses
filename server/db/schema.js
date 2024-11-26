@@ -46,11 +46,21 @@ export const comment = pgTable("comments", {
     parrentId: integer('parrentId').references(() => comment.id, {onDelete: 'cascade'})
 })
 
+export const notifications = pgTable("notifications", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    notificationDate: timestamp("notificationDate").notNull().defaultNow(),
+    content: text().notNull(),
+    userId: integer("userId").references(() => users.id),
+    notifyLink: text()
+
+})
+
 
 
 export const usersRelations = relations(users, ({ many }) => ({
     courses: many(course),
-    comments: many(comment)
+    comments: many(comment),
+    notifications: many(notifications)
 }))
 
 
@@ -93,5 +103,14 @@ export const videoRelations = relations(video, ({ one }) => ({
         references: [course.id]
     })
 }))
+
+
+export const notificationsRelations = relations(notifications, ({ one }) => ({
+    user: one(users, {
+        fields: [notifications.userId],
+        references: [users.id]
+    })
+}))
+
 
 
