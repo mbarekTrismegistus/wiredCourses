@@ -32,8 +32,8 @@ app.use(e.urlencoded({ extended: false }))
 app.use(cors({
     credentials: true, 
     origin: 'https://wired-courses.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allow these HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'] // Allow specific headers
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+    allowedHeaders: ['Content-Type', 'Authorization']
 
 }))
 app.use(cookieParser())
