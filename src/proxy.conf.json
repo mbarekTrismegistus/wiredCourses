@@ -9,7 +9,7 @@
       }
     },
     "/ws": {
-      "target": "https://wired-courses-3vl7.vercel.app/",
+      "target": "https://wiredcourses-2.onrender.com/",
       "secure": false,  
       "changeOrigin": true,  
       "logLevel": "debug",
