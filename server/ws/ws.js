@@ -18,20 +18,22 @@ const io = new Server(httpServer, { cors: {
 io.on('connection', (socket) => {
     console.log("connected")
     console.log(socket.id)
-    socket.emit("msg", "hello ")
+    socket.on("msg", (data) => {
+      console.log(data)
+    })
     socket.on('disconnect', (reason) => {
         console.log('disconnected cause of', reason)
     })
-    socket.on('addnotif', () => {
-      console.log('msg received')
-    })
-    socket.on('join', function(data){
-        socket.join(data.id)
-    })
-    socket.on('addnotif', (msg) => {
-        console.log("it is", msg.id)
-        io.sockets.in(msg.id).emit('sendbacknotif', "hello from server to ws to angular")
-    });
+    // socket.on('addnotif', () => {
+    //   console.log('msg received')
+    // })
+    // socket.on('join', function(data){
+    //     socket.join(data.id)
+    // })
+    // socket.on('addnotif', (msg) => {
+    //     console.log("it is", msg.id)
+    //     io.sockets.in(msg.id).emit('sendbacknotif', "hello from server to ws to angular")
+    // });
 })
 
 

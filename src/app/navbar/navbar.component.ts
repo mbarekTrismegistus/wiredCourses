@@ -1,6 +1,6 @@
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { HlmAvatarImageDirective, HlmAvatarComponent, HlmAvatarFallbackDirective } from '@spartan-ng/ui-avatar-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
@@ -9,6 +9,12 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { lucideHouse } from '@ng-icons/lucide';
 import { lucideBookPlus } from '@ng-icons/lucide';
 import { lucideLogOut } from '@ng-icons/lucide';
+import {
+    injectMutation,
+    injectQuery,
+    QueryClient
+  } from '@tanstack/angular-query-experimental'
+  import { lastValueFrom } from 'rxjs';
 
 import {
   HlmMenuComponent,
@@ -99,6 +105,7 @@ export class NavBar{
 
     title = "nav-bar";
     session: any;
+    queryClient = inject(QueryClient)
 
     constructor(private http: HttpClient){ 
         this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
@@ -113,6 +120,15 @@ export class NavBar{
             }
         })
     }
+
+    query = injectQuery(() => ({
+        queryKey: ['notifications'],
+            queryFn: () => {
+                return lastValueFrom(this.http.get<any>(`api/notifications`, {withCredentials: true}))
+
+        },
+        staleTime: 0
+  }))
 
 
     

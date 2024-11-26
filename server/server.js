@@ -13,6 +13,7 @@ import getRandomCourse from "./endpoints/getRandomCourse.js"
 import addComment from "./endpoints/addComment.js"
 import getUser from "./endpoints/getUser.js"
 import io from "socket.io-client"
+import getNotifications from "./endpoints/getNotification.js"
 
 
 
@@ -193,16 +194,29 @@ app.get("/users/:id", async (req, res) => {
 })
 
 
-app.post('/test/:id', (req, res) => {
-    let wsclient = io.connect("https://wiredcourses-2.onrender.com")
-    wsclient.emit('join', {id: Number(req.params.id)})
-    wsclient.emit('addnotif', {id: Number(req.params.id)})
-    res.status(200).json("hello")
-})
+// app.post('/test/:id', (req, res) => {
+//     let wsclient = io.connect("https://wiredcourses-2.onrender.com")
+//     wsclient.emit("msg", "msg from the server")
+//     // wsclient.emit('join', {id: Number(req.params.id)})
+//     // wsclient.emit('addnotif', {id: Number(req.params.id)})
+//     res.status(200).json("hello")
+// })
  
 
 
+app.get("/notifications", async (req, res) => {
 
+    let session = await decrypt(req.cookies.session)
+    let data = await getNotifications(session.id)
+    if(data){
+        res.status(200).json(data)
+    }
+    else{
+        res.status(500).json("something went wrong")
+    }
+
+
+})
 
 
 
