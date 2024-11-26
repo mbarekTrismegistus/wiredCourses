@@ -11,15 +11,15 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { 
     origin: ['https://wired-courses.vercel.app', 'https://wired-courses-m68i.vercel.app'],
     methods: ["GET", "POST"],
-    transports: ['websocket', 'polling'],
+    transports: ['websocket'],
     credentials: true
  } });
 
 io.on('connection', (socket) => {
     console.log("connected")
     socket.emit("msg", "hello ")
-    socket.on('disconnect', () => {
-        console.log('disconnected')
+    socket.on('disconnect', (reason) => {
+        console.log('disconnected cause of', reason)
     })
     socket.on('join', function(data){
         socket.join(data.id)

@@ -6,7 +6,7 @@
       },
       {
         "source": "/ws/:path*", 
-        "destination": "https://wiredcourses-2.onrender.com//:path*" 
+        "destination": "https://wiredcourses-2.onrender.com/:path*" 
       }
 
     ]
