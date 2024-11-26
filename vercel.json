@@ -3,6 +3,11 @@
       {
         "source": "/api/:path*", 
         "destination": "https://wired-courses-m68i.vercel.app/:path*" 
+      },
+      {
+        "source": "/ws/:path*", 
+        "destination": "https://wired-courses-3vl7.vercel.app/:path*" 
       }
+
     ]
   }

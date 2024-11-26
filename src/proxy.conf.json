@@ -7,6 +7,15 @@
       "pathRewrite": {
         "^/api": "" 
       }
+    },
+    "/ws": {
+      "target": "https://wired-courses-3vl7.vercel.app/",
+      "secure": false,  
+      "changeOrigin": true,  
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/ws": "" 
+      }
     }
   }
   
