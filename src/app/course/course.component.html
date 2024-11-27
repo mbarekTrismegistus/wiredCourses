@@ -115,7 +115,7 @@
             }
             <div class="py-5">
                 @if (Commentgroup['null']?.length > 0) {
-                    <app-comments-list [userId]="query.data().user.id" [comments]="Commentgroup['null']" [allComments]="Commentgroup">
+                    <app-comments-list [comments]="Commentgroup['null']" [allComments]="Commentgroup">
                     </app-comments-list>
 
                 }

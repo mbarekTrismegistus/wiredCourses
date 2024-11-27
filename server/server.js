@@ -179,7 +179,7 @@ app.post("/comment", async (req, res) => {
         await addNotification({
             userId: req.body.userId,
             senderId: session.id,
-            content: `${session.firstname}  ${session.lastname} commented on your post`,
+            content: `${session.firstname}  ${session.lastname} ${req.body?.isReply ? " replied to your comment " : " commented on your post" }`,
             notifyLink: `/courses/${req.body.comment.courseId}`
         })
     }
