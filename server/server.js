@@ -12,9 +12,9 @@ import addVideos from "./endpoints/addVideos.js"
 import getRandomCourse from "./endpoints/getRandomCourse.js"
 import addComment from "./endpoints/addComment.js"
 import getUser from "./endpoints/getUser.js"
-import io from "socket.io-client"
 import getNotifications from "./endpoints/getNotification.js"
 import addNotification from "./endpoints/addNotification.js"
+import readNotif from "./endpoints/readNotif.js"
 
 
 
@@ -144,7 +144,7 @@ app.get("/auth/session", async (req, res) => {
 
     }
     else{
-        return undefined
+        res.status(401).json("login first")
     }
     
 })
@@ -174,15 +174,16 @@ app.post("/comment", async (req, res) => {
         userId: session.id
     }
     let data = await addComment(body)
-    console.log(req.body.course.user.id)
-    let resp = await addNotification({
-        userId: req.body.course.user.id,
-        senderId: session.id,
-        content: `${session.firstname}  ${session.lastname} commented on your post`,
-        notifyLink: `/courses/${req.body.course.id}`
-    })
-    if(data && resp){
-        res.status(200).json({comment: data, notification: resp})
+    if(req.body.course.user.id != session.id){
+        await addNotification({
+            userId: req.body.course.user.id,
+            senderId: session.id,
+            content: `${session.firstname}  ${session.lastname} commented on your post`,
+            notifyLink: `/courses/${req.body.course.id}`
+        })
+    }
+    if(data){
+        res.status(200).json({comment: data})
     }
     else{
         res.status(500).json({msg: "error happened"})
@@ -202,45 +203,38 @@ app.get("/users/:id", async (req, res) => {
 })
 
 
-// app.post('/test/:id', (req, res) => {
-//     let wsclient = io.connect("https://wiredcourses-2.onrender.com")
-//     wsclient.emit("msg", "msg from the server")
-//     // wsclient.emit('join', {id: Number(req.params.id)})
-//     // wsclient.emit('addnotif', {id: Number(req.params.id)})
-//     res.status(200).json("hello")
-// })
- 
 
 
 app.get("/notifications", async (req, res) => {
 
-    let session = await decrypt(req.cookies.session)
-    let data = await getNotifications(Number(session.id))
+    if(req.cookies.session){
+        let session = await decrypt(req.cookies.session)
+        let data = await getNotifications(Number(session.id))
+        if(data){
+            res.status(200).json(data)
+        }
+        else{
+            res.status(500).json("something went wrong")
+        }
+    }
+    else{
+        res.status(401).json("login")
+    }
+})
+
+
+app.post('/readNotif', async (req, res) => {
+
+    let data = await readNotif(req.body.id)
     if(data){
         res.status(200).json(data)
     }
     else{
-        res.status(500).json("something went wrong")
-    }
-
-
-})
-
-
-app.post('/addNotification', async(req, res) => {
-    let session = await decrypt(req.cookies.session)
-    let body = {
-        ...req.body,
-        senderId: session.id
-    }
-    let resp = await addNotification(body)
-    if(resp){
-        res.status(200).json(resp)
-    }
-    else{
-        res.status(500).json("error")
+        res.status(500)
     }
 })
+
+
 
 
 

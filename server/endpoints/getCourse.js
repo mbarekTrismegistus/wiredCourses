@@ -1,9 +1,10 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import * as schema from "../db/schema.js"
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { course } from "../db/schema.js";
 import { configDotenv } from 'dotenv';
+import { comment } from "../db/schema.js";
 
 
 configDotenv()
@@ -34,7 +35,8 @@ export default async function getCourse(id){
                             password: false
                         }
                     }
-                }
+                },
+                orderBy: [desc(comment.dateCommented)]
             },
             videos: true
         }

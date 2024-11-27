@@ -9,7 +9,10 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { lucideHouse } from '@ng-icons/lucide';
 import { lucideBookPlus } from '@ng-icons/lucide';
 import { lucideLogOut } from '@ng-icons/lucide';
+import { lucideBell } from '@ng-icons/lucide';
 import { createClient } from '@supabase/supabase-js';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
+import { HlmScrollAreaComponent } from '@spartan-ng/ui-scrollarea-helm';
 import {
     injectMutation,
     injectQuery,
@@ -31,6 +34,7 @@ import {
 import { provideIcons } from '@ng-icons/core';
 import { lucideUser } from '@ng-icons/lucide';
 import { lucideSearch } from '@ng-icons/lucide';
+import moment from 'moment';
 
 
 
@@ -38,8 +42,8 @@ import { lucideSearch } from '@ng-icons/lucide';
 @Component({
     selector: "navbar",
     standalone: true,
-    imports: [HlmInputDirective, HlmIconComponent, HlmAvatarImageDirective, HlmIconComponent,BrnMenuTriggerDirective,HlmMenuComponent,HlmMenuGroupComponent,HlmMenuItemDirective,HlmMenuItemIconDirective,HlmMenuItemSubIndicatorComponent,HlmMenuLabelComponent,HlmMenuSeparatorComponent,HlmMenuShortcutComponent,HlmSubMenuComponent,RouterOutlet, HlmButtonDirective,RouterLink, RouterOutlet, RouterModule, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmButtonDirective],
-    providers: [provideIcons({lucideUser, lucideHouse, lucideBookPlus, lucideLogOut, lucideSearch})],
+    imports: [HlmScrollAreaComponent, HlmSkeletonComponent, HlmInputDirective, HlmIconComponent, HlmAvatarImageDirective, HlmIconComponent,BrnMenuTriggerDirective,HlmMenuComponent,HlmMenuGroupComponent,HlmMenuItemDirective,HlmMenuItemIconDirective,HlmMenuItemSubIndicatorComponent,HlmMenuLabelComponent,HlmMenuSeparatorComponent,HlmMenuShortcutComponent,HlmSubMenuComponent,RouterOutlet, HlmButtonDirective,RouterLink, RouterOutlet, RouterModule, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmButtonDirective],
+    providers: [provideIcons({lucideBell, lucideUser, lucideHouse, lucideBookPlus, lucideLogOut, lucideSearch})],
     template: `
         <nav class="flex px-5 py-3 sticky top-0 z-10 backdrop-blur-3xl">
             <p class="text-3xl self-start flex-1">Logo</p>
@@ -49,19 +53,63 @@ import { lucideSearch } from '@ng-icons/lucide';
                     <hlm-icon name="lucideSearch" size="22" class=""/>
                 </button>
             </form>
-            <div class="flex gap-3 self-end">
-                @if (session) {
-                    <hlm-avatar [brnMenuTriggerFor]="menu">
-                        <img src='{{ session.picture }}' hlmAvatarImage />
-                        <span class='text-white bg-zinc-500' hlmAvatarFallback>RG</span>
+            <div class="flex gap-3 self-end items-center">
+                    @if(query.isLoading()){
+                        <hlm-skeleton class="w-10 h-10 rounded-full"></hlm-skeleton>
+                    }
+                    @else{
+                        @if(query.data()){
+                            @if(countUnreadComments(query.data()) > 0){
+                                <div class="absolute text-sm min-w-4 min-h-4 text-center rounded-full bg-red-600 top-3">
+                                    <p class="leading-4">{{ countUnreadComments(query.data()) }}</p>
+                                </div>
+                            }
+                            <hlm-icon size="30" name="lucideBell" [brnMenuTriggerFor]="notifications">
+                                <ng-template #notifications>
+                                    <hlm-menu class="w-96">
+                                        <hlm-scroll-area class="h-[26rem]">
+                                            <hlm-menu-label class="font-bold">Notifications</hlm-menu-label>
+                                            <hlm-menu-separator />
+                                            <hlm-menu-group class="">
+                                                <div class="flex flex-col justify-center">
+                                                    @for (item of query.data(); track $index) {
+                                                        <a (click)="item.isRead ? null : readNotif.mutate(item.id)" routerLink="{{ item.notifyLink }}">
+                                                            <div  class="flex items-center gap-4 hover:bg-zinc-800 p-2 rounded-lg">
+                                                                <hlm-avatar>
+                                                                    <img src='{{ item.sender.picture }}' hlmAvatarImage />
+                                                                    <span class='text-white bg-zinc-500' hlmAvatarFallback>RG</span>
+                                                                </hlm-avatar>
+                                                                <div class="">
+                                                                    <p class="">{{ item.content }}</p>
+                                                                    <p class="text-zinc-400 text-md">{{ moment(item.notificationDate).fromNow() }}</p>
+                                                                </div>
+                                                                @if(!item.isRead){
+                                                                    <div class="w-3 h-3 bg-violet-600 rounded-full ms-auto"></div>
+                                                                }
+                                                            </div>
+                                                            <hlm-menu-separator />
+                                                        </a>
+        
+                                                    }
+                                                </div>
+                                            </hlm-menu-group>
+                                        </hlm-scroll-area>
+                                    </hlm-menu>
+                                </ng-template>
+                            </hlm-icon>
+                        }
+                    }
+                @if (querySession.data()) {
+                    <div [brnMenuTriggerFor]="menu">
+                        <img [src]="querySession.data().picture" class="w-10 h-10 rounded-full" />
                         <ng-template #menu>
                             <hlm-menu class="w-56">
-                                <hlm-menu-label class="font-bold">{{session.firstname + " " + session.lastname}}</hlm-menu-label>
+                                <hlm-menu-label class="font-bold">{{querySession.data().firstname + " " + querySession.data().lastname}}</hlm-menu-label>
                                 <hlm-menu-separator />
                                 <hlm-menu-group>
                                     <button hlmMenuItem>
                                         <hlm-icon name="lucideUser" hlmMenuIcon />
-                                        <a routerLink="/profile/{{ session.id }}">Profile</a>
+                                        <a routerLink="/profile/{{ querySession.data().id }}">Profile</a>
                                     </button>
                                     <button hlmMenuItem>
                                         <hlm-icon name="lucideHouse" hlmMenuIcon />
@@ -80,17 +128,14 @@ import { lucideSearch } from '@ng-icons/lucide';
                                         <a routerLink="/">Log Out</a>
                                     </button>
                                 </hlm-menu-group>
-                                <hlm-menu-group>
-                                    @if(query.isLoading()){
-                                        loading...
-                                    }
-                                    @for (item of query.data(); track $index) {
-                                        {{ item.content }}
-                                    }
-                                </hlm-menu-group>
                             </hlm-menu>
                         </ng-template>
-                    </hlm-avatar>
+                    </div>
+                }
+                @else if (querySession.isLoading()) {
+                    <div class="flex gap-4">
+                        <hlm-skeleton class="w-10 h-10 rounded-full"></hlm-skeleton>
+                    </div>
                 }
                 @else {
                     <div class="flex gap-4">
@@ -113,20 +158,17 @@ import { lucideSearch } from '@ng-icons/lucide';
 export class NavBar{
 
     title = "nav-bar";
-    session: any;
     queryClient = inject(QueryClient)
 
     supabase: any
     channel:any
+    moment = moment
 
 
 
 
     constructor(private http: HttpClient){ 
         
-        this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
-            this.session = res
-        })
         this.supabase = createClient("https://ruwfyzzkwvwtombvswpa.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1d2Z5enprd3Z3dG9tYnZzd3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE1OTM3NTEsImV4cCI6MjA0NzE2OTc1MX0.LS_PWRczbZdHtBDzHF5HqpzZspxHMS_-AUnv_e1l8IM")
         this.supabase
         .channel('schema-db-changes')
@@ -160,7 +202,30 @@ export class NavBar{
 
         },
         staleTime: 0
-  }))
+    }))
+
+    querySession = injectQuery(() => ({
+        queryKey: ['session'],
+            queryFn: () => {
+                return lastValueFrom(this.http.get<any>("/api/auth/session", { withCredentials: true }))
+
+        },
+        staleTime: 0
+    }))
+
+    countUnreadComments(array: any){
+        return array.filter((e:any) => ! e.isRead).length
+    }
+
+
+    readNotif = injectMutation(() => ({
+        mutationFn: (id: any) => {
+            return lastValueFrom(this.http.post(`api/readNotif`, {id: Number(id)}, {withCredentials: true}))
+        },
+        onSuccess: () => {
+            this.queryClient.invalidateQueries({queryKey: ['notifications']})
+        }
+    }))
 
 
     

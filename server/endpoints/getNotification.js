@@ -2,7 +2,7 @@ import * as schema from "../db/schema.js"
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { configDotenv } from 'dotenv';
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { notifications } from "../db/schema.js";
 
 
@@ -24,12 +24,13 @@ export default async function getNotifications(params) {
     let data = await db.query.notifications.findMany({
         where: eq(notifications.userId, params),
         with: {
-            user: {
+            sender: {
                 columns: {
                     password: false
                 }
             }
-        }
+        },
+        orderBy: [desc(notifications.notificationDate)]
     })
     return data
 }
