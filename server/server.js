@@ -126,7 +126,7 @@ app.post("/auth/google", async (req, res) => {
     let decoded = jwtDecode(req.body.credential)
     let session = await googleAuth(decoded)
     res.cookie('session', session, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, path: "/"})
-    res.redirect("http://localhost:4200")
+    res.redirect("https://wired-courses.vercel.app")
 
     
 })
