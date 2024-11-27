@@ -169,14 +169,20 @@ app.get("/randomCourse", async (req, res) => {
 
 app.post("/comment", async (req, res) => {
     let session = await decrypt(req.cookies.session)
-    console.log(req.body)
     let body = {
         ...req.body.comment,
         userId: session.id
     }
     let data = await addComment(body)
-    if(data){
-        res.status(200).json({comment: data, course: body.course})
+    console.log(req.body.course.user.id)
+    let resp = await addNotification({
+        userId: req.body.course.user.id,
+        senderId: session.id,
+        content: `${session.firstname}  ${session.lastname} commented on your post`,
+        notifyLink: `/courses/${req.body.course.id}`
+    })
+    if(data && resp){
+        res.status(200).json({comment: data, notification: resp})
     }
     else{
         res.status(500).json({msg: "error happened"})

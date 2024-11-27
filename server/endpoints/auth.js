@@ -1,11 +1,13 @@
 import { SignJWT, jwtVerify } from 'jose'
-import cookie from "cookie"
 import { db } from '../db/index.js'
 import { users } from '../db/schema.js'
 import { eq } from 'drizzle-orm'
 import registre from './registre.js'
 
+
 const key = new TextEncoder().encode(process.env['AUTH_SECRET'])
+
+
 
 
 async function encrypt(payload){
@@ -29,7 +31,7 @@ export async function decrypt(session){
 }
 
 export async function login(data){
-
+    console.log(process.env['AUTH_SECRET'])
     let user = await db.select().from(users).where(eq(users.email, data.email))
 
     if(user[0]){
