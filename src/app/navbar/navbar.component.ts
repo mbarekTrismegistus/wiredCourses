@@ -100,8 +100,9 @@ import moment from 'moment';
                         }
                     }
                 @if (querySession.data()) {
-                    <div [brnMenuTriggerFor]="menu">
-                        <img [src]="querySession.data().picture" class="w-10 h-10 rounded-full" />
+                    <hlm-avatar [brnMenuTriggerFor]="menu">
+                        <img src='{{ querySession.data().picture }}' hlmAvatarImage />
+                        <span class='text-white bg-zinc-500' hlmAvatarFallback>RG</span>
                         <ng-template #menu>
                             <hlm-menu class="w-56">
                                 <hlm-menu-label class="font-bold">{{querySession.data().firstname + " " + querySession.data().lastname}}</hlm-menu-label>
@@ -130,7 +131,7 @@ import moment from 'moment';
                                 </hlm-menu-group>
                             </hlm-menu>
                         </ng-template>
-                    </div>
+                    </hlm-avatar>
                 }
                 @else if (querySession.isLoading()) {
                     <div class="flex gap-4">

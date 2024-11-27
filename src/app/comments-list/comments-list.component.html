@@ -1,5 +1,5 @@
 @for (item of comments(); track $index) {
 
-    <app-comment [comment]="item" [allComments]="allComments()"></app-comment>
+    <app-comment [userId]="userId()" [comment]="item" [allComments]="allComments()"></app-comment>
 
 }

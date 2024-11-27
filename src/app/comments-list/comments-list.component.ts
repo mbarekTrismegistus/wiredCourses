@@ -11,4 +11,5 @@ import { CommentComponent } from '../comment/comment.component';
 export class CommentsListComponent {
   comments: any = input([])
   allComments: any = input()
+  userId:any = input()
 }

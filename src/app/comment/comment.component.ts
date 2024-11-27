@@ -24,6 +24,7 @@ export class CommentComponent {
   inputHidden: boolean = true
   queryClient = inject(QueryClient)
   session:any
+  userId: any = input([])
 
   constructor(private http: HttpClient){
     this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {

@@ -174,12 +174,13 @@ app.post("/comment", async (req, res) => {
         userId: session.id
     }
     let data = await addComment(body)
-    if(req.body.course.user.id != session.id){
+    console.log(req.body.userId)
+    if(req.body.userId != session.id){
         await addNotification({
-            userId: req.body.course.user.id,
+            userId: req.body.userId,
             senderId: session.id,
             content: `${session.firstname}  ${session.lastname} commented on your post`,
-            notifyLink: `/courses/${req.body.course.id}`
+            notifyLink: `/courses/${req.body.comment.courseId}`
         })
     }
     if(data){
