@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { DiscoverComponent } from './discover/discover.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CourseComponent } from './course/course.component';
+import { SearchComponent } from './search/search.component';
 
 export const routes: Routes = [
     {
@@ -35,5 +36,9 @@ export const routes: Routes = [
     {
         path: "profile/:id",
         component: ProfileComponent
+    },
+    {
+        path: "search",
+        component: SearchComponent
     }
 ];

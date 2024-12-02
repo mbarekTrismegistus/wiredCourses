@@ -1,5 +1,5 @@
-import { relations } from "drizzle-orm";
-import { boolean, integer, pgTable, real, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { relations, sql } from "drizzle-orm";
+import { boolean, index, integer, pgTable, real, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 
 
@@ -12,7 +12,14 @@ export const users = pgTable("users", {
     email: varchar({ length: 255 }).notNull().unique(),
     password: varchar({ length: 255 }),
     dateJoined: timestamp("dateJoined").notNull().defaultNow()
-});
+},
+    (table) => ({
+        searchIndex: index("search_index").using('gin', sql`(
+            setweight(to_tsvector('english', ${table.firstname}), 'A') ||
+            setweight(to_tsvector('english', ${table.lastname}), 'B')
+        )`)
+    })
+);
 
 
 export const course = pgTable("course", {
@@ -25,7 +32,14 @@ export const course = pgTable("course", {
     duration: real(),
     datePosted: timestamp("datePosted").notNull().defaultNow()
 
-});
+},
+    (table) => ({
+        searchIndex: index("search_index").using('gin', sql`(
+            setweight(to_tsvector('english', ${table.title}), 'A') ||
+            setweight(to_tsvector('english', ${table.description}), 'B')
+        )`)
+    })
+);
 
 
 export const video = pgTable("video", {

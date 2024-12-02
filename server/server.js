@@ -15,6 +15,7 @@ import getUser from "./endpoints/getUser.js"
 import getNotifications from "./endpoints/getNotification.js"
 import addNotification from "./endpoints/addNotification.js"
 import readNotif from "./endpoints/readNotif.js"
+import search from "./endpoints/search.js"
 
 
 
@@ -233,6 +234,13 @@ app.post('/readNotif', async (req, res) => {
     else{
         res.status(500)
     }
+})
+
+
+app.get('/search', async (req, res) => {
+    let keywords = req.query.keywords
+    let data = await search(keywords)
+    res.status(200).json(data)
 })
 
 

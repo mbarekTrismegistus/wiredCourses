@@ -139,6 +139,21 @@ html,body
     display: none;
 }
 
+.custom-scrollbar::-webkit-scrollbar{
+    position: fixed;
+    width: 10px;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f100; 
+  }
+
+::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: hsl(var(--secondary)); 
+  }
+
+
 .ng-scroll-content{
     width: 100%!important;
 }

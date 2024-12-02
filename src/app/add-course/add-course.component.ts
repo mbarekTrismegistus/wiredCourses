@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,11 +32,38 @@ export class AddCourseComponent {
   file: Array<Object> = []
   filesName: Array<String> = []
   progress: any
-  thumbnail: any
+  thumbnail: string = ""
   session: any
+  errorMsg = ""
+  isValidate = true
+  isValid = {
+    course: {
+        title: {
+          isEmpty: false,
+          msg: ""
+        },
+        description: {
+          isEmpty: false,
+          msg: ""
+        }, 
+        thumbnail: {
+          isEmpty: false,
+          msg: ""
+        },
+        duration: {
+          isEmpty: false,
+          msg: ""
+        }
+      },
+      videos: {
+        media: {
+          isEmpty: false,
+          msg: ""
+        }
+  }}
 
 
-  constructor(private http: HttpClient){
+  constructor(private http: HttpClient, private router: Router){
     this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
       this.session = res
   })
@@ -48,6 +75,7 @@ export class AddCourseComponent {
     let fileuuid = uuidv4()
 
     const avatarFile = event.target.files[0]
+    
 
 
     return new Promise<void>((resolve, reject) => {
@@ -94,6 +122,7 @@ export class AddCourseComponent {
                 }
                 video.src = URL.createObjectURL(avatarFile);
                 this.filesName.push(avatarFile.name)
+                this.isValid.videos.media.isEmpty = false
               }
               else if(event.target.name === "thumbnail"){
                 this.thumbnail = `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
@@ -120,28 +149,67 @@ export class AddCourseComponent {
 
   }
 
-  addCourse(title: string, des: string){
-    this.loading = true
-    let duration = 0
-    this.file.forEach((e:any) => {
-      duration += e.duration
-    })
 
-    this.http.post("/api/addCourse", {
-      course:{
-        title: title,
-        description: des, 
-        thumbnail: this.thumbnail,
-        duration: duration
-      },
-      videos: {
-        media: this.file
-      }
-    }, {withCredentials: true}).subscribe(res => {
-      if(res){
-        this.loading = false
-      }
-    })
+  addCourse(title: string, des: string){
+    console.log(title, des)
+    
+    if(title == ""){
+      this.isValid.course.title.isEmpty = true
+      this.isValid.course.title.msg = "Enter a title"
+    }
+    else{
+      this.isValid.course.title.isEmpty = false
+      this.isValid.course.title.msg = ""
+    }
+    if(des == ""){
+      this.isValid.course.description.isEmpty = true
+      this.isValid.course.description.msg = "Enter a description"
+    }
+    else{
+      this.isValid.course.description.isEmpty = false
+      this.isValid.course.description.msg = ""
+    }
+    if(this.thumbnail == ""){
+      this.isValid.course.thumbnail.isEmpty = true
+      this.isValid.course.thumbnail.msg = "Add A thumbnail"
+    }
+    else{
+      this.isValid.course.thumbnail.isEmpty = false
+      this.isValid.course.description.msg = ""
+    }
+    if(this.file.length == 0){
+      this.isValid.videos.media.isEmpty = true
+      this.isValid.videos.media.msg = "Add at least one video"
+    }
+    else{
+      this.isValid.videos.media.isEmpty = false
+      this.isValid.videos.media.msg = ""
+    }
+    // else{
+    //   this.errorMsg = "validated"
+    //   // this.loading = true
+    //   // let duration = 0
+    //   // this.file.forEach((e:any) => {
+    //   //   duration += e.duration
+    //   // })
+  
+    //   // this.http.post<any>("/api/addCourse", {
+    //   //   course:{
+    //   //     title: title,
+    //   //     description: des, 
+    //   //     thumbnail: this.thumbnail,
+    //   //     duration: duration
+    //   //   },
+    //   //   videos: {
+    //   //     media: this.file
+    //   //   }
+    //   // }, {withCredentials: true}).subscribe(res => {
+    //   //   if(res){
+    //   //     this.loading = false
+    //   //     this.router.navigate([`/courses/${res.id}`])
+    //   //   }
+    //   // })
+    // }
 
   }
 }

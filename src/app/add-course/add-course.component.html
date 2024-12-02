@@ -12,29 +12,39 @@
                 }
                 @else {
                     <div class="flex flex-col items-center gap-4">
-                        <label for="thumbnail" class="cursor-pointer bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4">
+                        <label for="thumbnail" [class]="isValid.course.thumbnail.isEmpty ? 'bg-red-700/[0.2] text-red-600 cursor-pointer rounded-full w-14 h-14 flex items-center justify-center p-4' : 'cursor-pointer text-violet-600 bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4'">
                             @if(progress){
                                 <p class="text-violet-600">{{ progress }}</p>
                             }
                             @else{
-                                <p class="flex items-center"><hlm-icon color="#7c3aed" name="lucideImage"></hlm-icon></p>
+                                <p class="flex items-center"><hlm-icon name="lucideImage"></hlm-icon></p>
                             }
                         </label>
-                        <p>Upload A Thumbnail</p>
+                        <p [class]="isValid.course.thumbnail.isEmpty ? 'text-red-600' : ''">Upload A Thumbnail</p>
                     </div>
                 }
             </div>
             <div class="flex-1 gap-4 flex-col flex">
-                <input hlmInput placeholder="Title" #title>
-                <textarea class="min-h-40"  name="" hlmInput id="" #description>Enter a description</textarea>
+                <div class="w-full">
+                    <input name="title" hlmInput placeholder="Title" [class]="isValid.course.title.isEmpty ? 'border-red-600 w-full' : 'w-full'" #title>
+                    @if (isValid.course.title.msg != "") {
+                        <p class="text-sm text-red-600 mt-0">{{ isValid.course.title.msg }}</p>
+                    }
+                </div>
+                <div class="w-full">
+                    <textarea class="min-h-40 w-full" name="des" [class]="isValid.course.description.isEmpty ? 'border-red-600' : ''" hlmInput id="" #description placeholder="Enter a description"></textarea>
+                    @if (isValid.course.description.msg != "") {
+                        <p class="text-sm text-red-600">{{ isValid.course.description.msg }}</p>
+                    }
+                </div>
                 <input type="file" class="hidden" name="thumbnail" accept="image/*" hlmInput id="thumbnail" (change)="handleUpload($event)">
                 <div class="flex items-center gap-4">
-                    <label for="media" class="cursor-pointer bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4">
+                    <label for="media" [class]="isValid.videos.media.isEmpty ? 'bg-red-700/[0.2] text-red-600 cursor-pointer rounded-full w-14 h-14 flex items-center justify-center p-4' : 'cursor-pointer text-violet-600 bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4'">
                         @if(progress){
                             <p class="text-violet-600">{{ progress }}</p>
                         }
                         @else{
-                            <p class="flex items-center"><hlm-icon color="#7c3aed" name="lucideVideo"></hlm-icon></p>
+                            <p class="flex items-center"><hlm-icon name="lucideVideo"></hlm-icon></p>
                         }
                     </label>
                     <p>Upload Course Videos</p>
@@ -45,7 +55,7 @@
                     }
                 </div>
                 <input type="file" name="media" class="hidden" hlmInput id="media"  accept="video/*" (change)="handleUpload($event)">
-                
+                <p class="text-md text-red-600">{{ isValid.videos.media.msg }}</p>
                 <button hlmBtn [disabled]="loading" (click)="addCourse(title.value, description.value)">Submit</button>
             </div>
         </div>

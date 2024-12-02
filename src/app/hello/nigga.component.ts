@@ -14,16 +14,6 @@ import { HlmButtonDirective } from "@spartan-ng/ui-button-helm";
 
 export class Hello{
     title = "hello";
-    setTitle(e: any){
-        this.title = e.target.value;
-    }
+    
 
-    isFinished = false;
-    total = 124
-
-    updateTitle(newTitle: string){
-        this.title = newTitle;
-    }
-
-    @Input() prop = 0;
 }

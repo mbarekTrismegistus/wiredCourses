@@ -35,6 +35,7 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideUser } from '@ng-icons/lucide';
 import { lucideSearch } from '@ng-icons/lucide';
 import moment from 'moment';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -42,17 +43,20 @@ import moment from 'moment';
 @Component({
     selector: "navbar",
     standalone: true,
-    imports: [HlmScrollAreaComponent, HlmSkeletonComponent, HlmInputDirective, HlmIconComponent, HlmAvatarImageDirective, HlmIconComponent,BrnMenuTriggerDirective,HlmMenuComponent,HlmMenuGroupComponent,HlmMenuItemDirective,HlmMenuItemIconDirective,HlmMenuItemSubIndicatorComponent,HlmMenuLabelComponent,HlmMenuSeparatorComponent,HlmMenuShortcutComponent,HlmSubMenuComponent,RouterOutlet, HlmButtonDirective,RouterLink, RouterOutlet, RouterModule, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmButtonDirective],
+    imports: [FormsModule, ReactiveFormsModule, HlmScrollAreaComponent, HlmSkeletonComponent, HlmInputDirective, HlmIconComponent, HlmAvatarImageDirective, HlmIconComponent,BrnMenuTriggerDirective,HlmMenuComponent,HlmMenuGroupComponent,HlmMenuItemDirective,HlmMenuItemIconDirective,HlmMenuItemSubIndicatorComponent,HlmMenuLabelComponent,HlmMenuSeparatorComponent,HlmMenuShortcutComponent,HlmSubMenuComponent,RouterOutlet, HlmButtonDirective,RouterLink, RouterOutlet, RouterModule, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmButtonDirective],
     providers: [provideIcons({lucideBell, lucideUser, lucideHouse, lucideBookPlus, lucideLogOut, lucideSearch})],
     template: `
         <nav class="flex px-5 py-3 sticky top-0 z-10 backdrop-blur-3xl">
             <p class="text-3xl self-start flex-1">Logo</p>
-            <form class="flex gap-0 items-center me-3">
-                <input type="text" class="rounded-l-full border-r-0 dark:border-zinc-400 focus-visible:ring-0 border-zinc-700 focus-visible: outline-0 focus-visible:ring-offset-0" placeholder="Search" hlmInput/>
-                <button type="submit" hlmBtn size="icon" variant="outline" class="border-r border-t border-b border-l-0 border-zinc-700 dark:border-zinc-400 rounded-r-full">
-                    <hlm-icon name="lucideSearch" size="22" class=""/>
-                </button>
-            </form>
+            <div class="flex gap-0 items-center me-3">
+                <input type="text" class="rounded-l-full border-r-0 dark:border-zinc-400 focus-visible:ring-0 border-zinc-700 focus-visible: outline-0 focus-visible:ring-offset-0" placeholder="Search" #search hlmInput [formControl]="searchParams"/>
+                <a routerLink="/search" [queryParams]="{keywords: searchParams.value}" (click)="search.value = ''">
+                    
+                    <button type="submit" hlmBtn size="icon" variant="outline" class="border-r border-t border-b border-l-0 border-zinc-700 dark:border-zinc-400 rounded-r-full">
+                        <hlm-icon name="lucideSearch" size="22" class=""/>
+                    </button>
+                </a>
+            </div>
             <div class="flex gap-3 self-end items-center">
                     @if(query.isLoading()){
                         <hlm-skeleton class="w-10 h-10 rounded-full"></hlm-skeleton>
@@ -66,25 +70,25 @@ import moment from 'moment';
                             }
                             <hlm-icon size="30" name="lucideBell" [brnMenuTriggerFor]="notifications">
                                 <ng-template #notifications>
-                                    <hlm-menu class="w-96">
-                                        <hlm-scroll-area class="h-[26rem]">
-                                            <hlm-menu-label class="font-bold">Notifications</hlm-menu-label>
+                                    <hlm-menu class="">
+                                        <div>
+                                            <hlm-menu-label class="text-lg font-bold">Notifications</hlm-menu-label>
                                             <hlm-menu-separator />
-                                            <hlm-menu-group class="">
+                                            <hlm-menu-group class="h-[26rem] overflow-y-scroll custom-scrollbar overflow-x-hidden">
                                                 <div class="flex flex-col justify-center">
                                                     @for (item of query.data(); track $index) {
-                                                        <a (click)="item.isRead ? null : readNotif.mutate(item.id)" routerLink="{{ item.notifyLink }}">
+                                                        <a class="max-w-[24rem]" (click)="item.isRead ? null : readNotif.mutate(item.id)" routerLink="{{ item.notifyLink }}">
                                                             <div  class="flex items-center gap-4 hover:bg-zinc-800 p-2 rounded-lg">
                                                                 <hlm-avatar>
                                                                     <img src='{{ item.sender.picture }}' hlmAvatarImage />
                                                                     <span class='text-white bg-zinc-500' hlmAvatarFallback>RG</span>
                                                                 </hlm-avatar>
-                                                                <div class="">
-                                                                    <p class="">{{ item.content }}</p>
+                                                                <div class="truncate min-w-0">
+                                                                    <p class="truncate">{{ item.content }}</p>
                                                                     <p class="text-zinc-400 text-md">{{ moment(item.notificationDate).fromNow() }}</p>
                                                                 </div>
                                                                 @if(!item.isRead){
-                                                                    <div class="w-3 h-3 bg-violet-600 rounded-full ms-auto"></div>
+                                                                    <div class="min-w-3 min-h-3 bg-violet-600 rounded-full ms-auto"></div>
                                                                 }
                                                             </div>
                                                             <hlm-menu-separator />
@@ -93,7 +97,7 @@ import moment from 'moment';
                                                     }
                                                 </div>
                                             </hlm-menu-group>
-                                        </hlm-scroll-area>
+                                        </div>
                                     </hlm-menu>
                                 </ng-template>
                             </hlm-icon>
@@ -165,6 +169,7 @@ export class NavBar{
     channel:any
     moment = moment
 
+    searchParams: any = new FormControl('');
 
 
 
