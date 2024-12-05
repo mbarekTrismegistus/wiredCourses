@@ -75,7 +75,7 @@ app.post("/addCourse", async (req, res) => {
                 data: req.body.videos.media
             })
             if(videos){
-                res.status(200).json(videos)
+                res.status(200).json({course: data, videos: videos})
             }
             else{
                 res.status(500)
