@@ -85,7 +85,7 @@
                 </div>
             </hlm-scroll-area>
         </div>
-        <div class="w-full">
+        <div class="w-full flex">
             <div class="flex gap-4 py-7">
                 <a routerLink="/profile/{{ query.data().user.id }}">
                     <hlm-avatar variant="large">
@@ -98,6 +98,11 @@
                     <p>By: <span class="font-bold">{{ query.data().user.firstname + " " + query.data().user.lastname }}</span></p>
                     <p class="pt-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos dicta animi ratione deserunt? Repudiandae sint aspernatur autem fugit, vel incidunt accusantium similique odit, optio asperiores sit animi, aut placeat veniam.</p>
                 </div>
+            </div>
+            <div>
+                @if(session?.id == query.data().user.id ){
+                    edit or delete
+                }
             </div>
         </div>
         <div class="py-5">

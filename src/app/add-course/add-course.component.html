@@ -51,7 +51,18 @@
                 </div>
                 <div class="flex gap-4">
                     @for (item of filesName; track $index) {
-                        <p>{{ item.substring(0, 15) + "... ." + item.split('.').pop() }}</p><brn-separator decorative hlmSeparator orientation="vertical" />
+                        <div class="flex items-center">
+                            <p>{{ item.currentName.substring(0, 15) + "... ." + item.currentName.split('.').pop() }}</p>
+                            <button (click)="deleteVid(item.urlName)" variant="ghost" class="rounded-full hover:bg-red-600/[0.3]" hlmBtn>
+                                @if(isDeletingVid){
+                                    <hlm-icon name="lucideLoaderCircle" size="sm" class="text-red-600 animate-spin" />
+                                }
+                                @else {
+                                    <hlm-icon class="text-red-600" name="lucideTrash"></hlm-icon>
+                                }
+                            </button>
+                            <brn-separator decorative hlmSeparator orientation="vertical" />
+                        </div>
                     }
                 </div>
                 <input type="file" name="media" class="hidden" hlmInput id="media"  accept="video/*" (change)="handleUpload($event)">

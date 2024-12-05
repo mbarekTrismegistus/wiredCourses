@@ -1,3 +1,4 @@
+import { supabase } from './../utils/supabase';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
@@ -7,8 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 import * as tus from 'tus-js-client';
 import { environment } from '../../environments/environment';
 import { provideIcons } from '@ng-icons/core';
-import { lucideImage } from '@ng-icons/lucide';
+import { lucideImage, lucideLoaderCircle } from '@ng-icons/lucide';
 import { lucideVideo } from '@ng-icons/lucide';
+import { lucideTrash } from '@ng-icons/lucide';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmSeparatorDirective } from '@spartan-ng/ui-separator-helm';
@@ -21,7 +23,7 @@ import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
   standalone: true,
   imports: [RouterOutlet, HlmInputDirective, HlmButtonDirective, HlmIconComponent, HlmLabelDirective, HlmSeparatorDirective, BrnSeparatorComponent],
   templateUrl: './add-course.component.html',
-  providers: [provideIcons({lucideVideo, lucideImage})],
+  providers: [provideIcons({lucideVideo, lucideImage, lucideTrash, lucideLoaderCircle})],
   styleUrl: './add-course.component.css'
 })
 
@@ -29,8 +31,9 @@ import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
 export class AddCourseComponent {
 
   loading:boolean = false
+  supabase: any = supabase
   file: Array<Object> = []
-  filesName: Array<String> = []
+  filesName: Array<any> = []
   progress: any
   thumbnail: string = ""
   session: any
@@ -61,6 +64,7 @@ export class AddCourseComponent {
           msg: ""
         }
   }}
+  isDeletingVid: boolean = false
 
 
   constructor(private http: HttpClient, private router: Router){
@@ -114,14 +118,14 @@ export class AddCourseComponent {
                   var duration = video.duration;
                   this.file.push({
                     duration: duration * 1000,
-                    title: avatarFile.name.split('.')[0],
+                    title: `${fileuuid}.${avatarFile.name.split('.').pop()}`,
                     size: avatarFile.size,
                     url: `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
                   })
                   console.log(this.file)
                 }
                 video.src = URL.createObjectURL(avatarFile);
-                this.filesName.push(avatarFile.name)
+                this.filesName.push({currentName: avatarFile.name, urlName: `${fileuuid}.${avatarFile.name.split('.').pop()}`})
                 this.isValid.videos.media.isEmpty = false
               }
               else if(event.target.name === "thumbnail"){
@@ -149,6 +153,23 @@ export class AddCourseComponent {
 
   }
 
+
+  async deleteVid(filename: any){
+
+    this.isDeletingVid = true
+
+    const { data, error } = await supabase
+      .storage
+      .from('wiredcourses')
+      .remove([`public/${filename}`])
+
+    if(data){
+      this.isDeletingVid = false
+      this.filesName = this.filesName.filter((f) => f == filename)
+    }
+
+
+  }
 
   addCourse(title: string, des: string){
     console.log(title, des)
