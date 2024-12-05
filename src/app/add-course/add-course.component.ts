@@ -185,31 +185,31 @@ export class AddCourseComponent {
       this.isValid.videos.media.isEmpty = false
       this.isValid.videos.media.msg = ""
     }
-    // else{
-    //   this.errorMsg = "validated"
-    //   // this.loading = true
-    //   // let duration = 0
-    //   // this.file.forEach((e:any) => {
-    //   //   duration += e.duration
-    //   // })
+    if(!this.isValid.course.title.isEmpty && !this.isValid.course.description.isEmpty && !this.isValid.course.thumbnail.isEmpty && !this.isValid.videos.media.isEmpty){
+      // this.errorMsg = "validated"
+      this.loading = true
+      let duration = 0
+      this.file.forEach((e:any) => {
+        duration += e.duration
+      })
   
-    //   // this.http.post<any>("/api/addCourse", {
-    //   //   course:{
-    //   //     title: title,
-    //   //     description: des, 
-    //   //     thumbnail: this.thumbnail,
-    //   //     duration: duration
-    //   //   },
-    //   //   videos: {
-    //   //     media: this.file
-    //   //   }
-    //   // }, {withCredentials: true}).subscribe(res => {
-    //   //   if(res){
-    //   //     this.loading = false
-    //   //     this.router.navigate([`/courses/${res.id}`])
-    //   //   }
-    //   // })
-    // }
+      this.http.post<any>("/api/addCourse", {
+        course:{
+          title: title,
+          description: des, 
+          thumbnail: this.thumbnail,
+          duration: duration
+        },
+        videos: {
+          media: this.file
+        }
+      }, {withCredentials: true}).subscribe(res => {
+        if(res){
+          this.loading = false
+          this.router.navigate([`/courses/${res.id}`])
+        }
+      })
+    }
 
   }
 }
