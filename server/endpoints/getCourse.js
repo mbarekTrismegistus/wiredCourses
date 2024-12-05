@@ -36,7 +36,8 @@ export default async function getCourse(id){
                         }
                     }
                 },
-                orderBy: [desc(comment.dateCommented)]
+                orderBy: [desc(comment.dateCommented)],
+                limit: 15
             },
             videos: true
         }
