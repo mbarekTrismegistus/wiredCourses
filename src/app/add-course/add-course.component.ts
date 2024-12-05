@@ -206,7 +206,7 @@ export class AddCourseComponent {
       }, {withCredentials: true}).subscribe(res => {
         if(res){
           this.loading = false
-          this.router.navigate([`/courses/${res.id}`])
+          this.router.navigate([`/courses/${res.course.id}`])
         }
       })
     }
