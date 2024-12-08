@@ -1,6 +1,6 @@
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, numberAttribute } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
@@ -20,6 +20,23 @@ import {
 } from '@tanstack/angular-query-experimental'
 import { lastValueFrom } from 'rxjs';
 import { CommentsListComponent } from '../comments-list/comments-list.component';
+import { provideIcons } from '@ng-icons/core';
+import { lucideEllipsis, lucideEye, lucideOption, lucideTrash, lucidePencilLine } from '@ng-icons/lucide';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+import { HlmMenuComponent, HlmMenuGroupComponent, HlmMenuItemDirective, HlmMenuLabelComponent, HlmMenuSeparatorComponent } from '@spartan-ng/ui-menu-helm';
+import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
+import {
+  HlmAlertDialogActionButtonDirective,
+  HlmAlertDialogCancelButtonDirective,
+  HlmAlertDialogComponent,
+  HlmAlertDialogContentComponent,
+  HlmAlertDialogDescriptionDirective,
+  HlmAlertDialogFooterComponent,
+  HlmAlertDialogHeaderComponent,
+  HlmAlertDialogOverlayDirective,
+  HlmAlertDialogTitleDirective,
+} from '@spartan-ng/ui-alertdialog-helm';
+import { BrnAlertDialogContentDirective, BrnAlertDialogTriggerDirective } from '@spartan-ng/ui-alertdialog-brain';
 
 interface Todo {
   id: string
@@ -29,13 +46,23 @@ interface Todo {
 @Component({
   selector: 'app-course',
   standalone: true,
-  imports: [RouterLink, CommentsListComponent, HlmSkeletonComponent, HlmInputDirective, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective, HlmSeparatorDirective, HlmButtonDirective, BrnSeparatorComponent, HlmScrollAreaComponent, RouterOutlet, VgBufferingModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule],
+  imports: [BrnAlertDialogContentDirective, BrnAlertDialogTriggerDirective, HlmAlertDialogActionButtonDirective,
+    HlmAlertDialogCancelButtonDirective,
+    HlmAlertDialogComponent,
+    HlmAlertDialogContentComponent,
+    HlmAlertDialogDescriptionDirective,
+    HlmAlertDialogFooterComponent,
+    HlmAlertDialogHeaderComponent,
+    HlmAlertDialogOverlayDirective,
+    HlmAlertDialogTitleDirective,BrnMenuTriggerDirective, HlmMenuItemDirective, HlmMenuLabelComponent, HlmMenuGroupComponent, HlmMenuSeparatorComponent, HlmMenuComponent, HlmIconComponent, RouterLink, CommentsListComponent, HlmSkeletonComponent, HlmInputDirective, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective, HlmSeparatorDirective, HlmButtonDirective, BrnSeparatorComponent, HlmScrollAreaComponent, RouterOutlet, VgBufferingModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule],
+  providers: [provideIcons({lucideEye, lucideEllipsis, lucideTrash, lucidePencilLine})],
   templateUrl: './course.component.html',
   styleUrl: './course.component.css'
 })
 export class CourseComponent {
 
-  courseId: any
+  id = input()
+  
   course: any
   coursePlaylistindex: number = 0
   videoFileContainer: any;
@@ -43,6 +70,7 @@ export class CourseComponent {
   session: any
   comments: any
   queryClient = inject(QueryClient)
+  viewCounted: boolean = false
 
   Commentgroup:any = {}
 
@@ -50,13 +78,14 @@ export class CourseComponent {
     this.http.get("/api/auth/session", { withCredentials: true }).subscribe(res => {
       this.session = res
     })
+    
   }
 
+
   query = injectQuery(() => ({
-    queryKey: ['course'],
+    queryKey: ['course', this.id()],
     queryFn: async() => {
-      this.courseId = Number(this.route.snapshot.paramMap.get('id'));
-      let data = await lastValueFrom(this.http.get<any>(`/api/courses/${this.courseId}`))
+      let data = await lastValueFrom(this.http.get<any>(`/api/courses/${this.id()}`))
       this.Commentgroup = {}
       data.comments.forEach((c: any) => {
         this.Commentgroup[c.parrentId] ||= []
@@ -67,8 +96,6 @@ export class CourseComponent {
     }
   }))
 
-
-  
 
 
   changeIndex(index: number){
@@ -87,6 +114,17 @@ export class CourseComponent {
       this.queryClient.invalidateQueries({ queryKey: ['course'] })
     },
   }))
+
+  countView = injectMutation(() => ({
+    mutationFn: () => {
+      console.log("hello")
+      return lastValueFrom(this.http.post(`/api/courses/countView`, {id: Number(this.id())}, {withCredentials: true}))
+    },
+    onSuccess: () => {
+      this.viewCounted = true
+    },
+  }))
+
 
 
 }

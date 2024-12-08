@@ -15,6 +15,20 @@
       "when": 1732806812714,
       "tag": "0001_gorgeous_speed",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1733409267053,
+      "tag": "0002_sudden_silver_sable",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1733659431537,
+      "tag": "0003_sweet_gargoyle",
+      "breakpoints": true
     }
   ]
 }

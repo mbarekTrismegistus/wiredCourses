@@ -15,13 +15,14 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmSeparatorDirective } from '@spartan-ng/ui-separator-helm';
 import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 
 
 
 @Component({
   selector: 'app-add-course',
   standalone: true,
-  imports: [RouterOutlet, HlmInputDirective, HlmButtonDirective, HlmIconComponent, HlmLabelDirective, HlmSeparatorDirective, BrnSeparatorComponent],
+  imports: [HlmSkeletonComponent, RouterOutlet, HlmInputDirective, HlmButtonDirective, HlmIconComponent, HlmLabelDirective, HlmSeparatorDirective, BrnSeparatorComponent],
   templateUrl: './add-course.component.html',
   providers: [provideIcons({lucideVideo, lucideImage, lucideTrash, lucideLoaderCircle})],
   styleUrl: './add-course.component.css'

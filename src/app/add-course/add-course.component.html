@@ -1,9 +1,27 @@
 @if(!session){
-    <p>Login</p>
+    <div class="p-5">
+        <p class="text-3xl font-bold py-5">Share Your Course</p>
+        <div class="p-5 bg-background flex flex-wrap gap-5 border rounded-lg shadow-5 dark:border-zinc-800 relative">
+            <div class="w-[70%] h-[1px] bg-gradient-to-r from-zinc-950 via-zinc-600 to-zinc-950 absolute top-0 z-[99]"></div>
+            <hlm-skeleton class="w-80 h-72 mx-auto self-center flex items-center justify-center">
+
+            </hlm-skeleton>
+            <div class="flex-1 gap-4 flex-col flex">
+                <hlm-skeleton class="w-full h-12">
+                </hlm-skeleton>
+                <hlm-skeleton class="w-full h-48">
+                </hlm-skeleton>
+                <div class="flex items-center gap-4">
+                    <hlm-skeleton class="h-12 w-12 rounded-full"></hlm-skeleton>
+                </div>
+                <hlm-skeleton class="w-full h-12"></hlm-skeleton>
+            </div>
+        </div>
+    </div>
 }
 @else{
     <div class="p-5">
-        <p class="text-5xl font-bold py-5">Share Your Course</p>
+        <p class="text-3xl font-bold py-5">Share Your Course</p>
         <div class="p-5 bg-background flex flex-wrap gap-5 border rounded-lg shadow-5 dark:border-zinc-800 relative">
             <div class="w-[70%] h-[1px] bg-gradient-to-r from-zinc-950 via-zinc-600 to-zinc-950 absolute top-0 z-[99]"></div>
             <div class="w-80 mx-auto flex items-center justify-center">
@@ -67,7 +85,12 @@
                 </div>
                 <input type="file" name="media" class="hidden" hlmInput id="media"  accept="video/*" (change)="handleUpload($event)">
                 <p class="text-md text-red-600">{{ isValid.videos.media.msg }}</p>
-                <button hlmBtn [disabled]="loading" (click)="addCourse(title.value, description.value)">Submit</button>
+                <button hlmBtn [disabled]="loading" (click)="addCourse(title.value, description.value)">
+                    @if(loading){
+                        <hlm-icon name="lucideLoaderCircle" size="sm" class="mr-2 animate-spin" />
+                    }
+                    Upload
+                </button>
             </div>
         </div>
     </div>

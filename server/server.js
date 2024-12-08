@@ -16,6 +16,8 @@ import getNotifications from "./endpoints/getNotification.js"
 import addNotification from "./endpoints/addNotification.js"
 import readNotif from "./endpoints/readNotif.js"
 import search from "./endpoints/search.js"
+import countView from "./endpoints/countView.js"
+import deleteCourse from "./endpoints/deleteCourse.js"
 
 
 
@@ -244,6 +246,17 @@ app.get('/search', async (req, res) => {
 })
 
 
+app.post("/courses/countView", async (req, res) => {
+    let { id } = req.body
+    let data = await countView(id)
+    res.status(200).json(data)
+})
+
+app.post("/deleteCourse/:id", async (req, res) => {
+    let { id } = req.params
+    let data = await deleteCourse(id)
+    res.status(200).json(data)
+})
 
 
 

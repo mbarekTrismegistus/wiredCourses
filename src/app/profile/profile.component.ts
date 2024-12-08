@@ -36,19 +36,6 @@ export class ProfileComponent {
 
   }
 
-  // ngOnInit() {
-  //   this.socketService.setupSocketConnection(this.id);
-  // }
-
-
-  // ngOnDestroy() {
-  //   this.socketService.disconnect();
-  // }
-
-
-
-
-
 
 
   query = injectQuery(() => ({
