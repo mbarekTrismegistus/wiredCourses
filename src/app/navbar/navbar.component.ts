@@ -185,6 +185,7 @@ export class NavBar{
             schema: 'public',
             },
             (payload: any) => {
+                console.log("listening", payload)
                 this.queryClient.invalidateQueries({queryKey: ['notifications', 'comments']})
             }
             )
