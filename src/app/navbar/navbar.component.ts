@@ -187,6 +187,7 @@ export class NavBar{
             (payload: any) => {
                 console.log("listening", payload)
                 this.queryClient.invalidateQueries({queryKey: ['notifications']})
+                this.queryClient.invalidateQueries({queryKey: ['course']})
 
             }
             )

@@ -37,7 +37,6 @@ import {
   HlmAlertDialogTitleDirective,
 } from '@spartan-ng/ui-alertdialog-helm';
 import { BrnAlertDialogContentDirective, BrnAlertDialogTriggerDirective } from '@spartan-ng/ui-alertdialog-brain';
-import { createClient } from '@supabase/supabase-js';
 
 interface Todo {
   id: string
@@ -65,7 +64,6 @@ export class CourseComponent {
   id = input()
   
   course: any
-  supabase: any
   coursePlaylistindex: number = 0
   videoFileContainer: any;
   moment: any = moment
@@ -81,23 +79,6 @@ export class CourseComponent {
       this.session = res
     })
     
-    this.supabase = createClient("https://ruwfyzzkwvwtombvswpa.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1d2Z5enprd3Z3dG9tYnZzd3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE1OTM3NTEsImV4cCI6MjA0NzE2OTc1MX0.LS_PWRczbZdHtBDzHF5HqpzZspxHMS_-AUnv_e1l8IM")
-        this.supabase
-        .channel('schema-db-changes')
-        .on(
-            'postgres_changes',
-            {
-            event: 'INSERT',
-            schema: 'public',
-            },
-            (payload: any) => {
-                console.log("listening", payload)
-                this.queryClient.invalidateQueries({queryKey: ['comments']})
-
-            }
-            )
-            .subscribe()
-        
   }
 
 
