@@ -204,8 +204,9 @@ export class NavBar{
 
     query = injectQuery(() => ({
         queryKey: ['notifications'],
-            queryFn: () => {
-                return lastValueFrom(this.http.get<any>(`api/notifications`, {withCredentials: true}))
+        queryFn: () => {
+            console.log("fetching")
+            return lastValueFrom(this.http.get<any>(`api/notifications`, {withCredentials: true}))
 
         },
         staleTime: 0
