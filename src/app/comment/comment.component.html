@@ -12,19 +12,46 @@
                 {{ comment().content }}
             </p>
             <div class="pt-4">
-                <div class="flex text-sm text-zinc-400 gap-2">
-                    <p class="" (click)="toggleReplies()">
+                <div class="flex items-center text-sm text-zinc-400 gap-2">
+                    <p class="cursor-pointer hover:text-violet-600" (click)="toggleReplies()">
                         show Replies {{ allComments()[comment().id] ? "(" + allComments()[comment().id].length + ")" : "(0)" }}
                     </p>
-                    <p (click)="toggleInput()">
-                        Reply
-                    </p>
+                    @if(session){
+                        <brn-separator class="bg-zinc-500 h-5" decorative hlmSeparator orientation="vertical" />
+                        <p class="cursor-pointer hover:text-violet-600" (click)="toggleInput()">
+                            Reply
+                        </p>
+                        @if(session.id == comment().userId){
+                            @if(deleteComment.isPending()){
+                                <hlm-icon name="lucideLoaderCircle" size="sm" class="text-red-600 animate-spin ms-auto" />
+                            }
+                            @else {
+                                <button [brnMenuTriggerFor]="menu" class="ms-auto">
+                                    <hlm-icon name="lucideEllipsis"></hlm-icon>
+                                </button>
+                                <ng-template #menu>
+                                    <hlm-menu>
+                                      <hlm-menu-label>Actions</hlm-menu-label>
+                                      <hlm-menu-separator />
+                                      <hlm-menu-group>
+                                        <button (click)="deleteComment.mutate(comment())" class="hover:bg-red-600/[0.3] cursor-pointer" hlmMenuItem>
+                                            <hlm-icon class="text-red-600" size="sm" name="lucideTrash"></hlm-icon>                                        
+                                            <p class="text-sm text-red-600 ps-2">Delete</p>
+                                        </button>                    
+                                      </hlm-menu-group>
+                                    </hlm-menu>
+                                </ng-template>
+                            }
+                            
+                        }
+                    }
                 </div>
             </div>
+            
             @if(!inputHidden){
                 <div class="flex gap-4">
-                    <textarea class="rounded-full focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Enter A Comment"></textarea>
-                    <button hlmBtn class="rounded-full" (click)="mutation.mutate({comment: {content: content.value, courseId: comment().courseId, parrentId: comment().id}, userId: userId(), isReply: true})" [disabled]="mutation.isPending()">Comment</button>
+                    <textarea [formControl]="commentContent" class="rounded-full focus:border-zinc-100 focus:border-b-2 focus-visible:ring-offset-0 focus-visible:ring-0 min-h-10 w-full rounded-none border-t-0 border-x-0 border-b-1 focus:ring-0" name="" hlmInput id="" #content placeholder="Enter A Comment"></textarea>
+                    <button hlmBtn class="rounded-full" (click)="reply.mutate({comment: {content: content.value, courseId: comment().courseId, parrentId: comment().id}, userId: userId(), isReply: true, parrentId: comment().id})" [disabled]="reply.isPending()">Comment</button>
                 </div>
             }
         </div>

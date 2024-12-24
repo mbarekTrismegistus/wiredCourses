@@ -5,6 +5,7 @@ import { video } from "../db/schema.js";
 
 export default async function addVideos(req){
     let data = req.data.map((e) => {
+        delete e.id
         return {
             ...e,
             courseId: req.courseId

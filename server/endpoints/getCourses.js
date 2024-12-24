@@ -2,6 +2,8 @@ import * as schema from "../db/schema.js"
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { configDotenv } from 'dotenv';
+import { desc } from "drizzle-orm";
+import { course } from "../db/schema.js";
 
 
 configDotenv()
@@ -24,7 +26,8 @@ export default async function getCourses(){
                     password: false
                 }
             }
-        }
+        },
+        orderBy: [desc(course.datePosted)]
     })
     return data
 }

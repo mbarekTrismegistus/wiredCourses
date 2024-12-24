@@ -33,7 +33,7 @@ export class AddCourseComponent {
 
   loading:boolean = false
   supabase: any = supabase
-  file: Array<Object> = []
+  file: Array<any> = []
   filesName: Array<any> = []
   progress: any
   thumbnail: string = ""
@@ -119,7 +119,7 @@ export class AddCourseComponent {
                   var duration = video.duration;
                   this.file.push({
                     duration: duration * 1000,
-                    title: `${fileuuid}.${avatarFile.name.split('.').pop()}`,
+                    title: `${avatarFile.name}`,
                     size: avatarFile.size,
                     url: `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
                   })
@@ -167,13 +167,13 @@ export class AddCourseComponent {
     if(data){
       this.isDeletingVid = false
       this.filesName = this.filesName.filter((f) => f == filename)
+      this.file = this.file.filter((f) => f.title == filename)
     }
 
 
   }
 
   addCourse(title: string, des: string){
-    console.log(title, des)
     
     if(title == ""){
       this.isValid.course.title.isEmpty = true
@@ -227,8 +227,9 @@ export class AddCourseComponent {
         }
       }, {withCredentials: true}).subscribe(res => {
         if(res){
+          console.log(res)
           this.loading = false
-          this.router.navigate([`/courses/${res.course.id}`])
+          this.router.navigate([`/courses/${res.course[0].id}`])
         }
       })
     }

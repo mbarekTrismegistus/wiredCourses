@@ -18,6 +18,12 @@ import readNotif from "./endpoints/readNotif.js"
 import search from "./endpoints/search.js"
 import countView from "./endpoints/countView.js"
 import deleteCourse from "./endpoints/deleteCourse.js"
+import getComments from "./endpoints/getComments.js"
+import {deleteVids, deleteVid } from "./endpoints/deleteVids.js"
+import editCourse from "./endpoints/editCourse.js"
+import { deleteComment } from "./endpoints/deleteComment.js"
+import updateRating from "./endpoints/updateRating.js"
+import { getRating, getUserRating } from "./endpoints/getRating.js"
 
 
 
@@ -61,6 +67,38 @@ app.post("/register/teacher", async (req, res) => {
     else{
         res.status(500)
     }
+})
+
+app.post("/editCourse", async (req, res) => {
+    let session = await decrypt(req.cookies.session)
+    if(session){
+        let body = req.body
+        // console.log(body)
+        let data = await editCourse(body.course)
+        if(data){
+            let deleted = await deleteVids(data[0].id)
+            if(deleted){
+                console.log("deleted")
+                let videos = await addVideos({
+                    courseId: data[0].id,
+                    data: req.body.videos.media
+                })
+                if(videos){
+                    res.status(200).json({course: data, videos: videos})
+                }
+                else{
+                    res.status(500)
+                }
+            }
+        }
+        else{
+            res.status(500)
+        }
+    }
+    else{
+        res.status(401)
+    }
+    
 })
 
 app.post("/addCourse", async (req, res) => {
@@ -164,6 +202,19 @@ app.get("/courses/:id", async (req, res) => {
     res.status(200).json(data)
 })
 
+app.get("/courses/comments/:id", async (req, res) => {
+    let { id } = req.params
+    let { cursor } = req.query
+    let data = await getComments(Number(id), Number(cursor))
+    let isStillComments = await getComments(Number(id), Number(cursor) + 1)
+    if(isStillComments.length > 0){
+        res.status(200).json({data: data, nextCursor: Number(cursor) + 1})
+    }
+    else{
+        res.status(200).json({data: data})
+    }
+})
+
 app.get("/randomCourse", async (req, res) => {
     let data = await getRandomCourse()
     res.status(200).json(data)
@@ -252,12 +303,97 @@ app.post("/courses/countView", async (req, res) => {
     res.status(200).json(data)
 })
 
-app.post("/deleteCourse/:id", async (req, res) => {
-    let { id } = req.params
-    let data = await deleteCourse(id)
-    res.status(200).json(data)
+app.post("/deleteCourse", async (req, res) => {
+    let { id } = req.body
+    let {userId} = req.body
+    if(req.cookies.session){
+        let session = await decrypt(req.cookies.session)
+        if(session){
+            if(userId == session.id){
+                let data = await deleteCourse(id)
+                res.status(200).json(data)
+            }
+            else{
+                res.status(401).json("unauthorized")
+            }
+        }
+        else{
+            res.status(401).json("unauthorized")
+        }
+    }
+    else{
+        res.status(401).json("login")
+    }
+    
 })
 
 
+app.post("/deleteVid", async (req, res) => {
+    if(req.cookies.session){
+        let data = await deleteVid(req.body.id)
+        if(data){
+            res.status(200).json(data)
+        }
+    }
+})
 
+app.post("/deleteComment", async (req, res) => {
+    if(req.cookies.session){
+        let session = await decrypt(req.cookies.session)
+        if(session){
+            if(req.body.userId == session.id){
+                let data = await deleteComment(req.body.id)
+                res.status(200).json(data)
+            }
+            else{
+                res.status(401).json("unauthorized")
+            }
+        }
+        else{
+            res.status(401).json("unauthorized")
+        }
+    }
+    else{
+        res.status(401).json("login")
+    }
+})
+
+
+app.post("/rateCourse", async(req, res) => {
+    if(req.cookies.session){
+        let session = await decrypt(req.cookies.session)
+        if(session){
+            let data = await updateRating(req.body)
+            if(data){
+                res.status(200).json(data)
+            }
+            else{
+                res.status(500)
+            }
+
+        }
+        else{
+            res.status(401).json("unauthorized")
+        }
+    }
+    else{
+        res.status(401).json("login")
+    }
+})
+
+
+app.get("/getRating/:courseId/:userId", async(req, res) => {
+    let {courseId} = req.params
+    let {userId} = req.params
+    let rating = await getRating({courseId: courseId, userId: userId})
+    let userRating = await getUserRating({courseId: courseId, userId: userId})
+    if(rating || userRating){
+        res.status(200).json({rating: rating, userRating: userRating})
+    }
+    else{
+        res.status(500)
+    }
+
+
+})
 

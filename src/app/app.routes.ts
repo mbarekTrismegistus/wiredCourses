@@ -7,6 +7,7 @@ import { DiscoverComponent } from './discover/discover.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CourseComponent } from './course/course.component';
 import { SearchComponent } from './search/search.component';
+import { EditCourseComponent } from './editCourse/edit-course.component';
 
 export const routes: Routes = [
     {
@@ -40,5 +41,9 @@ export const routes: Routes = [
     {
         path: "search",
         component: SearchComponent
+    },
+    {
+        path: "edit/:id",
+        component: EditCourseComponent
     }
 ];

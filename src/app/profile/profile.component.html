@@ -1,5 +1,24 @@
 @if(query.isLoading()){
-    loading ...
+    <div class="p-5">
+        <div class="w-full flex flex-col items-center p-5">
+            <hlm-skeleton class="w-[150px] h-[150px] rounded-full outline outline-offset-4 outline-violet-600"></hlm-skeleton>
+            <hlm-skeleton class="mt-5 w-[25vw] h-12 "></hlm-skeleton>
+            <hlm-skeleton class="mt-5 w-[20vw] h-5 rounded-full"></hlm-skeleton>
+            <hlm-skeleton class="mt-5 w-[15vw] rounded-full h-5 "></hlm-skeleton>
+
+        </div>
+        <div class="py-10 px-5">
+            <p class="text-xl lg:text-4xl py-3 font-black bg-gradient-to-b dark:from-[#FFFFFF] dark:to-zinc-400 from-zinc-900 to-zinc-800 text-transparent bg-clip-text">Courses</p>
+            <div class="flex flex-wrap gap-4">
+                @for (item of [1,2,3,4]; track $index) {
+    
+                    <hlm-skeleton class="w-[17rem] h-[25rem]">
+
+                    </hlm-skeleton>
+                }
+            </div>
+        </div>
+    </div>
 }
 @else if (query.isError()) {
     error

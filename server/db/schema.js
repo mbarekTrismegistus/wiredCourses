@@ -31,7 +31,8 @@ export const course = pgTable("course", {
     thumbnail: text("thumbnail"),
     duration: real(),
     datePosted: timestamp("datePosted").notNull().defaultNow(),
-    views: integer("views").notNull().default(0)
+    views: integer("views").notNull().default(0),
+    rating: real()
 
 },
     (table) => ({
@@ -50,6 +51,14 @@ export const video = pgTable("video", {
     duration: real(),
     size: real(),
     url: text("url")
+});
+
+export const rating = pgTable("rating", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    rate: real(),
+    courseId: integer("courseId").references(() => course.id, {onDelete: 'cascade', onUpdate: 'cascade'}),
+    userId: integer("userId").references(() => users.id, {onDelete: 'cascade', onUpdate: 'cascade'}),
+
 });
 
 export const comment = pgTable("comments", {
@@ -77,13 +86,15 @@ export const notifications = pgTable("notifications", {
 export const usersRelations = relations(users, ({ many }) => ({
     courses: many(course),
     comments: many(comment),
-    notifications: many(notifications)
+    notifications: many(notifications),
+    ratings: many(rating)
 }))
 
 
 export const courseRelations = relations(course, ({ many, one }) => ({
     comments: many(comment),
     videos: many(video),
+    ratings: many(rating),
     user: one(users, {
         fields: [course.userId],
         references: [users.id]
@@ -115,6 +126,17 @@ export const commentRelations = relations(comment, ({ one, many }) => ({
 
 
 export const videoRelations = relations(video, ({ one }) => ({
+    course: one(course, {
+        fields: [rating.courseId],
+        references: [course.id]
+    }),
+    user: one(users, {
+        fields: [rating.userId],
+        references: [users.id]
+    }),
+}))
+
+export const ratingRelations = relations(rating, ({ one }) => ({
     course: one(course, {
         fields: [video.courseId],
         references: [course.id]

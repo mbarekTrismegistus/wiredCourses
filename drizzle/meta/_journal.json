@@ -29,6 +29,20 @@
       "when": 1733659431537,
       "tag": "0003_sweet_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1734874917909,
+      "tag": "0004_abnormal_the_leader",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1734976220303,
+      "tag": "0005_early_wrecker",
+      "breakpoints": true
     }
   ]
 }

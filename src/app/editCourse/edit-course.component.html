@@ -1,0 +1,99 @@
+@if(!session || query.isLoading()){
+    <div class="p-5">
+        <p class="text-3xl font-bold py-5">Share Your Course</p>
+        <div class="p-5 bg-background flex flex-wrap gap-5 border rounded-lg shadow-5 dark:border-zinc-800 relative">
+            <div class="w-[70%] h-[1px] bg-gradient-to-r from-zinc-950 via-zinc-600 to-zinc-950 absolute top-0 z-[99]"></div>
+            <hlm-skeleton class="w-80 h-72 mx-auto self-center flex items-center justify-center">
+
+            </hlm-skeleton>
+            <div class="flex-1 gap-4 flex-col flex">
+                <hlm-skeleton class="w-full h-12">
+                </hlm-skeleton>
+                <hlm-skeleton class="w-full h-48">
+                </hlm-skeleton>
+                <div class="flex items-center gap-4">
+                    <hlm-skeleton class="h-12 w-12 rounded-full"></hlm-skeleton>
+                </div>
+                <hlm-skeleton class="w-full h-12"></hlm-skeleton>
+            </div>
+        </div>
+    </div>
+}
+@else{
+    <div class="p-5">
+        <p class="text-3xl font-bold py-5">Share Your Course</p>
+        <div class="p-5 bg-background flex flex-wrap gap-5 border rounded-lg shadow-5 dark:border-zinc-800 relative">
+            <div class="w-[70%] h-[1px] bg-gradient-to-r from-zinc-950 via-zinc-600 to-zinc-950 absolute top-0 z-[99]"></div>
+            <div class="w-80 mx-auto flex items-center justify-center">
+                @if (query.data().thumbnail) {
+                    <img src="{{ query.data().thumbnail }}" alt="">
+                }
+                @else {
+                    <div class="flex flex-col items-center gap-4">
+                        <label for="thumbnail" [class]="isValid.course.thumbnail.isEmpty ? 'bg-red-700/[0.2] text-red-600 cursor-pointer rounded-full w-14 h-14 flex items-center justify-center p-4' : 'cursor-pointer text-violet-600 bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4'">
+                            @if(progress){
+                                <p class="text-violet-600">{{ progress }}</p>
+                            }
+                            @else{
+                                <p class="flex items-center"><hlm-icon name="lucideImage"></hlm-icon></p>
+                            }
+                        </label>
+                        <p [class]="isValid.course.thumbnail.isEmpty ? 'text-red-600' : ''">Upload A Thumbnail</p>
+                    </div>
+                }
+            </div>
+            <div class="flex-1 gap-4 flex-col flex">
+                <div class="w-full">
+                    <input name="title"[value]="query.data().title" hlmInput placeholder="Title" [class]="isValid.course.title.isEmpty ? 'border-red-600 w-full' : 'w-full'" #title>
+                    @if (isValid.course.title.msg != "") {
+                        <p class="text-sm text-red-600 mt-0">{{ isValid.course.title.msg }}</p>
+                    }
+                </div>
+                <div class="w-full">
+                    <textarea [value]="query.data().description" class="min-h-40 w-full" name="des" [class]="isValid.course.description.isEmpty ? 'border-red-600' : ''" hlmInput id="" #description placeholder="Enter a description"></textarea>
+                    @if (isValid.course.description.msg != "") {
+                        <p class="text-sm text-red-600">{{ isValid.course.description.msg }}</p>
+                    }
+                </div>
+                <input type="file" class="hidden" name="thumbnail" accept="image/*" hlmInput id="thumbnail" (change)="handleUpload($event)">
+                <div class="flex items-center gap-4">
+                    <label for="media" [class]="isValid.videos.media.isEmpty ? 'bg-red-700/[0.2] text-red-600 cursor-pointer rounded-full w-14 h-14 flex items-center justify-center p-4' : 'cursor-pointer text-violet-600 bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4'">
+                        @if(progress){
+                            <p class="text-violet-600">{{ progress }}</p>
+                        }
+                        @else{
+                            <p class="flex items-center"><hlm-icon name="lucideVideo"></hlm-icon></p>
+                        }
+                    </label>
+                    <p>Upload Course Videos</p>
+                </div>
+                <div class="flex gap-4">
+                    @for (item of file; track $index) {
+                        <div class="flex items-center">
+                            <p>{{ item.title.substring(0, 15) + "... ." + item.title.split('.').pop() }}</p>
+                            <button (click)="deleteVid.mutate({url:item.url, id:item.id})" variant="ghost" class="rounded-full hover:bg-red-600/[0.3]" hlmBtn>
+                                @if(deleteVid.isPending() && deleteVid.variables().url == item.url){
+                                    <hlm-icon name="lucideLoaderCircle" size="sm" [class]="deleteVid.isPending() ? 'text-red-600 animate-spin' : 'hidden'" />
+                                }
+                                @else {
+                                    <hlm-icon class="text-red-600" name="lucideTrash"></hlm-icon>
+                                }
+                            </button>
+                            <brn-separator decorative hlmSeparator orientation="vertical" />
+                        </div>
+                    }
+                </div>
+                <input type="file" name="media" class="hidden" hlmInput id="media"  accept="video/*" (change)="handleUpload($event)">
+                <p class="text-md text-red-600">{{ isValid.videos.media.msg }}</p>
+                <button hlmBtn [disabled]="loading" (click)="editCourse(title.value, description.value)">
+                    @if(loading){
+                        <hlm-icon name="lucideLoaderCircle" size="sm" class="mr-2 animate-spin" />
+                    }
+                    Upload
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<router-outlet/>

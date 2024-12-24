@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import * as schema from "../db/schema.js"
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
@@ -28,18 +28,7 @@ export default async function getCourse(id){
                     password: false
                 }
             },
-            comments: {
-                with: {
-                    user: {
-                        columns: {
-                            password: false
-                        }
-                    }
-                },
-                orderBy: [desc(comment.dateCommented)],
-                limit: 15
-            },
-            videos: true
+            videos: true,
         }
     })
     return data

@@ -12,11 +12,12 @@ import moment from 'moment';
 import { HlmCardContentDirective, HlmCardDirective, HlmCardFooterDirective, HlmCardHeaderDirective } from '@spartan-ng/ui-card-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { SocketService } from '../../services/socket.service';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [HlmButtonDirective, HlmCardDirective,HlmCardHeaderDirective,HlmCardContentDirective, HlmCardFooterDirective, RouterLink, HlmAvatarComponent, HlmAvatarImageDirective, HlmAvatarFallbackDirective],
+  imports: [HlmSkeletonComponent, HlmButtonDirective, HlmCardDirective,HlmCardHeaderDirective,HlmCardContentDirective, HlmCardFooterDirective, RouterLink, HlmAvatarComponent, HlmAvatarImageDirective, HlmAvatarFallbackDirective],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
