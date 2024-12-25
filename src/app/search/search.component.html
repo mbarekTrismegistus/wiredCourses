@@ -1,7 +1,27 @@
 <div class="p-5">
     <p class="font-bold text-3xl">{{ keywords() }} Search Results</p>
     @if(query.isLoading()){
-        loading ...
+        <div>
+            <p class="py-3 text-2xl text-zinc-400">Users</p>
+            <div class="flex flex-wrap gap-4">
+                <hlm-skeleton class="w-[18rem] h-[100px]"></hlm-skeleton>
+                <hlm-skeleton class="w-[18rem] h-[100px]"></hlm-skeleton>
+                <hlm-skeleton class="w-[18rem] h-[100px]"></hlm-skeleton>
+                <hlm-skeleton class="w-[18rem] h-[100px]"></hlm-skeleton>
+
+            </div>
+    
+        </div>
+        <div>
+            <p class="py-3 text-2xl text-zinc-400">Courses</p>
+            <div class="flex gap-4 flex-wrap">
+                <hlm-skeleton class="w-[17rem] h-[350px]"></hlm-skeleton>
+
+                <hlm-skeleton class="w-[17rem] h-[350px]"></hlm-skeleton>
+                <hlm-skeleton class="w-[17rem] h-[350px]"></hlm-skeleton>
+                <hlm-skeleton class="w-[17rem] h-[350px]"></hlm-skeleton>
+            </div>
+        </div>
     }
     @else {
         <div>

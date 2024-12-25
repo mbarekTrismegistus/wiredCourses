@@ -14,6 +14,7 @@ import { injectQuery, QueryClient } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import moment from "moment"
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +24,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
     HlmCardDirective,
     HlmCardFooterDirective,
     HlmCardHeaderDirective,
-    HlmCardTitleDirective, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective],
+    HlmCardTitleDirective, HlmSkeletonComponent, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmAvatarImageDirective],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
