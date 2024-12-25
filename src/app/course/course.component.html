@@ -111,7 +111,7 @@
                             }
                             @else{
                                 <hlm-icon name="lucideStar"></hlm-icon>
-                                <p>{{ getRating.data().rating.rating == null ? 0 : getRating.data().rating.rating }} / 5</p>
+                                <p>{{ getRating.data().rating.rating == null ? 0 : getRating.data().rating.rating.toString().substring(0,3) }} / 5</p>
                             }
                         </div>
                         <p class="pt-10">{{ query.data().description }}</p>
