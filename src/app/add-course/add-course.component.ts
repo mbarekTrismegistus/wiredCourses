@@ -36,6 +36,7 @@ export class AddCourseComponent {
   file: Array<any> = []
   filesName: Array<any> = []
   progress: any
+  progressVid: any
   thumbnail: string = ""
   session: any
   errorMsg = ""
@@ -106,7 +107,12 @@ export class AddCourseComponent {
           },
           onProgress: (bytesUploaded, bytesTotal) => {
             var percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2)
-            this.progress = percentage
+            if(event.target.name === "thumbnail"){
+              this.progress = percentage
+            }
+            else{
+              this.progressVid = percentage
+            }
           },
           onSuccess: () => {
               console.log('Download %s from %s', upload.url)
@@ -133,6 +139,7 @@ export class AddCourseComponent {
                 this.thumbnail = `https://bqnwxzdqfkmujzqgkyvq.supabase.co/storage/v1/object/public/wiredcourses/public/${fileuuid}.${avatarFile.name.split('.').pop()}`
               }
               this.progress = null
+              this.progressVid = null
               resolve()
           },
       })

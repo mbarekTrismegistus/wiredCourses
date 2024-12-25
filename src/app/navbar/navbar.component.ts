@@ -46,8 +46,11 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
     imports: [FormsModule, ReactiveFormsModule, HlmScrollAreaComponent, HlmSkeletonComponent, HlmInputDirective, HlmIconComponent, HlmAvatarImageDirective, HlmIconComponent,BrnMenuTriggerDirective,HlmMenuComponent,HlmMenuGroupComponent,HlmMenuItemDirective,HlmMenuItemIconDirective,HlmMenuItemSubIndicatorComponent,HlmMenuLabelComponent,HlmMenuSeparatorComponent,HlmMenuShortcutComponent,HlmSubMenuComponent,RouterOutlet, HlmButtonDirective,RouterLink, RouterOutlet, RouterModule, HlmAvatarComponent, HlmAvatarFallbackDirective, HlmButtonDirective],
     providers: [provideIcons({lucideBell, lucideUser, lucideHouse, lucideBookPlus, lucideLogOut, lucideSearch})],
     template: `
-        <nav class="flex px-5 py-3 sticky top-0 z-10 backdrop-blur-3xl">
-            <p class="text-3xl self-start flex-1">Logo</p>
+        <nav class="flex items-center px-5 py-3 sticky top-0 z-10 backdrop-blur-3xl">
+            <a routerLink="/" class="self-start flex-1 flex items-center">
+                <img src="/copland.gif" class="w-15 h-10" alt="">
+                <p>Wired Courses</p>
+            </a>
             <div class="flex gap-0 items-center me-3">
                 <input type="text" class="rounded-l-full border-r-0 dark:border-zinc-400 focus-visible:ring-0 border-zinc-700 focus-visible: outline-0 focus-visible:ring-offset-0" placeholder="Search" #search hlmInput [formControl]="searchParams"/>
                 <a routerLink="/search" [queryParams]="{keywords: searchParams.value}" (click)="search.value = ''">

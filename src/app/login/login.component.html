@@ -26,7 +26,7 @@
                 <input type="text" [class]="error ? 'border-red-600/[0.7] w-[100%] rounded-full bg-red-600/[0.1]' : 'w-[100%] rounded-full'" hlmInput formControlName="email">
             </label>
             <label for="" hlmLabel>Password
-                <input type="text" [class]="error ? 'border-red-600/[0.7] w-[100%] rounded-full bg-red-600/[0.1]' : 'w-[100%] rounded-full'" hlmInput formControlName="password">
+                <input type="password" [class]="error ? 'border-red-600/[0.7] w-[100%] rounded-full bg-red-600/[0.1]' : 'w-[100%] rounded-full'" hlmInput formControlName="password">
             </label>
             <p class="text-red-600">{{ error }}</p>
             <button type="submit" [disabled]="laoding" class="rounded-full" hlmBtn>@if (laoding) {<hlm-icon name="lucideLoaderCircle" size="sm" class="mr-2 animate-spin" />} Login</button>

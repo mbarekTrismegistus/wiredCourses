@@ -58,8 +58,8 @@
                 <input type="file" class="hidden" name="thumbnail" accept="image/*" hlmInput id="thumbnail" (change)="handleUpload($event)">
                 <div class="flex items-center gap-4">
                     <label for="media" [class]="isValid.videos.media.isEmpty ? 'bg-red-700/[0.2] text-red-600 cursor-pointer rounded-full w-14 h-14 flex items-center justify-center p-4' : 'cursor-pointer text-violet-600 bg-violet-700/[0.2] rounded-full w-14 h-14 flex items-center justify-center p-4'">
-                        @if(progress){
-                            <p class="text-violet-600">{{ progress }}</p>
+                        @if(progressVid){
+                            <p class="text-violet-600">{{ progressVid }}</p>
                         }
                         @else{
                             <p class="flex items-center"><hlm-icon name="lucideVideo"></hlm-icon></p>

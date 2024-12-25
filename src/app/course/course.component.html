@@ -107,7 +107,7 @@
                             <hlm-icon size="lg" name="lucideEye"></hlm-icon>
                             <div class="font-bold">{{ query.data().views }}</div>
                             @if(getRating.isLoading()){
-                                "loading"
+                                <hlm-skeleton class="w-10 h-5 rounded-full"></hlm-skeleton>
                             }
                             @else{
                                 <hlm-icon name="lucideStar"></hlm-icon>
