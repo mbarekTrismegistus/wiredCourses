@@ -1,6 +1,5 @@
 import e from "express"
 import getUsers from "./endpoints/getUsers.js"
-import addTeacher from "./endpoints/registre.js"
 import addCourse from "./endpoints/addCourse.js"
 import cors from "cors"
 import { createSession, decrypt, googleAuth, login } from "./endpoints/auth.js"
@@ -24,6 +23,7 @@ import editCourse from "./endpoints/editCourse.js"
 import { deleteComment } from "./endpoints/deleteComment.js"
 import updateRating from "./endpoints/updateRating.js"
 import { getRating, getUserRating } from "./endpoints/getRating.js"
+import registre from "./endpoints/registre.js"
 
 
 
@@ -59,15 +59,6 @@ app.get('/users', async (req, res) => {
     })
 })
 
-app.post("/register/teacher", async (req, res) => {
-    let data = await addTeacher(req.body)
-    if(data){
-        res.status(200).json(data)
-    }
-    else{
-        res.status(500)
-    }
-})
 
 app.post("/editCourse", async (req, res) => {
     let session = await decrypt(req.cookies.session)
@@ -132,7 +123,7 @@ app.post("/addCourse", async (req, res) => {
 })
 
 app.post("/auth/registre", async (req, res) => {
-    let data = await addTeacher(req.body)
+    let data = await registre(req.body)
     if(data){
         let session = await createSession({
             id: data[0].id,
@@ -141,7 +132,7 @@ app.post("/auth/registre", async (req, res) => {
             firstname: data[0].firstname,
             lastname: data[0].lastname
         })
-        res.cookie('session', data, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, sameSite: "None"})
+        res.cookie('session', session, {httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 1000, sameSite: "None"})
         res.status(200).json(session)
     }
     else{
